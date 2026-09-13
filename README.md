@@ -5,25 +5,25 @@ in the instrument between them.
 
 ## 1. The demo
 
-I open a terminal and run `deriva enemdu_2019_diciembre.xlsx enemdu_2024_diciembre.xlsx`.
-It prints about [N] differences grouped by type: [n] new variables, [n] that disappeared,
-[n] whose response categories changed, [n] renamed but with the same question text.
-I open the CSV it wrote next to the files, and each row has the variable name in each
-round, the question text in each round, the type of change, and the reason it was
-classified that way. The last block lists the [n] variables it could not match with
-confidence, for manual review. Then I run it on two consecutive rounds, 2023 and 2024,
-and it reports [n] changes — the point being that it does not invent differences where
-the instrument stayed still.
+I open a terminal and run
+`deriva "Diccionario de Datos_persona_anual_2021.xlsx" "Diccionario de Datos_persona_anual_2025.xlsx"`.
+It prints that the 2021 round has 151 variables and 2025 has 139: 12 variables were removed,
+none were added, and 22 descriptions changed — of which 9 are cosmetic (accents,
+capitalisation, stray punctuation) and 13 are real. I open the CSV it wrote next to the
+files, and the 13 real ones are there with both descriptions side by side, including `rama1`
+moving from CIIU4 to CIIU 4.1 and `p54a` losing the words "trabajo secundario". Then I run
+it on 2021 against 2022 and it reports the same 12 removals and zero description changes —
+the point being that it does not invent differences where the instrument stayed still.
 
 ## 2. The shape
 
 ```
-in           two ENEMDU variable dictionaries (Excel), one per round
+in           two ENEMDU variable dictionaries (Excel), one per annual round
 out          a printed summary by type of change + a CSV, one row per change
-in between   read each dictionary into a list of variables with question text and
-             response categories; match variables across rounds by name first, then
-             by question text for the ones left over; classify each matched pair as
-             unchanged, renamed, reworded or recategorised; report what stayed unmatched
+in between   find the header row in each sheet and read the variable names and their
+             descriptions; line the two rounds up by variable name; for names present in
+             both, compare the descriptions and separate cosmetic differences from real
+             ones; count and group what is left
 ```
 
 ## 3. The size
@@ -31,50 +31,52 @@ in between   read each dictionary into a list of variables with question text an
 The first useful version:
 
 - takes two dictionary files as command-line arguments
-- reads variable name, question text and response categories out of each
-- matches variables across rounds by name, and by question text where the names differ
-- classifies every variable as new, removed, renamed, reworded, recategorised or unchanged
-- prints counts by type and writes one CSV with a row per change and the reason for it
-- lists variables it could not match, instead of forcing a pair
+- locates the `Nombre del campo` header row, which does not sit at the top of the sheet
+- reports variables added and removed between the two rounds
+- for variables present in both, classifies the description as unchanged, cosmetically
+  changed, or really changed
+- prints the counts and writes one CSV with a row per change, both descriptions and the
+  reason it was classified that way
 
 Explicitly not this term:
 
-- reading the microdata itself — only the dictionary
-- deciding whether two variables are *comparable for analysis*; that is a judgement the
-  researcher makes, and the tool only shows what moved
+- response categories and value labels; the dictionary does not contain them, and reading
+  them would mean parsing the SPSS files instead
+- the microdata itself
+- matching variables that were renamed; in the rounds I checked, no variable was renamed,
+  so this is not worth building until I see a round where it happens
+- deciding whether two variables are *comparable for analysis*; the tool shows what moved
+  and the researcher decides what that means
 - harmonising or recoding the data so rounds can be pooled
 - comparing more than two rounds in one run
+- the vivienda/hogar dictionaries; persona first
 - a graphical interface
-- dictionaries from other surveys; the reader is written for the ENEMDU layout first
-- learned matching of any kind; a text similarity threshold I can explain is enough
 
 ## 4. How we would know it works
 
-- Given a dictionary file whose sheet has no variable-name column, it exits with an error
-  naming the column it could not find.
-- Given the same dictionary compared against itself, it reports zero changes and zero
-  unmatched variables.
-- Given a variable that keeps its question text but changes name between rounds, it appears
-  once as renamed, not as one removed plus one new.
+- Given a sheet with no `Nombre del campo` header row, it exits with an error saying which
+  header it looked for and did not find.
+- Given two descriptions that differ only by an accent or by capitalisation, it reports them
+  as a cosmetic change and not as a changed question.
+- Given the same dictionary compared against itself, it reports zero changes of every kind.
 
 ## 5. What could stop this
 
-The dictionaries are published as Excel, but the layout is not identical across rounds —
-headers sit in different rows, columns get renamed, cells are merged. Some rounds may be
-published only as PDF; those are out of scope, and if that turns out to be most rounds
-the project shrinks to the years that are readable.
+The sheets are not laid out identically across rounds. The 2021 file has two columns and the
+2025 file has four, two of them empty; five rows of metadata sit above the real header; and
+the files are not even named consistently — `persona` in 2021 and 2025 but `personas` in
+2022, `vivienda_hogar` in 2021 but `vivienda` afterwards. The published zip for 2022 is
+called `Dicionario de variables.zip`, missing a c. Any reader I write has to survive this,
+and each new round can break it again.
 
-Matching by question text is the part I have not built before. The same question is not
-always written the same way twice — accents, capitalisation, a trailing instruction — so
-the matcher can pair the wrong things or refuse to pair the right ones. My answer to that
-is the unmatched list: when the tool is unsure it says so instead of guessing.
-
-Response categories are sometimes stored as free text in a single cell rather than as
-separate rows, which makes "the categories changed" harder to detect than "the wording
-changed".
+The line between a cosmetic and a real change is a judgement, not a fact. `13er sueldo`
+becoming `13vo sueldo` means nothing; `CIIU4` becoming `CIIU 4.1` means a lot; `per cápita`
+becoming `por cápita` is a typo the publisher introduced. I plan to normalise accents,
+case and punctuation and treat what survives as real, but that rule will misfile some cases,
+so the CSV always shows both descriptions and lets the reader overrule it.
 
 The data is ENEMDU, the Ecuadorian national employment survey. It is public microdata
-published by INEC through its national data archive, free to download and free to show in
-class, so the demo files can live in the repository. ENEMDU is also the honest test case:
-the rounds really do differ, so the tool has something to find. The instrument I most want
-to point it at afterwards is not public, which is another reason the demo runs on ENEMDU.
+published by INEC under a CC-BY licence, free to download and free to show in class, so the
+dictionary files can live in the repository. ENEMDU is also the honest test case: the rounds
+really do differ, so the tool has something to find. The instrument I most want to point it
+at afterwards is not public, which is another reason the demo runs on ENEMDU.
