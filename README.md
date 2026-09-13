@@ -75,6 +75,15 @@ becoming `por cápita` is a typo the publisher introduced. I plan to normalise a
 case and punctuation and treat what survives as real, but that rule will misfile some cases,
 so the CSV always shows both descriptions and lets the reader overrule it.
 
+This ground is not empty. R packages like `retroharmonize` harmonise several waves of a
+survey into a comparable dataset, and projects like Harmony match questionnaire items
+across instruments semantically. They solve the step after mine: they assume you already
+know what differs and want it reconciled. What I want is the step before — a command that
+answers "what moved between these two files" without asking me to set up a harmonisation
+scheme first, and that reads the dictionaries as INEC actually publishes them. If a first
+week with `retroharmonize` shows it already answers that question, I would rather find out
+now than in week ten, and I will say so in the repository.
+
 The data is ENEMDU, the Ecuadorian national employment survey. It is public microdata
 published by INEC under a CC-BY licence, free to download and free to show in class, so the
 dictionary files can live in the repository. ENEMDU is also the honest test case: the rounds
