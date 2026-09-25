@@ -1,0 +1,29 @@
+[project]
+name = "deriva"
+version = "0.1.0"
+description = "Compares the variable dictionaries of two survey rounds and reports what changed."
+readme = "README.md"
+authors = [
+    { name = "Maria Fernanda Salazar", email = "mfsalazarl@outlook.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "openpyxl>=3.1",
+]
+
+[project.scripts]
+deriva = "deriva.cli:main"
+deriva-eval = "deriva.evaluate:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.17,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

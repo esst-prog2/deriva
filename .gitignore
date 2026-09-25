@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+dist/
+
+# deriva output written to the current directory
+/deriva_*.csv
+/labels_*.csv

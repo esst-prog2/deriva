@@ -3,6 +3,77 @@
 Compares the variable dictionaries of two survey rounds and reports what changed
 in the instrument between them.
 
+## Usage
+
+Requires [uv](https://docs.astral.sh/uv/). From a clone of this repository:
+
+```
+uv sync
+uv run deriva "data/Diccionario de Datos_persona_anual_2021.xlsx" "data/Diccionario de Datos_persona_anual_2025.xlsx"
+```
+
+The earlier round goes first. deriva prints the number of variables in each round and how
+many were added, removed, cosmetically changed and really changed, then writes
+`deriva_2021_vs_2025.csv` to the current directory (replacing any earlier copy). Each
+round is named by the last year in its file name.
+
+The CSV has one row per change, real changes first:
+
+| column | content |
+|---|---|
+| `variable` | the variable name |
+| `change` | `real`, `cosmetic`, `removed` or `added` |
+| `description_2021`, `description_2025` | both descriptions in full; empty for the round the variable is missing from |
+| `reason` | why the row was classified that way |
+
+A description change is **cosmetic** when the two descriptions become identical after
+removing accents, ignoring case, treating punctuation as spaces and collapsing
+whitespace, and **real** otherwise. The rule misfiles some cases (`13er` → `13vo` counts
+as real), so read both descriptions before trusting a verdict.
+
+Run the tests with `uv run pytest`.
+
+### Checking the rule against hand labels
+
+To measure how often the cosmetic/real rule agrees with a person, label the description
+changes of one pair of rounds by hand, **before** seeing the rule's verdicts on that pair:
+
+1. Generate a blind labels template. This prints only the variable counts and how many
+   descriptions differ; it runs no classification and writes no changes CSV.
+
+   ```
+   uv run deriva --labels-template "data/Diccionario de Datos_persona_anual_2021.xlsx" "data/Diccionario de Datos_persona_anual_2025.xlsx"
+   ```
+
+   It writes `labels_2021_vs_2025.csv`: one row per variable whose description differs
+   between the rounds, with both descriptions and empty `label` and `note` columns. It
+   refuses to overwrite an existing labels file, so entered labels are never lost.
+
+2. Fill in `label` for each row with `cosmetic` or `real` (case does not matter), and use
+   `note` for anything worth remembering. Leave a label empty to skip that row for now.
+   Do not run plain `deriva` on this pair until you are done, or its verdicts will
+   colour your labels. Saving from Excel is fine, including with `;` as the separator.
+
+3. Compare your labels with the rule:
+
+   ```
+   uv run deriva-eval labels_2021_vs_2025.csv
+   ```
+
+   It prints how many rows are labelled, a 2×2 table of your label against the rule's
+   verdict, the agreement, and every disagreement with both descriptions and your note.
+   Disagreements where you said `real` and the rule said `cosmetic` come first: those are
+   real changes the rule would hide. With no labels filled in yet it reports
+   `0 of 22 rows labelled` and `nothing to measure yet`.
+
+Settle the rule before the first measurement. If you then change the rule because of
+what the disagreements show, measure it again on a pair of rounds you have not looked
+at, not on the same labels.
+
+**A note on 2021.** INEC made methodological changes to ENEMDU between 2020 and May 2021,
+so the 2021 annual round straddles the redesign. Differences between 2021 and later rounds
+partly reflect that redesign; do not read their number as ordinary year-to-year drift.
+
 ## 1. The demo
 
 I open a terminal and run
