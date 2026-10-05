@@ -28,3 +28,11 @@
 2026-09-25 — data/ is committed so the tests and demo run from a fresh clone. — decided by: Claude
 2026-09-25 — On this machine deriva's uv virtualenv lives in ~/.venvs/deriva (UV_PROJECT_ENVIRONMENT, set by a ~/.zshrc hook only inside the project folder), because iCloud Drive syncs Documents and breaks .venv. — decided by: user (on Claude's recommendation)
 2026-09-25 — pytest puts src/ on the import path itself, so the tests do not depend on the editable install. — decided by: Claude
+2026-09-25 — add-deriva-mvp archived; its three specs (dictionary-reader, round-comparison, classifier-evaluation) become the project's main specs. — decided by: user
+2026-10-05 — hw4 spike question (branch hw4-spike): does deriva load the 2022, 2023 and 2024 persona dictionaries in data/ without code changes? — decided by: user
+2026-10-05 — Spike answer criterion: how many of the 3 load (run against 2021), plus the first error for each that fails; no code changes; full terminal output saved to spike/output.txt. — decided by: user
+2026-10-05 — The spike runs deriva in --labels-template mode (same reader path, no cosmetic/real verdicts) with outputs in a temp dir, so the held-out 2023/2024 pair stays unseen. — decided by: Claude
+2026-10-05 — Spike answer: 3 of 3 (2022, 2023, 2024) persona dictionaries load without code changes; no errors. 2021 vs 2022: 151/139 vars, 0 added, 12 removed, 0 descriptions differ; 2021 vs 2023: 151/141, 2 added, 12 removed, 0 differ; 2021 vs 2024: 151/139, 0 added, 12 removed, 22 differ. — decided by: user (from Claude's spike run)
+2026-10-05 — Spike: 2024 vs 2025 are identical in content (139/139 vars, 0 added, 0 removed, 0 descriptions differ), so all 22 description changes happen between 2023 and 2024. — decided by: user (from Claude's spike run)
+2026-10-05 — Held-out plan (2023 or 2024 middle pair) dropped: no pair of the 2021–2025 persona dictionaries gives description changes independent of the 2021 vs 2025 labels set; where the held-out set comes from instead is still open. — decided by: user
+2026-10-05 — Download links for the 2022–2024 dictionaries are kept in spike/sources.md. — decided by: user

@@ -135,10 +135,17 @@ Explicitly not this term:
 
 The sheets are not laid out identically across rounds. The 2021 file has two columns and the
 2025 file has four, two of them empty; five rows of metadata sit above the real header; and
-the files are not even named consistently — `persona` in 2021 and 2025 but `personas` in
-2022, `vivienda_hogar` in 2021 but `vivienda` afterwards. The published zip for 2022 is
+the files are not even named consistently — `persona` in 2021, 2024 and 2025 but `personas`
+in 2022 and 2023, `vivienda_hogar` in 2021 but `vivienda` afterwards. The published zip for 2022 is
 called `Dicionario de variables.zip`, missing a c. Any reader I write has to survive this,
 and each new round can break it again.
+
+A spike on 2026-10-05 (`spike/`) ran the reader on 2022, 2023 and 2024 against 2021 with
+no code changes: all three loaded. The same spike found a risk for evaluation instead.
+2022 and 2023 have the same descriptions as 2021, and 2024 is identical to 2025, so every
+description change in 2021–2025 happens in one step, between 2023 and 2024. That leaves
+one set of 22 changes to label and no independent pair of rounds to hold out for checking
+the rule, so the held-out set has to come from somewhere else.
 
 The line between a cosmetic and a real change is a judgement, not a fact. `13er sueldo`
 becoming `13vo sueldo` means nothing; `CIIU4` becoming `CIIU 4.1` means a lot; `per cápita`
