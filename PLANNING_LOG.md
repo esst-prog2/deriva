@@ -43,3 +43,4 @@
 2026-10-05 — A second coder (Claude) agreed with the hand labels on 21 of 22 pairs, differing only on p78. — decided by: user
 2026-10-05 — README demo: the unverified 9 cosmetic / 13 real replaced with the hand-label result and the agreement figures. — decided by: user
 2026-10-05 — The rule is not changed after this measurement. — decided by: user
+2026-10-05 — Correction to the second-coder entry above: Claude's labels were not independent, because Claude had seen the user's labels before giving its own, so the 21 of 22 must not be read as inter-rater agreement. — decided by: user
