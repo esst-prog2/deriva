@@ -1,0 +1,59 @@
+labels_2021_vs_2025.csv: 22 of 22 rows labelled
+
+                 rule: cosmetic  rule: real
+  you: cosmetic               9          10
+  you: real                   0           3
+
+agreement: 12 of 22 (55%)
+
+disagreements: 10
+
+  p44j  you: cosmetic  rule: real
+    2021: Recibe 13er sueldo
+    2025: Recibe 13vo sueldo
+    note: only the ordinal abbreviation changed (13er to 13vo)
+
+  p44k  you: cosmetic  rule: real
+    2021: Recibe 14to sueldo
+    2025: Recibe 14vo sueldo
+    note: only the ordinal abbreviation changed (14to to 14vo)
+
+  p78  you: cosmetic  rule: real
+    2021: Monto recibido por el Bono por discapacidad (Joaquin Gallegos Lara - BJGL)
+    2025: Monto recibido por el BONO DE DISCAPACIDAD
+    note: program name change assumed (BJGL), not verified
+
+  sd0210  you: cosmetic  rule: real
+    2021: La semana pasada que no tenía trabajo - Realizó venta de productos por internet, catálogo o venta d
+    2025: La semana pasada que no tenía trabajo - Realizó venta de productos por internet, catálogo o venta directa
+    note: 2021 text truncated by INEC; same question
+
+  estrato  you: cosmetic  rule: real
+    2021: Estrato anual
+    2025: Estrato
+    note: "anual" dropped from the label; both files are annual
+
+  fexp  you: cosmetic  rule: real
+    2021: Factor de expansión anual
+    2025: Factor de expansión
+    note: "anual" dropped from the label; both files are annual
+
+  ingpc  you: cosmetic  rule: real
+    2021: Ingreso per cápita
+    2025: Ingreso por cápita
+    note: spelling only (per / por cápita)
+
+  secemp  you: cosmetic  rule: real
+    2021: Sectorización de los empleados (15 años y más)
+    2025: Sectores de los Empleados (clasificación para >= 15 años)
+    note: rewording; same age group (15 and over)
+
+  prov  you: cosmetic  rule: real
+    2021: Provincias
+    2025: Provincia
+    note: singular instead of plural
+
+  mes  you: cosmetic  rule: real
+    2021: Mes
+    2025: Mes de levantamiento
+    note: "de levantamiento" added; assumed same meaning

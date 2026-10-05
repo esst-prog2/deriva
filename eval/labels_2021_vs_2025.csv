@@ -1,0 +1,23 @@
+variable;description_2021;description_2025;label;note
+p04;Relación de parentesco;Relación de Parentesco;cosmetic;only accents, punctuation or capitalisation changed
+p09;Razón por la que no asiste:;Razón por la que no asiste;cosmetic;only accents, punctuation or capitalisation changed
+p15;Cómo se considera;Como se considera;cosmetic;only accents, punctuation or capitalisation changed
+p15aa;Donde nació;Dónde nació;cosmetic;only accents, punctuation or capitalisation changed
+p26;Razón por la que trabajó más de 40 horas;Razón por la que trabajó mas de 40 horas;cosmetic;only accents, punctuation or capitalisation changed
+p29;Cuántas horas a la semana estarìa disponible para trabajar;Cuántas horas a la semana estaría disponible para trabajar;cosmetic;only accents, punctuation or capitalisation changed
+p44j;Recibe 13er sueldo;Recibe 13vo sueldo;cosmetic;only the ordinal abbreviation changed (13er to 13vo)
+p44k;Recibe 14to sueldo;Recibe 14vo sueldo;cosmetic;only the ordinal abbreviation changed (14to to 14vo)
+p54a;Es socio de cooperativa o asociación - trabajo secundario;Es socio de cooperativa o asociación;real;"""trabajo secundario"" removed; unclear if it still refers to the secondary job"
+p75;Recibió el Bono de Desarrollo Humano;Recibió el BONO DE DESARROLLO HUMANO;cosmetic;only capitalisation changed
+p76;Monto que recibió por el Bono de Desarrollo Humano;Monto que recibió por el BONO DE DESARROLLO HUMANO;cosmetic;only capitalisation changed
+p77;Recibió el Bono por discapacidad (Joaquin Gallegos Lara  - BJGL);Recibe el BONO DE DISCAPACIDAD;real;"""Recibió"" vs ""Recibe"" may change the reference period; program name change assumed"
+p78;Monto recibido por el Bono por discapacidad (Joaquin Gallegos Lara - BJGL);Monto recibido por el BONO DE DISCAPACIDAD;cosmetic;program name change assumed (BJGL), not verified
+sd0210;La semana pasada que no tenía trabajo - Realizó venta de productos por internet, catálogo o venta d;La semana pasada que no tenía trabajo - Realizó venta de productos por internet, catálogo o venta directa;cosmetic;"2021 text truncated by INEC; same question"
+estrato;Estrato anual;Estrato;cosmetic;"""anual"" dropped from the label; both files are annual"
+fexp;Factor de expansión anual;Factor de expansión;cosmetic;"""anual"" dropped from the label; both files are annual"
+ingpc;Ingreso per cápita;Ingreso por cápita;cosmetic;spelling only (per / por cápita)
+secemp;Sectorización de los empleados (15 años y más);Sectores de los Empleados (clasificación para >= 15 años);cosmetic;"rewording; same age group (15 and over)"
+rama1;Rama de Actividad CIIU4 (población ocupada de 15 años y más);Rama de Actividad CIIU 4.1 (población ocupada de 15 años y más);real;"CIIU 4 to CIIU 4.1 may change codes; unsure"
+prov;Provincias;Provincia;cosmetic;singular instead of plural
+upm;Unidad primaria de muestreo;Unidad Primaria de Muestreo;cosmetic;only capitalisation changed
+mes;Mes;Mes de levantamiento;cosmetic;"""de levantamiento"" added; assumed same meaning"

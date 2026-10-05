@@ -36,3 +36,11 @@
 2026-10-05 — Spike: 2024 vs 2025 are identical in content (139/139 vars, 0 added, 0 removed, 0 descriptions differ), so all 22 description changes happen between 2023 and 2024. — decided by: user (from Claude's spike run)
 2026-10-05 — Held-out plan (2023 or 2024 middle pair) dropped: no pair of the 2021–2025 persona dictionaries gives description changes independent of the 2021 vs 2025 labels set; where the held-out set comes from instead is still open. — decided by: user
 2026-10-05 — Download links for the 2022–2024 dictionaries are kept in spike/sources.md. — decided by: user
+2026-10-05 — Definition of a real change for the hand labels: a researcher comparing the two rounds would need to check whether the variable still measures the same thing. — decided by: user
+2026-10-05 — Labelling process: the user hand-labelled all 22 differing 2021 vs 2025 pairs in the blind template; Claude pointed out the differences between descriptions but gave no verdicts; the rule was not changed before measuring. — decided by: user
+2026-10-05 — Hand labels and deriva-eval output are committed as eval/labels_2021_vs_2025.csv and eval/result.txt. — decided by: user
+2026-10-05 — Result: by hand 19 cosmetic and 3 real (p54a, p77, rama1); agreement with the rule 12 of 22; 0 cases hand-real / rule-cosmetic; 10 cases hand-cosmetic / rule-real. The rule's own split is 9 cosmetic / 13 real, the same as the unverified README figure. — decided by: user (numbers re-checked by Claude with deriva-eval)
+2026-10-05 — A second coder (Claude) agreed with the hand labels on 21 of 22 pairs, differing only on p78. — decided by: user
+2026-10-05 — README demo: the unverified 9 cosmetic / 13 real replaced with the hand-label result and the agreement figures. — decided by: user
+2026-10-05 — The rule is not changed after this measurement. — decided by: user
+2026-10-05 — Correction to the second-coder entry above: Claude's labels were not independent, because Claude had seen the user's labels before giving its own, so the 21 of 22 must not be read as inter-rater agreement. — decided by: user
