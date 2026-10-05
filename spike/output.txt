@@ -1,0 +1,45 @@
+deriva spike — 2026-10-05 11:23:58 — commit b5d531e
+
+=== 2021 vs 2022: Diccionario de Datos_personas_anual_2022.xlsx ===
+2021: 151 variables
+2022: 139 variables
+
+  added         0
+  removed      12
+  descriptions differing    0  (not classified, so labelling stays blind)
+
+wrote /private/var/folders/ng/ncwd6_c14yz6p_dtwcr7l6540000gn/T/tmp.d8d9404z4M/labels_2021_vs_2022.csv with 0 rows to label
+exit code: 0
+
+=== 2021 vs 2023: Diccionario de Datos_personas_anual_2023.xlsx ===
+2021: 151 variables
+2023: 141 variables
+
+  added         2
+  removed      12
+  descriptions differing    0  (not classified, so labelling stays blind)
+
+wrote /private/var/folders/ng/ncwd6_c14yz6p_dtwcr7l6540000gn/T/tmp.d8d9404z4M/labels_2021_vs_2023.csv with 0 rows to label
+exit code: 0
+
+=== 2021 vs 2024: Diccionario de Datos_persona_anual_2024.xlsx ===
+2021: 151 variables
+2024: 139 variables
+
+  added         0
+  removed      12
+  descriptions differing   22  (not classified, so labelling stays blind)
+
+wrote /private/var/folders/ng/ncwd6_c14yz6p_dtwcr7l6540000gn/T/tmp.d8d9404z4M/labels_2021_vs_2024.csv with 22 rows to label
+exit code: 0
+
+=== 2024 vs 2025: Diccionario de Datos_persona_anual_2024.xlsx vs Diccionario de Datos_persona_anual_2025.xlsx ===
+2024: 139 variables
+2025: 139 variables
+
+  added         0
+  removed       0
+  descriptions differing    0  (not classified, so labelling stays blind)
+
+wrote /private/var/folders/ng/ncwd6_c14yz6p_dtwcr7l6540000gn/T/tmp.d8d9404z4M/labels_2024_vs_2025.csv with 0 rows to label
+exit code: 0
