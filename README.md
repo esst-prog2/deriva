@@ -79,10 +79,15 @@ partly reflect that redesign; do not read their number as ordinary year-to-year 
 I open a terminal and run
 `deriva "Diccionario de Datos_persona_anual_2021.xlsx" "Diccionario de Datos_persona_anual_2025.xlsx"`.
 It prints that the 2021 round has 151 variables and 2025 has 139: 12 variables were removed,
-none were added, and 22 descriptions changed — of which 9 are cosmetic (accents,
-capitalisation, stray punctuation) and 13 are real. I open the CSV it wrote next to the
-files, and the 13 real ones are there with both descriptions side by side, including `rama1`
-moving from CIIU4 to CIIU 4.1 and `p54a` losing the words "trabajo secundario". Then I run
+none were added, and 22 descriptions changed. Classified by hand, 19 of those changes are
+cosmetic and 3 are real (`p54a`, `p77`, `rama1`), counting a change as real when a
+researcher comparing the two rounds would need to check whether the variable still
+measures the same thing. deriva's rule agrees on 12 of the 22: it never files a real change
+as cosmetic, but it flags 10 cosmetic ones as real, such as `13er` → `13vo` and
+`per` → `por cápita` ([eval/result.txt](eval/result.txt)). I open the CSV it wrote next to
+the files, and the 3 real ones are among its real rows with both descriptions side by side,
+including `rama1` moving from CIIU4 to CIIU 4.1 and `p54a` losing the words "trabajo
+secundario". Then I run
 it on 2021 against 2022 and it reports the same 12 removals and zero description changes —
 the point being that it does not invent differences where the instrument stayed still.
 
