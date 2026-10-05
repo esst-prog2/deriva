@@ -28,3 +28,4 @@
 2026-09-25 — data/ is committed so the tests and demo run from a fresh clone. — decided by: Claude
 2026-09-25 — On this machine deriva's uv virtualenv lives in ~/.venvs/deriva (UV_PROJECT_ENVIRONMENT, set by a ~/.zshrc hook only inside the project folder), because iCloud Drive syncs Documents and breaks .venv. — decided by: user (on Claude's recommendation)
 2026-09-25 — pytest puts src/ on the import path itself, so the tests do not depend on the editable install. — decided by: Claude
+2026-09-25 — add-deriva-mvp archived; its three specs (dictionary-reader, round-comparison, classifier-evaluation) become the project's main specs. — decided by: user
