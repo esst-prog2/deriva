@@ -1,0 +1,136 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.2, pytest-9.1.1, pluggy-1.6.0
+rootdir: /Users/mariafernandasalazar/Documents/Documentos Mafer/Master ELTE/Third Semester/Advanced Programming/Project/deriva
+configfile: pyproject.toml
+testpaths: tests
+collected 57 items
+
+tests/test_cli.py .......                                                [ 12%]
+tests/test_compare.py ..F                                                [ 17%]
+tests/test_evaluate.py F.......                                          [ 31%]
+tests/test_hand_labels.py ...F                                           [ 38%]
+tests/test_labels_template.py ....                                       [ 45%]
+tests/test_output.py F..                                                 [ 50%]
+tests/test_reader.py ..................                                  [ 82%]
+tests/test_rule.py .....F.F..                                            [100%]
+
+=================================== FAILURES ===================================
+____________________________ test_classify_changes _____________________________
+
+    def test_classify_changes():
+        a = {"area": "Area", "rama1": "Rama CIIU4", "p54a": "x", "ciudad": "Ciudad"}
+        b = {"area": "Área", "rama1": "Rama CIIU 4.1", "ciudad": "Ciudad", "p99": "y"}
+        changes = classify_changes(align(*dictionaries(a, b)))
+>       assert [(c.variable, c.change) for c in changes] == [
+            ("rama1", REAL),
+            ("area", COSMETIC),
+            ("p54a", REMOVED),
+            ("p99", ADDED),
+        ]
+E       AssertionError: assert [('area', 'co...99', 'added')] == [('rama1', 'r...99', 'added')]
+E         
+E         At index 0 diff: ('area', 'cosmetic') != ('rama1', 'real')
+E         Use -v to get more diff
+
+tests/test_compare.py:28: AssertionError
+__________________________ test_partly_labelled_file ___________________________
+
+tmp_path = PosixPath('/private/var/folders/ng/ncwd6_c14yz6p_dtwcr7l6540000gn/T/pytest-of-mariafernandasalazar/pytest-7/test_partly_labelled_file0')
+capsys = <_pytest.capture.CaptureFixture object at 0x108feb9b0>
+
+    def test_partly_labelled_file(tmp_path, capsys):
+        path = write_labels(tmp_path / "labels_2021_vs_2025.csv", twenty_two_rows())
+        assert main([str(path)]) == 0
+        out = capsys.readouterr().out
+        assert "10 of 22 rows labelled" in out
+>       assert "agreement: 8 of 10 (80%)" in out
+E       AssertionError: assert 'agreement: 8 of 10 (80%)' in 'labels_2021_vs_2025.csv: 10 of 22 rows labelled\n\n                 rule: cosmetic  rule: real\n  you: cosmetic      ...CIIU 4.1\n\n  p54a  you: real  rule: cosmetic\n    2021: Area\n    2025: Área\n    note: the word order matters here\n'
+
+tests/test_evaluate.py:41: AssertionError
+___________________ test_rule_agrees_with_hand_label[rama1] ____________________
+
+variable = 'rama1'
+
+    @pytest.mark.parametrize("variable", HAND_REAL)
+    def test_rule_agrees_with_hand_label(variable):
+        row = hand_labels()[variable]
+>       assert classify(row["description_2021"], row["description_2025"]) == row["label"].strip()
+E       AssertionError: assert 'cosmetic' == 'real'
+E         
+E         - real
+E         + cosmetic
+
+tests/test_hand_labels.py:32: AssertionError
+_______________________________ test_changes_csv _______________________________
+
+tmp_path = PosixPath('/private/var/folders/ng/ncwd6_c14yz6p_dtwcr7l6540000gn/T/pytest-of-mariafernandasalazar/pytest-7/test_changes_csv0')
+
+    def test_changes_csv(tmp_path):
+        a = Dictionary("2021", {"rama1": "Rama de actividad CIIU4", "p54a": "Horas, trabajo", "area": "Area"})
+        b = Dictionary("2025", {"rama1": "Rama de actividad CIIU 4.1", "area": "Area"})
+        alignment = align(a, b)
+        path = write_changes(classify_changes(alignment), alignment, tmp_path)
+    
+        assert path.name == "deriva_2021_vs_2025.csv"
+        assert path.read_bytes().startswith(b"\xef\xbb\xbf")  # BOM for Excel
+        header, *rows = read_csv(path)
+        assert header == ["variable", "change", "description_2021", "description_2025", "reason"]
+>       assert rows == [
+            [
+                "rama1",
+                "real",
+                "Rama de actividad CIIU4",
+                "Rama de actividad CIIU 4.1",
+                "descriptions still differ after normalising accents, case, punctuation and whitespace",
+            ],
+            ["p54a", "removed", "Horas, trabajo", "", "only in 2021"],
+        ]
+E       AssertionError: assert [['rama1', 'c...nly in 2021']] == [['rama1', 'r...nly in 2021']]
+E         
+E         At index 0 diff: ['rama1', 'cosmetic', 'Rama de actividad CIIU4', 'Rama de actividad CIIU 4.1', 'descriptions differ, but are identical after normalising accents, case, punctuation and whitespace'] != ['rama1', 'real', 'Rama de actividad CIIU4', 'Rama de actividad CIIU 4.1', 'descriptions still differ after normalising accents, case, punctuation and whitespace']
+E         Use -v to get more diff
+
+tests/test_output.py:23: AssertionError
+____ test_classify[Rama de actividad CIIU4-Rama de actividad CIIU 4.1-real] ____
+
+a = 'Rama de actividad CIIU4', b = 'Rama de actividad CIIU 4.1'
+expected = 'real'
+
+    @pytest.mark.parametrize(
+        "a, b, expected",
+        [
+            ("Area", "Area", UNCHANGED),
+            ("Area", "Área", COSMETIC),
+            ("Rama de actividad", "rama de Actividad", COSMETIC),
+            ("Ingreso  total.", "Ingreso total", COSMETIC),
+            (" Ingreso total", "Ingreso total ", COSMETIC),
+            ("Rama de actividad CIIU4", "Rama de actividad CIIU 4.1", REAL),
+            ("Horas en el trabajo secundario", "Horas en el", REAL),
+        ],
+    )
+    def test_classify(a, b, expected):
+>       assert classify(a, b) == expected
+E       AssertionError: assert 'cosmetic' == 'real'
+E         
+E         - real
+E         + cosmetic
+
+tests/test_rule.py:19: AssertionError
+_______________________ test_punctuation_becomes_a_space _______________________
+
+    def test_punctuation_becomes_a_space():
+>       assert normalise("CIIU 4.1") == "ciiu 4 1"
+E       AssertionError: assert 'ciiu' == 'ciiu 4 1'
+E         
+E         - ciiu 4 1
+E         + ciiu
+
+tests/test_rule.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_compare.py::test_classify_changes - AssertionError: assert ...
+FAILED tests/test_evaluate.py::test_partly_labelled_file - AssertionError: as...
+FAILED tests/test_hand_labels.py::test_rule_agrees_with_hand_label[rama1] - A...
+FAILED tests/test_output.py::test_changes_csv - AssertionError: assert [['ram...
+FAILED tests/test_rule.py::test_classify[Rama de actividad CIIU4-Rama de actividad CIIU 4.1-real]
+FAILED tests/test_rule.py::test_punctuation_becomes_a_space - AssertionError:...
+========================= 6 failed, 51 passed in 0.27s =========================
