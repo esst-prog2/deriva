@@ -1,0 +1,10 @@
+2023: 141 variables
+2024: 139 variables
+
+  added         0
+  removed       2
+  cosmetic      9
+  real         13
+  unchanged   117
+
+wrote /Users/mariafernandasalazar/Documents/Documentos Mafer/Master ELTE/Third Semester/Advanced Programming/Project/deriva/deriva_2023_vs_2024.csv
