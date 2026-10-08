@@ -44,3 +44,5 @@
 2026-10-05 — README demo: the unverified 9 cosmetic / 13 real replaced with the hand-label result and the agreement figures. — decided by: user
 2026-10-05 — The rule is not changed after this measurement. — decided by: user
 2026-10-05 — Correction to the second-coder entry above: Claude's labels were not independent, because Claude had seen the user's labels before giving its own, so the 21 of 22 must not be read as inter-rater agreement. — decided by: user
+2026-10-08 — hw5 (branch hw5-usable) test sentence: "A test would go red if the rule labelled any of the 3 changes I judged real by hand (p54a, p77, rama1) as cosmetic." — decided by: user
+2026-10-08 — Expected value for that test: p54a, p77 and rama1 are real; it comes from the user's blind hand labels in eval/labels_2021_vs_2025.csv, made before seeing the rule's verdicts, not from running the code. The test is not written yet. — decided by: user
