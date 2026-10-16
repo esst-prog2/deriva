@@ -48,6 +48,18 @@ For each variable in both rounds deriva SHALL classify the description as:
   whitespace;
 - `real` when they still differ after normalising.
 
+"Punctuation" SHALL mean every character in a Unicode punctuation category (`P*`), so
+characters such as `.`, `,`, `%` and `/` become whitespace. Characters in Unicode symbol
+categories (`S*`), such as `>`, `=`, `$` and `°`, SHALL be kept.
+
+#### Scenario: Percent sign dropped
+- **WHEN** the descriptions are `Ingreso en %` and `Ingreso en`
+- **THEN** the variable is classified as cosmetic, because `%` is Unicode punctuation
+
+#### Scenario: Symbols kept
+- **WHEN** the descriptions are `Ingreso en $` and `Ingreso en`
+- **THEN** the variable is classified as real, because `$` is a Unicode symbol
+
 #### Scenario: Accent only
 - **WHEN** the descriptions are `Area` and `Área`
 - **THEN** the variable is classified as cosmetic
@@ -70,7 +82,7 @@ For each variable in both rounds deriva SHALL classify the description as:
 
 ### Requirement: Print a summary
 deriva SHALL print the number of variables in each round and the number of variables
-added, removed, cosmetically changed and really changed, followed by the path of the
+added, removed, cosmetically changed, really changed and unchanged, followed by the path of the
 changes CSV it wrote. deriva SHALL exit with status 0 whenever the comparison completes,
 whether or not changes were found.
 
@@ -86,7 +98,8 @@ whether or not changes were found.
 deriva SHALL write `deriva_<A>_vs_<B>.csv` to the current directory, replacing any
 existing file of that name, with the columns `variable`, `change`, `description_<A>`,
 `description_<B>` and `reason`, and one row per variable that was added, removed,
-cosmetically changed or really changed. Unchanged variables SHALL NOT appear. For an
+cosmetically changed or really changed. Rows SHALL be ordered real changes first, then
+cosmetic changes, then removed and then added variables. Unchanged variables SHALL NOT appear. For an
 added variable the A description SHALL be empty; for a removed variable the B description
 SHALL be empty. `reason` SHALL state in words why the row was classified as it was. The
 file SHALL be UTF-8 encoded and open with accents intact in Excel.
@@ -94,6 +107,14 @@ file SHALL be UTF-8 encoded and open with accents intact in Excel.
 #### Scenario: Real change row
 - **WHEN** a variable's description changes from `Rama de actividad CIIU4` to `Rama de actividad CIIU 4.1`
 - **THEN** its row has `change` = `real`, both descriptions in full, and a reason stating the descriptions still differ after normalising accents, case, punctuation and whitespace
+
+#### Scenario: Row order
+- **WHEN** a comparison has one real change, one cosmetic change, one removed and one added variable
+- **THEN** the rows appear in the order real, cosmetic, removed, added
+
+#### Scenario: Added and cosmetic rows
+- **WHEN** a variable is added with the description `Año de nacimiento` and another changes from `Area` to `Área`
+- **THEN** the added row has an empty A description and the reason `only in <B>`, the cosmetic row's reason states the descriptions are identical after normalising, and the accented descriptions read back unchanged
 
 #### Scenario: No changes
 - **WHEN** a dictionary is compared with itself

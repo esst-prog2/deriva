@@ -32,6 +32,23 @@ def test_template_on_real_files(tmp_path):
         assert label == "" and note == ""
 
 
+def test_both_descriptions_copied_into_template(tmp_path, make_workbook):
+    header = ("Nombre del campo", "Descripción del campo")
+    a = make_workbook(
+        [header, ("area", "Area"), ("rama1", "Rama CIIU4"), ("ciudad", "Ciudad")], name="dict_2021.xlsx"
+    )
+    b = make_workbook(
+        [header, ("area", "Área"), ("rama1", "Rama CIIU 4.1"), ("ciudad", "Ciudad")], name="dict_2025.xlsx"
+    )
+    assert main(["--labels-template", str(a), str(b)]) == 0
+    with (tmp_path / TEMPLATE).open(encoding=ENCODING, newline="") as f:
+        _, *rows = list(csv.reader(f))
+    assert rows == [
+        ["area", "Area", "Área", "", ""],
+        ["rama1", "Rama CIIU4", "Rama CIIU 4.1", "", ""],
+    ]
+
+
 def test_no_changes_csv_is_written(tmp_path):
     run_template()
     assert list(tmp_path.glob("deriva_*.csv")) == []

@@ -21,6 +21,10 @@ SHALL NOT be taken as the header.
 - **WHEN** a sheet has `Nombre del campo` in row 2 instead of row 6
 - **THEN** the variables are read from row 3 onwards
 
+#### Scenario: Header with surrounding whitespace
+- **WHEN** the first-column cell reads `  Nombre del campo ` with spaces around the label
+- **THEN** it is taken as the header and the variables below it are read
+
 #### Scenario: Header missing
 - **WHEN** no cell in the first column reads exactly `Nombre del campo`
 - **THEN** deriva exits with a non-zero status and an error message that names the file and the header text `Nombre del campo` it looked for and did not find
@@ -51,6 +55,14 @@ wherever it occurs, and SHALL continue reading after it.
 - **WHEN** an empty row sits between two variables
 - **THEN** both variables are read
 
+### Requirement: Reject a description without a name
+The reader SHALL stop with an error when a row below the header has a description but
+an empty variable name, naming the file and the row number.
+
+#### Scenario: Description without a name
+- **WHEN** a row below the header has an empty first cell and `Area` in the second
+- **THEN** deriva exits with a non-zero status and an error message naming the file and that row
+
 ### Requirement: Reject duplicate variable names
 The reader SHALL stop with an error when the same variable name appears more than once
 in one dictionary, naming the file and the duplicated variable.
@@ -62,6 +74,10 @@ in one dictionary, naming the file and the duplicated variable.
 ### Requirement: Read the first sheet of an xlsx workbook
 The reader SHALL read the first worksheet of an `.xlsx` workbook. A path that does not
 exist or cannot be opened as an `.xlsx` workbook SHALL produce an error naming the path.
+
+#### Scenario: Several sheets
+- **WHEN** a workbook has two sheets and the second one is the active sheet
+- **THEN** the variables are read from the first sheet only
 
 #### Scenario: Missing file
 - **WHEN** a path given to deriva does not exist

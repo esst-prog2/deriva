@@ -84,6 +84,33 @@ def test_wrong_columns(tmp_path, capsys):
     assert "expected the columns" in capsys.readouterr().err
 
 
+def test_columns_reordered_with_an_extra_column(tmp_path, capsys):
+    path = tmp_path / "labels.csv"
+    with path.open("w", encoding=ENCODING, newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["label", "variable", "note", "description_2025", "description_2021", "extra"])
+        writer.writerow(["real", "p54a", "", "Área", "Area", "ignored"])
+    assert main([str(path)]) == 0
+    out = capsys.readouterr().out
+    assert "p54a  you: real  rule: cosmetic" in out
+    assert "    2025: Área\n    2021: Area" in out
+
+
+def test_empty_file(tmp_path, capsys):
+    path = tmp_path / "labels.csv"
+    path.write_text("", encoding=ENCODING)
+    assert main([str(path)]) == 1
+    err = capsys.readouterr().err
+    assert "labels.csv" in err and "empty" in err
+
+
+def test_identical_descriptions(tmp_path, capsys):
+    path = write_labels(tmp_path / "labels.csv", [("area", "Area", "Area", "", "")])
+    assert main([str(path)]) == 1
+    err = capsys.readouterr().err
+    assert "labels.csv" in err and "'area'" in err
+
+
 def test_missing_file(tmp_path, capsys):
     assert main([str(tmp_path / "nope.csv")]) == 1
     assert "nope.csv" in capsys.readouterr().err

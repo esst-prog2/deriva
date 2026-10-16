@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pytest
+from openpyxl import Workbook
 
 from deriva import DerivaError
 from deriva.reader import distinct_labels, read_dictionary, round_label
@@ -26,6 +27,11 @@ def test_header_missing(make_workbook):
         read_dictionary(path)
     assert str(path) in str(error.value)
     assert "Nombre del campo" in str(error.value)
+
+
+def test_header_with_surrounding_whitespace(make_workbook):
+    path = make_workbook(METADATA + [("  Nombre del campo ", "Descripción del campo")] + VARIABLES)
+    assert read_dictionary(path).variables == {"area": "Area", "ciudad": "Ciudad"}
 
 
 def test_near_miss_is_not_the_header(make_workbook):
@@ -73,6 +79,28 @@ def test_duplicate_name(make_workbook):
         read_dictionary(path)
     assert str(path) in str(error.value)
     assert "p54a" in str(error.value)
+
+
+def test_description_without_a_name(make_workbook):
+    path = make_workbook([HEADER_ROW, VARIABLES[0], (None, "Area")])
+    with pytest.raises(DerivaError) as error:
+        read_dictionary(path)
+    assert str(path) in str(error.value)
+    assert "row 3" in str(error.value)
+
+
+def test_first_sheet_is_read_even_when_another_is_active(tmp_path):
+    workbook = Workbook()
+    first = workbook.active
+    for row in [HEADER_ROW] + VARIABLES:
+        first.append(row)
+    second = workbook.create_sheet("otra")
+    for row in [HEADER_ROW, ("p99", "Otra hoja")]:
+        second.append(row)
+    workbook.active = 1
+    path = tmp_path / "two_sheets_2021.xlsx"
+    workbook.save(path)
+    assert read_dictionary(path).variables == {"area": "Area", "ciudad": "Ciudad"}
 
 
 def test_missing_file(tmp_path):
