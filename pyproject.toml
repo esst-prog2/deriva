@@ -26,4 +26,6 @@ build-backend = "uv_build"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# Put src/ on the path directly, so the tests do not depend on the editable install:
+# in an iCloud-synced folder macOS hides the venv's .pth files and Python 3.14 skips them.
 pythonpath = ["src"]

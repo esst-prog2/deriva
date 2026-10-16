@@ -49,3 +49,29 @@ and a year inside a longer run of digits was taken as the round label.
 
 **Moved to a later review:** deriva-eval crashes on a labels file saved as Windows-1252
 instead of printing an error (review 5, errors).
+
+## 3. Patched where it broke, not where it was wrong
+
+**Looked for:** chains of commits that fix the same area again and again, or special
+cases added one by one on top of a wrong assumption. Read the full `git log` of all
+branches, not only the code.
+
+**Found:** no chain of fix commits in `src/`; the code changed only twice. The
+pattern shows up in the specs and setup instead:
+- The cosmetic/real rule assumes Unicode categories match "does not change what the
+  variable measures". Each review found another case where they do not (`%`, `m²`,
+  `ñ`), and each time the spec got one more scenario describing what Unicode does,
+  not a decision about what the rule should do.
+- The round label from the file name now has three fallbacks, but the fix sits in the
+  right place (the regex is the rule).
+- Workarounds for iCloud and hidden `.pth` files were added wherever a symptom showed
+  up: shell hook, pytest config, spike script, one-off command.
+
+**Did:**
+- Did not change the rule, because the 12 of 22 measurement depends on it. Updated
+  the docstrings in `rule.py` so the code states the same rule as the spec.
+- Added a comment on `pythonpath` in `pyproject.toml` and a troubleshooting note in the
+  README.
+- The fix underneath chain 1 is not another special case in `rule.py`. It is the next
+  step of the project: try a different rule and measure it once on a held-out set of
+  changes I have not looked at.

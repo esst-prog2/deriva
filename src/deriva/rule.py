@@ -3,6 +3,14 @@
 Two descriptions that differ only in accents, case, punctuation or whitespace are a
 cosmetic change; anything that survives normalisation is a real change. The rule is a
 judgement and will misfile some cases, which is why deriva-eval exists.
+
+Each term is defined by Unicode, as in the round-comparison spec:
+- accents: NFKD, then every combining mark (category Mn) is dropped. NFKD also folds
+  compatibility characters, so m² becomes m2, and ñ becomes n;
+- case: casefold, so ß matches ss;
+- punctuation: every character in a P* category (such as . , % /) becomes a space;
+  symbols in S* categories (such as $ ° > =) are kept;
+- whitespace: runs collapse to one space, leading and trailing space is dropped.
 """
 
 import unicodedata
@@ -13,7 +21,8 @@ REAL = "real"
 
 
 def normalise(text: str) -> str:
-    """Strip accents, fold case, turn punctuation into spaces and collapse whitespace."""
+    """NFKD and drop Mn marks (m² -> m2, ñ -> n), casefold, turn P* punctuation into
+    spaces, keep S* symbols, and collapse whitespace."""
     decomposed = unicodedata.normalize("NFKD", text)
     chars = []
     for ch in decomposed:
