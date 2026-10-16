@@ -8,6 +8,7 @@ from deriva.rule import COSMETIC, REAL, UNCHANGED, classify, normalise
     [
         ("Area", "Area", UNCHANGED),
         ("Area", "Área", COSMETIC),
+        ("Superficie en m²", "Superficie en m2", COSMETIC),
         ("Rama de actividad", "rama de Actividad", COSMETIC),
         ("Ingreso  total.", "Ingreso total", COSMETIC),
         (" Ingreso total", "Ingreso total ", COSMETIC),

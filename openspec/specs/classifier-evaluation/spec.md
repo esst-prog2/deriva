@@ -54,7 +54,13 @@ deriva-eval SHALL accept a labels file whose columns are separated by `,` or by 
 Excel in a Spanish locale saves CSV. It SHALL find the columns by their header names,
 so the columns MAY appear in any order and extra columns SHALL be ignored. The header
 SHALL contain `variable`, `label`, `note` and exactly two columns whose names start with
-`description_`; the text after `description_` names each round in the report.
+`description_`; the text after `description_` names each round in the report. The
+first `description_` column in the header SHALL be treated as round A and the second as
+round B, whatever their names.
+
+#### Scenario: Description columns in reverse order
+- **WHEN** the header has `description_2025` before `description_2021`
+- **THEN** deriva-eval treats 2025 as round A and shows its description first in each disagreement
 
 #### Scenario: Semicolon-separated file
 - **WHEN** the labels file uses `;` between columns
@@ -81,6 +87,14 @@ SHALL also name the variable.
 #### Scenario: Identical descriptions
 - **WHEN** a row's two descriptions are both `Area`
 - **THEN** deriva-eval exits with a non-zero status and an error naming that variable
+
+### Requirement: Report errors on stderr
+When deriva-eval stops with an error, it SHALL print one message to stderr starting with
+`deriva-eval: error: ` and SHALL exit with status 1.
+
+#### Scenario: Error message format
+- **WHEN** a row's label is `maybe`
+- **THEN** stderr starts with `deriva-eval: error: ` and the exit status is 1
 
 ### Requirement: Report agreement and every disagreement
 deriva-eval SHALL print how many rows are labelled out of the total, a 2×2 table of

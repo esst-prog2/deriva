@@ -11,7 +11,7 @@ from openpyxl.utils.exceptions import InvalidFileException
 from deriva import DerivaError
 
 HEADER = "Nombre del campo"
-YEAR = re.compile(r"(?:19|20)\d\d")
+YEAR = re.compile(r"(?<!\d)(?:19|20)\d\d(?!\d)")  # not part of a longer run of digits
 
 
 @dataclass
@@ -21,7 +21,7 @@ class Dictionary:
 
 
 def round_label(path: Path) -> str:
-    """The last 19xx/20xx year in the file name, or the file name without extension."""
+    """The last standalone 19xx/20xx year in the file name, or the file name without extension."""
     years = YEAR.findall(path.stem)
     return years[-1] if years else path.stem
 

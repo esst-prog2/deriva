@@ -61,6 +61,7 @@ def test_invalid_label(tmp_path, capsys):
     path = write_labels(tmp_path / "labels.csv", [("p54a", *REAL_PAIR, "maybe", "")])
     assert main([str(path)]) == 1
     err = capsys.readouterr().err
+    assert err.startswith("deriva-eval: error: ")
     assert "p54a" in err and "maybe" in err
 
 

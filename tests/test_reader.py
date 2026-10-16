@@ -125,6 +125,11 @@ def test_round_label_uses_the_last_year():
     assert round_label(Path("enemdu_1999_revised_2021.xlsx")) == "2021"
 
 
+def test_round_label_ignores_digits_inside_a_longer_number():
+    assert round_label(Path("ronda_120215.xlsx")) == "ronda_120215"
+    assert round_label(Path("anual_2021.xlsx")) == "2021"
+
+
 def test_round_label_without_a_year():
     assert round_label(Path("dictionary_persona.xlsx")) == "dictionary_persona"
 

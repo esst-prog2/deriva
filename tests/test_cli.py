@@ -58,6 +58,7 @@ def test_sheet_without_header(capsys, make_workbook):
     bad = make_workbook(METADATA + [("area", "Area")], name="bad_2025.xlsx")
     assert main([str(DICT_2021), str(bad)]) == 1
     err = capsys.readouterr().err
+    assert err.startswith("deriva: error: ")
     assert "Nombre del campo" in err
     assert "bad_2025.xlsx" in err
 
