@@ -1,3 +1,4 @@
+import os
 import re
 
 import pytest
@@ -46,12 +47,12 @@ def test_both_descriptions_copied_into_template(tmp_path, make_workbook):
 
 
 def test_no_changes_csv_is_written(tmp_path):
-    run_template()
+    assert run_template() == 0
     assert list(tmp_path.glob("deriva_*.csv")) == []
 
 
 def test_no_verdict_leaks(tmp_path, capsys):
-    run_template()
+    assert run_template() == 0
     captured = capsys.readouterr()
     # Descriptions themselves could contain the word, so only the non-description text
     # is checked: stdout, and the header and variable/label/note columns of the file.
@@ -62,7 +63,7 @@ def test_no_verdict_leaks(tmp_path, capsys):
 
 
 def test_existing_template_is_never_overwritten(tmp_path, capsys):
-    run_template()
+    assert run_template() == 0
     path = tmp_path / TEMPLATE
     path.write_bytes(path.read_bytes() + "p54a,x,y,real,labelled by hand\n".encode())
     before = path.read_bytes()
@@ -70,3 +71,16 @@ def test_existing_template_is_never_overwritten(tmp_path, capsys):
     assert run_template() == 1
     assert path.read_bytes() == before
     assert TEMPLATE in capsys.readouterr().err
+
+
+def test_template_cannot_be_written(tmp_path, capsys):
+    tmp_path.chmod(0o555)
+    try:
+        if os.access(tmp_path, os.W_OK):
+            pytest.skip("cannot make a read-only folder here (running as root or on Windows)")
+        assert run_template() == 1
+    finally:
+        tmp_path.chmod(0o755)
+    err = capsys.readouterr().err
+    assert err.startswith("deriva: error: ")
+    assert str(tmp_path / TEMPLATE) in err and "cannot be written" in err

@@ -31,7 +31,11 @@ def reason(change: Change, label_a: str, label_b: str) -> str:
 def write_changes(changes: list[Change], alignment: Alignment, directory: Path) -> Path:
     label_a, label_b = alignment.a.label, alignment.b.label
     path = directory / f"deriva_{label_a}_vs_{label_b}.csv"
-    with path.open("w", encoding=ENCODING, newline="") as f:
+    try:
+        f = path.open("w", encoding=ENCODING, newline="")
+    except OSError as exc:
+        raise DerivaError(f"{path}: cannot be written ({exc.strerror})") from exc
+    with f:
         writer = csv.writer(f)
         writer.writerow(
             [VARIABLE_COLUMN, "change", DESCRIPTION_PREFIX + label_a, DESCRIPTION_PREFIX + label_b, "reason"]
@@ -61,6 +65,8 @@ def write_labels_template(alignment: Alignment, directory: Path) -> Path:
             f"{path.name} already exists; not overwriting it, so no labels are lost. "
             "Move or rename it to generate a fresh template."
         ) from None
+    except OSError as exc:
+        raise DerivaError(f"{path}: cannot be written ({exc.strerror})") from exc
     with f:
         writer = csv.writer(f)
         writer.writerow(

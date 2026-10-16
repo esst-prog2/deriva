@@ -74,6 +74,8 @@ in one dictionary, naming the file and the duplicated variable.
 ### Requirement: Read the first sheet of an xlsx workbook
 The reader SHALL read the first worksheet of an `.xlsx` workbook. A path that does not
 exist or cannot be opened as an `.xlsx` workbook SHALL produce an error naming the path.
+So SHALL a workbook whose first sheet is corrupt and a workbook with no ordinary
+worksheet, such as one holding only a chart sheet.
 
 #### Scenario: Several sheets
 - **WHEN** a workbook has two sheets and the second one is the active sheet
@@ -82,6 +84,14 @@ exist or cannot be opened as an `.xlsx` workbook SHALL produce an error naming t
 #### Scenario: Missing file
 - **WHEN** a path given to deriva does not exist
 - **THEN** deriva exits with a non-zero status and an error message naming that path
+
+#### Scenario: Corrupt sheet
+- **WHEN** the workbook opens but its first sheet's XML is cut off, as in a download cut short
+- **THEN** deriva exits with a non-zero status and an error message naming the file
+
+#### Scenario: No ordinary worksheet
+- **WHEN** the workbook holds only a chart sheet
+- **THEN** deriva exits with a non-zero status and an error message naming the file
 
 ### Requirement: Real 2021 and 2025 dictionaries read correctly
 The reader SHALL read the 2021 and 2025 ENEMDU annual persona dictionaries in `data/`

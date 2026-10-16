@@ -99,3 +99,29 @@ silently break or skip another:
 - Left as they are: short repeated blocks in the code (error printing, trimming,
   file names), repeated test helpers that read better inline, and `spike/`, which is
   the record of the 2026-10-05 run.
+
+  ## 5. Errors that disappear
+
+**Looked for:** broad `except`, `except: pass`, `return None` after an error, errors
+turned into a default, uncaught exceptions that crash with a traceback, and shell
+scripts that carry on after a failure.
+
+**Found:** no broad `except` and no swallowed errors. The problem was the reverse:
+each command caught only `DerivaError`, so other errors crashed with a traceback,
+and some bad input was silently counted:
+- A labels file saved as Windows-1252 or UTF-16, an output CSV that cannot be
+  written, and a corrupt or chart-only workbook all crashed with a traceback that
+  did not name the file.
+- A labels row with a missing field or an unclosed quote was read as "not labelled
+  yet", and a variable listed twice was counted twice, both with exit status 0.
+  The agreement figure could be wrong without any warning.
+- One test passed even when the template run failed, because it did not check the
+  return code.
+
+**Did:**
+- Each of these now gives a `deriva: error:` or `deriva-eval: error:` message
+  naming the file, row or variable, with a test for each and the specs updated.
+- The test now checks the return code.
+- Left as they are: the console-script test skips when `deriva` is not on PATH
+  (it runs under `uv run pytest`), and `spike/run_spike.sh`, which is the record of
+  the 2026-10-05 run.

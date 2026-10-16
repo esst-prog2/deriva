@@ -65,6 +65,14 @@ def test_missing_file(capsys):
     assert "nope_2025.xlsx" in capsys.readouterr().err
 
 
+def test_changes_csv_cannot_be_written(capsys, tmp_path):
+    (tmp_path / "deriva_2021_a_vs_2021_b.csv").mkdir()  # a folder in the way
+    assert main([str(DICT_2021), str(DICT_2021)]) == 1
+    err = capsys.readouterr().err
+    assert err.startswith("deriva: error: ")
+    assert str(tmp_path / "deriva_2021_a_vs_2021_b.csv") in err and "cannot be written" in err
+
+
 def test_console_script_runs(tmp_path):
     import subprocess
 

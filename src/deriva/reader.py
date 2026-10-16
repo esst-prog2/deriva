@@ -4,6 +4,7 @@ import re
 import zipfile
 from dataclasses import dataclass
 from pathlib import Path
+from xml.etree.ElementTree import ParseError
 
 from openpyxl import load_workbook
 from openpyxl.utils.exceptions import InvalidFileException
@@ -40,12 +41,15 @@ def read_dictionary(path: str | Path) -> Dictionary:
         raise DerivaError(f"{path}: file not found")
     try:
         workbook = load_workbook(path, read_only=True, data_only=True)
-    except (OSError, zipfile.BadZipFile, InvalidFileException, KeyError) as exc:
+    # openpyxl 3.1.5 raises AttributeError on any chartsheet when reading read-only.
+    except (OSError, zipfile.BadZipFile, InvalidFileException, KeyError, ParseError, AttributeError) as exc:
         raise DerivaError(f"{path}: cannot be opened as an .xlsx workbook ({exc})") from exc
 
     try:
         rows = workbook.worksheets[0].iter_rows(values_only=True)
         variables = _read_variables(path, rows)
+    except ParseError as exc:  # sheet XML is parsed only while the rows are read
+        raise DerivaError(f"{path}: first sheet cannot be read ({exc})") from exc
     finally:
         workbook.close()
     return Dictionary(label=round_label(path), variables=variables)

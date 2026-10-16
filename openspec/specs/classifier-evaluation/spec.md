@@ -38,6 +38,14 @@ so labels already entered are never lost.
 - **WHEN** `labels_2021_vs_2025.csv` already exists and `deriva --labels-template` is run on the same rounds
 - **THEN** the existing file is left unchanged and deriva exits with a non-zero status naming it
 
+### Requirement: Report a labels template that cannot be written
+When the labels template cannot be written, for example because the current directory is
+read-only, deriva SHALL exit with a non-zero status and an error naming the path.
+
+#### Scenario: Read-only directory
+- **WHEN** `deriva --labels-template` is run in a directory it cannot write to
+- **THEN** deriva exits with a non-zero status and an error naming the template path
+
 ### Requirement: Evaluate labels against the rule
 `deriva-eval <labels.csv>` SHALL read a labels file in the template format, apply the
 same classification rule as deriva to the two descriptions in each row, and compare it
@@ -72,9 +80,19 @@ round B, whatever their names.
 
 ### Requirement: Reject an unusable labels file
 deriva-eval SHALL exit with a non-zero status and an error naming the file when the file
-is empty, when its header does not have the columns above, or when a row's two
-descriptions are identical strings, since such a row has no change to label; that error
-SHALL also name the variable.
+is empty, when it is not UTF-8 text, when its header does not have the columns above, or
+when a row's two descriptions are identical strings, since such a row has no change to
+label; that error SHALL also name the variable. A file that is not UTF-8 SHALL get an
+error saying to save it again as "CSV UTF-8".
+
+It SHALL also stop with an error naming the file and the row number when a row has fewer
+or more fields than the header, or when a row cannot be read as CSV, such as a quote that
+is opened and never closed; it SHALL NOT read the rest of the file into that field. Row
+numbers SHALL count as a spreadsheet shows them: the header is row 1 and a cell spanning
+several lines is one row.
+
+It SHALL stop with an error naming the file and the variable when the same variable
+appears in more than one row.
 
 #### Scenario: Empty file
 - **WHEN** the labels file is empty
@@ -87,6 +105,22 @@ SHALL also name the variable.
 #### Scenario: Identical descriptions
 - **WHEN** a row's two descriptions are both `Area`
 - **THEN** deriva-eval exits with a non-zero status and an error naming that variable
+
+#### Scenario: File saved as Windows-1252
+- **WHEN** the labels file was saved by Excel in Windows-1252 and contains `Área`
+- **THEN** deriva-eval exits with a non-zero status and an error naming the file and saying to save it as "CSV UTF-8"
+
+#### Scenario: Row with fewer or more fields than the header
+- **WHEN** row 3 has 3 fields, or 6, and the header has 5
+- **THEN** deriva-eval exits with a non-zero status and an error naming the file and row 3
+
+#### Scenario: Unclosed quote
+- **WHEN** a field in row 2 opens a quote that is never closed, whether in a description or in the note
+- **THEN** deriva-eval exits with a non-zero status and an error naming the file and row 2, instead of reading the rest of the file into that field
+
+#### Scenario: Same variable twice
+- **WHEN** `p54a` appears in rows 2 and 3
+- **THEN** deriva-eval exits with a non-zero status and an error naming the file and `p54a`
 
 ### Requirement: Report errors on stderr
 When deriva-eval stops with an error, it SHALL print one message to stderr starting with

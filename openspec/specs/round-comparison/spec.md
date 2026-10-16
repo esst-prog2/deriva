@@ -125,6 +125,10 @@ added variable the A description SHALL be empty; for a removed variable the B de
 SHALL be empty. `reason` SHALL state in words why the row was classified as it was. The
 file SHALL be UTF-8 encoded and open with accents intact in Excel.
 
+When the changes CSV cannot be written, for example because a folder of that name is in
+the way or the directory is read-only, deriva SHALL exit with a non-zero status and an
+error naming the path.
+
 #### Scenario: Real change row
 - **WHEN** a variable's description changes from `Rama de actividad CIIU4` to `Rama de actividad CIIU 4.1`
 - **THEN** its row has `change` = `real`, both descriptions in full, and a reason stating the descriptions still differ after normalising accents, case, punctuation and whitespace
@@ -140,3 +144,7 @@ file SHALL be UTF-8 encoded and open with accents intact in Excel.
 #### Scenario: No changes
 - **WHEN** a dictionary is compared with itself
 - **THEN** the CSV contains only the header row
+
+#### Scenario: Changes CSV cannot be written
+- **WHEN** a folder named `deriva_2021_a_vs_2021_b.csv` is in the current directory and a dictionary is compared with itself
+- **THEN** deriva exits with a non-zero status and an error naming that path

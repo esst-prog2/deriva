@@ -1,3 +1,4 @@
+import zipfile
 from pathlib import Path
 
 import pytest
@@ -142,3 +143,26 @@ def test_same_label_twice():
 def test_real_dictionaries_variable_counts():
     assert len(read_dictionary(DICT_2021).variables) == 151
     assert len(read_dictionary(DICT_2025).variables) == 139
+
+
+def test_corrupt_sheet(make_workbook, tmp_path):
+    good = make_workbook([HEADER_ROW] + VARIABLES)
+    path = tmp_path / "corrupt_2025.xlsx"
+    with zipfile.ZipFile(good) as source, zipfile.ZipFile(path, "w") as target:
+        for item in source.infolist():
+            data = source.read(item)
+            if item.filename == "xl/worksheets/sheet1.xml":
+                data = data[: len(data) // 2]  # as in a download cut short
+            target.writestr(item, data)
+    with pytest.raises(DerivaError, match="corrupt_2025.xlsx"):
+        read_dictionary(path)
+
+
+def test_no_ordinary_worksheet(tmp_path):
+    workbook = Workbook()
+    workbook.create_chartsheet()
+    workbook.remove(workbook.active)
+    path = tmp_path / "chart_only_2025.xlsx"
+    workbook.save(path)
+    with pytest.raises(DerivaError, match="chart_only_2025.xlsx"):
+        read_dictionary(path)

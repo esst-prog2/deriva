@@ -37,6 +37,8 @@ def read_labels(path: Path) -> LabelsFile:
         text = path.read_text(encoding=ENCODING)
     except OSError as exc:
         raise DerivaError(f"{path}: cannot be read ({exc.strerror})") from exc
+    except UnicodeDecodeError as exc:
+        raise DerivaError(f'{path}: is not UTF-8 text; save it again as "CSV UTF-8"') from exc
 
     if not text.strip():
         raise DerivaError(f"{path}: file is empty")
@@ -52,9 +54,16 @@ def read_labels(path: Path) -> LabelsFile:
         )
 
     rows = []
-    for record in csv.DictReader(io.StringIO(text, newline=""), delimiter=delimiter):
-        variable = (record[VARIABLE_COLUMN] or "").strip()
-        a, b = record[descriptions[0]] or "", record[descriptions[1]] or ""
+    seen = set()
+    for row_number, fields in _records(path, text, delimiter):
+        if len(fields) != len(header):
+            raise DerivaError(f"{path}: row {row_number} has {len(fields)} fields; the header has {len(header)}")
+        record = dict(zip(header, fields))
+        variable = record[VARIABLE_COLUMN].strip()
+        if variable in seen:
+            raise DerivaError(f"{path}: variable {variable!r} appears more than once (again in row {row_number})")
+        seen.add(variable)
+        a, b = record[descriptions[0]], record[descriptions[1]]
         verdict = classify(a, b)
         if verdict == UNCHANGED:
             raise DerivaError(f"{path}: {variable!r} has identical descriptions, so there is nothing to label")
@@ -64,7 +73,7 @@ def read_labels(path: Path) -> LabelsFile:
                 description_a=a,
                 description_b=b,
                 label=_parse_label(path, variable, record[LABEL_COLUMN]),
-                note=(record[NOTE_COLUMN] or "").strip(),
+                note=record[NOTE_COLUMN].strip(),
                 verdict=verdict,
             )
         )
@@ -75,8 +84,23 @@ def read_labels(path: Path) -> LabelsFile:
     )
 
 
-def _parse_label(path: Path, variable: str, raw: str | None) -> str | None:
-    label = (raw or "").strip().casefold()
+def _records(path: Path, text: str, delimiter: str):
+    """(row number, fields) for each non-empty row below the header, numbered as a
+    spreadsheet shows them: the header is row 1 and a multi-line cell is one row."""
+    # strict, so an unclosed quote is an error instead of swallowing the rows after it.
+    reader = csv.reader(io.StringIO(text, newline=""), delimiter=delimiter, strict=True)
+    row_number = 0
+    try:
+        for fields in reader:
+            row_number += 1
+            if row_number > 1 and fields:
+                yield row_number, fields
+    except csv.Error as exc:
+        raise DerivaError(f"{path}: row {row_number + 1} cannot be read as CSV ({exc})") from exc
+
+
+def _parse_label(path: Path, variable: str, raw: str) -> str | None:
+    label = raw.strip().casefold()
     if not label:
         return None
     if label not in LABELS:
