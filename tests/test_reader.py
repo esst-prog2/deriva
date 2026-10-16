@@ -166,3 +166,11 @@ def test_no_ordinary_worksheet(tmp_path):
     workbook.save(path)
     with pytest.raises(DerivaError, match="chart_only_2025.xlsx"):
         read_dictionary(path)
+
+
+def test_header_without_variables(make_workbook):
+    path = make_workbook(METADATA + [HEADER_ROW] + [(None, None)] * 3, name="empty_2025.xlsx")
+    with pytest.raises(DerivaError) as error:
+        read_dictionary(path)
+    assert str(path) in str(error.value)
+    assert "no variables" in str(error.value)

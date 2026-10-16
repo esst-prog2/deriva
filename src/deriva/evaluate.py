@@ -4,6 +4,7 @@ import argparse
 import csv
 import io
 import sys
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -52,6 +53,10 @@ def read_labels(path: Path) -> LabelsFile:
             f"{path}: expected the columns {VARIABLE_COLUMN}, two {DESCRIPTION_PREFIX}<round> columns, "
             f"{LABEL_COLUMN} and {NOTE_COLUMN}, separated by , or ;"
         )
+    # Blank names are left alone: a spreadsheet can save empty trailing columns.
+    repeated = [name for name, n in Counter(header).items() if n > 1 and name.strip()]
+    if repeated:
+        raise DerivaError(f"{path}: column {repeated[0]!r} appears more than once in the header")
 
     rows = []
     seen = set()
@@ -60,6 +65,8 @@ def read_labels(path: Path) -> LabelsFile:
             raise DerivaError(f"{path}: row {row_number} has {len(fields)} fields; the header has {len(header)}")
         record = dict(zip(header, fields))
         variable = record[VARIABLE_COLUMN].strip()
+        if not variable:
+            raise DerivaError(f"{path}: row {row_number} has no variable name")
         if variable in seen:
             raise DerivaError(f"{path}: variable {variable!r} appears more than once (again in row {row_number})")
         seen.add(variable)

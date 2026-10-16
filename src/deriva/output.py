@@ -25,7 +25,10 @@ def reason(change: Change, label_a: str, label_b: str) -> str:
         return f"only in {label_a}"
     if change.change == COSMETIC:
         return f"descriptions differ, but are identical after normalising {NORMALISED}"
-    return f"descriptions still differ after normalising {NORMALISED}"
+    if change.change == REAL:
+        return f"descriptions still differ after normalising {NORMALISED}"
+    # A bug in deriva, not in the input, so not a DerivaError.
+    raise ValueError(f"no reason for change kind {change.change!r}")
 
 
 def write_changes(changes: list[Change], alignment: Alignment, directory: Path) -> Path:

@@ -29,6 +29,15 @@ SHALL NOT be taken as the header.
 - **WHEN** no cell in the first column reads exactly `Nombre del campo`
 - **THEN** deriva exits with a non-zero status and an error message that names the file and the header text `Nombre del campo` it looked for and did not find
 
+### Requirement: Reject a dictionary with no variables
+The reader SHALL stop with an error naming the file when the header is found but no
+variable follows it, rather than return an empty dictionary that would report every
+variable of the other round as added or removed.
+
+#### Scenario: Header without variables
+- **WHEN** the sheet has `Nombre del campo` and only empty rows below it
+- **THEN** deriva exits with a non-zero status and an error message naming the file
+
 ### Requirement: Read names and descriptions from the first two columns
 Below the header, the reader SHALL take the variable name from the first column and its
 description from the second column, and SHALL ignore every other column. Names SHALL be

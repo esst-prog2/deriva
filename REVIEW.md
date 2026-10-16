@@ -155,3 +155,26 @@ The only lines no test reaches are the two `if __name__ == "__main__"` blocks. T
 - Removed the unused import and parameter.
 - Kept the `__main__` blocks, so `python -m deriva.cli` still works, and kept the
   `assert`, which documents a guarantee on purpose.
+
+  ## 8. Quiet defaults
+
+**Looked for:** `.get(key, default)`, `or` fallbacks, default parameter values, and
+any place where a missing or empty value silently becomes a decision.
+
+**Found:** no `.get` or `x or ""` left, but three missing values that turned into a
+believable wrong result with exit status 0, each checked by running it:
+- A dictionary with the header and no variables reported every variable in the other
+  round as removed.
+- An empty variable name in the labels file was accepted and counted in the agreement.
+- A labels header with a column name twice kept only the last column, so a hand label
+  could be lost.
+- `reason()` also treated any unknown change kind as "real".
+
+**Did:**
+- Each of these is now an error naming the file, row or column, with a test, and the
+  first three are in the specs.
+- Left as they are: formula cells without a cached value read as empty (INEC files
+  hold plain values), the console-script test skip (decided in review 5), and the
+  default file name in the `make_workbook` test helper (no current test affected).
+- Every other default I found is one the spec requires, such as an empty label meaning
+  "not labelled yet".

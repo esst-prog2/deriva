@@ -76,6 +76,8 @@ def _read_variables(path: Path, rows) -> dict[str, str]:
         raise DerivaError(
             f"{path}: no header row found; looked for {HEADER!r} in the first column"
         )
+    if not variables:
+        raise DerivaError(f"{path}: no variables found below the {HEADER!r} header")
     return variables
 
 

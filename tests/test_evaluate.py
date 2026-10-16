@@ -181,3 +181,31 @@ def test_duplicate_variable(tmp_path, capsys):
     assert main([str(path)]) == 1
     err = capsys.readouterr().err
     assert "labels.csv" in err and "'p54a' appears more than once (again in row 3)" in err
+
+
+def test_row_without_a_variable_name(tmp_path, capsys):
+    path = write_labels(tmp_path / "labels.csv", [("p54a", *COSMETIC_PAIR, "cosmetic", ""), (" ", *REAL_PAIR, "real", "")])
+    assert main([str(path)]) == 1
+    err = capsys.readouterr().err
+    assert "labels.csv" in err and "row 3 has no variable name" in err
+
+
+def test_repeated_column(tmp_path, capsys):
+    path = tmp_path / "labels.csv"
+    with path.open("w", encoding=ENCODING, newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(HEADER + ["label"])
+        writer.writerow(["p54a", *COSMETIC_PAIR, "real", "", ""])  # the second label would win
+    assert main([str(path)]) == 1
+    err = capsys.readouterr().err
+    assert "labels.csv" in err and "column 'label' appears more than once" in err
+
+
+def test_empty_trailing_columns_are_not_repeated_names(tmp_path, capsys):
+    path = tmp_path / "labels.csv"
+    with path.open("w", encoding=ENCODING, newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(HEADER + ["", ""])
+        writer.writerow(["p54a", *COSMETIC_PAIR, "cosmetic", "", "", ""])
+    assert main([str(path)]) == 0
+    assert "agreement: 1 of 1 (100%)" in capsys.readouterr().out

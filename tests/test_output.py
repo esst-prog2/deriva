@@ -1,5 +1,7 @@
-from deriva.compare import align, classify_changes
-from deriva.output import summary, write_changes
+import pytest
+
+from deriva.compare import Change, align, classify_changes
+from deriva.output import reason, summary, write_changes
 from deriva.reader import Dictionary
 
 from conftest import read_csv
@@ -62,3 +64,8 @@ def test_self_comparison_writes_header_only(tmp_path):
     text = summary(alignment, changes, path)
     assert "unchanged     2" in text
     assert f"wrote {path}" in text
+
+
+def test_reason_for_an_unknown_change_kind():
+    with pytest.raises(ValueError, match="unchanged"):
+        reason(Change("area", "unchanged", "Area", "Area"), "2021", "2025")

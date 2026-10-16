@@ -92,7 +92,12 @@ numbers SHALL count as a spreadsheet shows them: the header is row 1 and a cell 
 several lines is one row.
 
 It SHALL stop with an error naming the file and the variable when the same variable
-appears in more than one row.
+appears in more than one row, and with an error naming the file and the row number when
+a row's `variable` is empty.
+
+It SHALL stop with an error naming the file and the column when a column name appears
+more than once in the header, rather than read only one of those columns. Blank column
+names, as a spreadsheet saves for empty trailing columns, SHALL NOT count as repeated.
 
 #### Scenario: Empty file
 - **WHEN** the labels file is empty
@@ -121,6 +126,18 @@ appears in more than one row.
 #### Scenario: Same variable twice
 - **WHEN** `p54a` appears in rows 2 and 3
 - **THEN** deriva-eval exits with a non-zero status and an error naming the file and `p54a`
+
+#### Scenario: Row without a variable name
+- **WHEN** row 3 has an empty `variable`
+- **THEN** deriva-eval exits with a non-zero status and an error naming the file and row 3
+
+#### Scenario: Repeated column
+- **WHEN** the header has two columns named `label`
+- **THEN** deriva-eval exits with a non-zero status and an error naming the file and `label`
+
+#### Scenario: Empty trailing columns
+- **WHEN** the header ends with two blank column names
+- **THEN** deriva-eval reads the file as it would without them
 
 ### Requirement: Report errors on stderr
 When deriva-eval stops with an error, it SHALL print one message to stderr starting with
