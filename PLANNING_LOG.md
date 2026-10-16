@@ -87,3 +87,4 @@
 2026-10-16 — Errors-that-disappear review, decision 9: no change to test_console_script_runs; it skips, rather than fails, when the deriva script is not on PATH (as when pytest is run with the venv's python without activating it). Noted only. — decided by: user
 2026-10-16 — Errors-that-disappear review, decision 10: no change to spike/run_spike.sh (no set -e, empty argument when a year file is missing, script exit status always 0); spike/ is the record of the 2026-10-05 run. — decided by: user
 2026-10-16 — Errors-that-disappear review: the cosmetic/real rule is not changed. — decided by: user
+2026-10-16 — Dependencies review: openpyxl range in pyproject.toml tightened from >=3.1 to >=3.1.5,<4, because the reader relies on how openpyxl 3.1.5 reports errors; uv.lock still pins 3.1.5; no other dependency changes. — decided by: user

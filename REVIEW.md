@@ -125,3 +125,17 @@ and some bad input was silently counted:
 - Left as they are: the console-script test skips when `deriva` is not on PATH
   (it runs under `uv run pytest`), and `spike/run_spike.sh`, which is the record of
   the 2026-10-05 run.
+
+  ## 6. Dependencies
+
+**Looked for:** packages that do not exist under that name, packages that are not
+used, versions that are not pinned, and imports that are not declared.
+
+**Found:** one runtime dependency (`openpyxl`) and one dev dependency (`pytest`).
+Every locked package exists on PyPI at that version with matching hashes, none is
+yanked, every one is used directly or needed by one that is, and `uv lock --check`
+passes. No undeclared imports. The only loose point: `openpyxl>=3.1` had no upper
+limit, while the reader now relies on how openpyxl 3.1.5 reports errors.
+
+**Did:** tightened the range to `openpyxl>=3.1.5,<4`, so it matches the version that
+was tested. `uv.lock` still pins 3.1.5.
