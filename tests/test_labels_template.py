@@ -1,12 +1,10 @@
-import csv
 import re
 
 import pytest
 
 from deriva.cli import main
-from deriva.output import ENCODING
 
-from conftest import DICT_2021, DICT_2025
+from conftest import DICT_2021, DICT_2025, read_csv
 
 VERDICT = re.compile(r"\b(cosmetic|real)\b", re.IGNORECASE)
 TEMPLATE = "labels_2021_vs_2025.csv"
@@ -23,8 +21,7 @@ def run_template():
 
 def test_template_on_real_files(tmp_path):
     assert run_template() == 0
-    with (tmp_path / TEMPLATE).open(encoding=ENCODING, newline="") as f:
-        header, *rows = list(csv.reader(f))
+    header, *rows = read_csv(tmp_path / TEMPLATE)
     assert header == ["variable", "description_2021", "description_2025", "label", "note"]
     assert len(rows) == 22
     for variable, description_a, description_b, label, note in rows:
@@ -41,8 +38,7 @@ def test_both_descriptions_copied_into_template(tmp_path, make_workbook):
         [header, ("area", "Área"), ("rama1", "Rama CIIU 4.1"), ("ciudad", "Ciudad")], name="dict_2025.xlsx"
     )
     assert main(["--labels-template", str(a), str(b)]) == 0
-    with (tmp_path / TEMPLATE).open(encoding=ENCODING, newline="") as f:
-        _, *rows = list(csv.reader(f))
+    _, *rows = read_csv(tmp_path / TEMPLATE)
     assert rows == [
         ["area", "Area", "Área", "", ""],
         ["rama1", "Rama CIIU4", "Rama CIIU 4.1", "", ""],
@@ -57,11 +53,10 @@ def test_no_changes_csv_is_written(tmp_path):
 def test_no_verdict_leaks(tmp_path, capsys):
     run_template()
     captured = capsys.readouterr()
-    written = (tmp_path / TEMPLATE).read_text(encoding=ENCODING)
     # Descriptions themselves could contain the word, so only the non-description text
     # is checked: stdout, and the header and variable/label/note columns of the file.
     assert not VERDICT.search(captured.out + captured.err)
-    for row in csv.reader(written.splitlines()):
+    for row in read_csv(tmp_path / TEMPLATE):
         assert not VERDICT.search(" ".join([row[0], *row[3:]]))
     assert "22 rows to label" in captured.out
 

@@ -1,13 +1,11 @@
-import csv
 import re
 import shutil
 
 import pytest
 
 from deriva.cli import main
-from deriva.output import ENCODING
 
-from conftest import DICT_2021, DICT_2025, HEADER_ROW, METADATA
+from conftest import DICT_2021, DICT_2025, HEADER_ROW, METADATA, read_csv
 
 
 @pytest.fixture(autouse=True)
@@ -36,8 +34,7 @@ def test_same_file_twice(capsys, tmp_path):
     assert main([str(DICT_2021), str(DICT_2021)]) == 0
     found = counts(capsys.readouterr().out)
     assert [found[k] for k in ("added", "removed", "cosmetic", "real")] == [0, 0, 0, 0]
-    with (tmp_path / "deriva_2021_a_vs_2021_b.csv").open(encoding=ENCODING) as f:
-        assert len(list(csv.reader(f))) == 1
+    assert len(read_csv(tmp_path / "deriva_2021_a_vs_2021_b.csv")) == 1
 
 
 def test_one_argument(capsys):

@@ -19,6 +19,9 @@ UNCHANGED = "unchanged"
 COSMETIC = "cosmetic"
 REAL = "real"
 
+# What normalise() makes no difference to, in the words the changes CSV uses.
+NORMALISED = "accents, case, punctuation and whitespace"
+
 
 def normalise(text: str) -> str:
     """NFKD and drop Mn marks (m² -> m2, ñ -> n), casefold, turn P* punctuation into

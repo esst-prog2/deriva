@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from deriva import DerivaError
-from deriva.output import ENCODING
+from deriva.output import DESCRIPTION_PREFIX, ENCODING, LABEL_COLUMN, NOTE_COLUMN, VARIABLE_COLUMN
 from deriva.rule import COSMETIC, REAL, UNCHANGED, classify
 
 LABELS = (COSMETIC, REAL)
@@ -42,18 +42,18 @@ def read_labels(path: Path) -> LabelsFile:
         raise DerivaError(f"{path}: file is empty")
     for delimiter in DELIMITERS:
         header = next(csv.reader(io.StringIO(text, newline=""), delimiter=delimiter))
-        descriptions = [c for c in header if c.startswith("description_")]
-        if {"variable", "label", "note"} <= set(header) and len(descriptions) == 2:
+        descriptions = [c for c in header if c.startswith(DESCRIPTION_PREFIX)]
+        if {VARIABLE_COLUMN, LABEL_COLUMN, NOTE_COLUMN} <= set(header) and len(descriptions) == 2:
             break
     else:
         raise DerivaError(
-            f"{path}: expected the columns variable, two description_<round> columns, "
-            "label and note, separated by , or ;"
+            f"{path}: expected the columns {VARIABLE_COLUMN}, two {DESCRIPTION_PREFIX}<round> columns, "
+            f"{LABEL_COLUMN} and {NOTE_COLUMN}, separated by , or ;"
         )
 
     rows = []
     for record in csv.DictReader(io.StringIO(text, newline=""), delimiter=delimiter):
-        variable = (record["variable"] or "").strip()
+        variable = (record[VARIABLE_COLUMN] or "").strip()
         a, b = record[descriptions[0]] or "", record[descriptions[1]] or ""
         verdict = classify(a, b)
         if verdict == UNCHANGED:
@@ -63,14 +63,14 @@ def read_labels(path: Path) -> LabelsFile:
                 variable=variable,
                 description_a=a,
                 description_b=b,
-                label=_parse_label(path, variable, record["label"]),
-                note=(record["note"] or "").strip(),
+                label=_parse_label(path, variable, record[LABEL_COLUMN]),
+                note=(record[NOTE_COLUMN] or "").strip(),
                 verdict=verdict,
             )
         )
     return LabelsFile(
-        label_a=descriptions[0].removeprefix("description_"),
-        label_b=descriptions[1].removeprefix("description_"),
+        label_a=descriptions[0].removeprefix(DESCRIPTION_PREFIX),
+        label_b=descriptions[1].removeprefix(DESCRIPTION_PREFIX),
         rows=rows,
     )
 

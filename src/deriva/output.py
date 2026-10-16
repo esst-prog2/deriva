@@ -6,11 +6,16 @@ from pathlib import Path
 
 from deriva import DerivaError
 from deriva.compare import ADDED, REMOVED, Alignment, Change
-from deriva.rule import COSMETIC, REAL
+from deriva.rule import COSMETIC, NORMALISED, REAL
 
 # utf-8-sig writes a byte-order mark so Excel opens the file with accents intact.
 ENCODING = "utf-8-sig"
-NORMALISED = "accents, case, punctuation and whitespace"
+
+# Columns of the labels file; deriva-eval reads it back with the same names.
+VARIABLE_COLUMN = "variable"
+LABEL_COLUMN = "label"
+NOTE_COLUMN = "note"
+DESCRIPTION_PREFIX = "description_"  # followed by the round label
 
 
 def reason(change: Change, label_a: str, label_b: str) -> str:
@@ -29,7 +34,7 @@ def write_changes(changes: list[Change], alignment: Alignment, directory: Path) 
     with path.open("w", encoding=ENCODING, newline="") as f:
         writer = csv.writer(f)
         writer.writerow(
-            ["variable", "change", f"description_{label_a}", f"description_{label_b}", "reason"]
+            [VARIABLE_COLUMN, "change", DESCRIPTION_PREFIX + label_a, DESCRIPTION_PREFIX + label_b, "reason"]
         )
         for change in changes:
             writer.writerow(
@@ -58,7 +63,9 @@ def write_labels_template(alignment: Alignment, directory: Path) -> Path:
         ) from None
     with f:
         writer = csv.writer(f)
-        writer.writerow(["variable", f"description_{label_a}", f"description_{label_b}", "label", "note"])
+        writer.writerow(
+            [VARIABLE_COLUMN, DESCRIPTION_PREFIX + label_a, DESCRIPTION_PREFIX + label_b, LABEL_COLUMN, NOTE_COLUMN]
+        )
         for name in alignment.differing:
             writer.writerow([name, a[name], b[name], "", ""])
     return path

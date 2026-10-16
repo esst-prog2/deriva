@@ -75,3 +75,27 @@ pattern shows up in the specs and setup instead:
 - The fix underneath chain 1 is not another special case in `rule.py`. It is the next
   step of the project: try a different rule and measure it once on a held-out set of
   changes I have not looked at.
+
+  ## 4. A copy instead of a change
+
+**Looked for:** modules, functions, constants or blocks in `src/`, `tests/` and
+`spike/` that do almost the same job under different names or in different places.
+
+**Found:** 14 copies. The ones that matter are where changing one place could
+silently break or skip another:
+- The labels-file columns were written in `output.py` and checked separately in
+  `evaluate.py`; renaming one column in the writer would break every new template.
+- The description of the normalisation rule (`NORMALISED`) lived in `output.py`,
+  away from the rule it describes.
+- The tests read CSVs in five ways. `test_hand_labels.py` was a third copy of
+  `read_labels`, and one test split rows on line breaks, which breaks descriptions
+  that contain a newline.
+
+**Did:**
+- One definition of the labels-file columns, shared by writer and reader.
+- `NORMALISED` moved next to `normalise()` in `rule.py`; the CSV text is unchanged.
+- One `read_csv` helper in `conftest.py`; `test_hand_labels.py` now reads the hand
+  labels with `read_labels`, the same way deriva-eval does.
+- Left as they are: short repeated blocks in the code (error printing, trimming,
+  file names), repeated test helpers that read better inline, and `spike/`, which is
+  the record of the 2026-10-05 run.

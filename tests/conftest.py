@@ -1,7 +1,10 @@
+import csv
 from pathlib import Path
 
 import pytest
 from openpyxl import Workbook
+
+from deriva.output import ENCODING
 
 DATA = Path(__file__).resolve().parent.parent / "data"
 DICT_2021 = DATA / "Diccionario de Datos_persona_anual_2021.xlsx"
@@ -15,6 +18,12 @@ METADATA = [
     ("Descripción", "La Tabla de datos de la Encuesta Nacional de Empleo"),
 ]
 HEADER_ROW = ("Nombre del campo", "Descripción del campo")
+
+
+def read_csv(path):
+    """All rows of a CSV deriva wrote, header included."""
+    with path.open(encoding=ENCODING, newline="") as f:
+        return list(csv.reader(f))
 
 
 @pytest.fixture

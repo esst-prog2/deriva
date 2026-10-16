@@ -1,13 +1,8 @@
-import csv
-
 from deriva.compare import align, classify_changes
-from deriva.output import ENCODING, summary, write_changes
+from deriva.output import summary, write_changes
 from deriva.reader import Dictionary
 
-
-def read_csv(path):
-    with path.open(encoding=ENCODING, newline="") as f:
-        return list(csv.reader(f))
+from conftest import read_csv
 
 
 def test_changes_csv(tmp_path):
