@@ -61,6 +61,7 @@ def test_invalid_label(tmp_path, capsys):
     path = write_labels(tmp_path / "labels.csv", [("p54a", *REAL_PAIR, "maybe", "")])
     assert main([str(path)]) == 1
     err = capsys.readouterr().err
+    assert err.startswith("deriva-eval: error: ")
     assert "p54a" in err and "maybe" in err
 
 
@@ -84,6 +85,33 @@ def test_wrong_columns(tmp_path, capsys):
     assert "expected the columns" in capsys.readouterr().err
 
 
+def test_columns_reordered_with_an_extra_column(tmp_path, capsys):
+    path = tmp_path / "labels.csv"
+    with path.open("w", encoding=ENCODING, newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["label", "variable", "note", "description_2025", "description_2021", "extra"])
+        writer.writerow(["real", "p54a", "", "Área", "Area", "ignored"])
+    assert main([str(path)]) == 0
+    out = capsys.readouterr().out
+    assert "p54a  you: real  rule: cosmetic" in out
+    assert "    2025: Área\n    2021: Area" in out
+
+
+def test_empty_file(tmp_path, capsys):
+    path = tmp_path / "labels.csv"
+    path.write_text("", encoding=ENCODING)
+    assert main([str(path)]) == 1
+    err = capsys.readouterr().err
+    assert "labels.csv" in err and "empty" in err
+
+
+def test_identical_descriptions(tmp_path, capsys):
+    path = write_labels(tmp_path / "labels.csv", [("area", "Area", "Area", "", "")])
+    assert main([str(path)]) == 1
+    err = capsys.readouterr().err
+    assert "labels.csv" in err and "'area'" in err
+
+
 def test_missing_file(tmp_path, capsys):
     assert main([str(tmp_path / "nope.csv")]) == 1
     assert "nope.csv" in capsys.readouterr().err
@@ -91,9 +119,93 @@ def test_missing_file(tmp_path, capsys):
 
 def test_freshly_generated_template(tmp_path, monkeypatch, capsys):
     monkeypatch.chdir(tmp_path)
-    deriva_main(["--labels-template", str(DICT_2021), str(DICT_2025)])
+    assert deriva_main(["--labels-template", str(DICT_2021), str(DICT_2025)]) == 0
     capsys.readouterr()
     assert main(["labels_2021_vs_2025.csv"]) == 0
     out = capsys.readouterr().out
     assert "0 of 22 rows labelled" in out
     assert "nothing to measure yet" in out
+
+
+def test_windows_1252_file(tmp_path, capsys):
+    path = tmp_path / "labels.csv"
+    path.write_bytes(",".join(HEADER).encode("cp1252") + b"\r\narea,Area,\xc1rea,cosmetic,\r\n")
+    assert main([str(path)]) == 1
+    err = capsys.readouterr().err
+    assert err.startswith("deriva-eval: error: ")
+    assert "labels.csv" in err and '"CSV UTF-8"' in err
+
+
+@pytest.mark.parametrize(
+    "row, fields",
+    [
+        ("rama1,Rama CIIU4,Rama CIIU 4.1", 3),  # label and note cut off
+        ("rama1,Rama CIIU4,Rama CIIU 4.1,real,,extra", 6),
+    ],
+)
+def test_row_with_wrong_number_of_fields(tmp_path, capsys, row, fields):
+    path = tmp_path / "labels.csv"
+    path.write_text(f"{','.join(HEADER)}\narea,Area,Área,cosmetic,\n{row}\n", encoding=ENCODING)
+    assert main([str(path)]) == 1
+    err = capsys.readouterr().err
+    assert "labels.csv" in err and f"row 3 has {fields} fields; the header has 5" in err
+
+
+@pytest.mark.parametrize(
+    "row",
+    [
+        'area,"Area,Área,cosmetic,',  # the rest of the file becomes one description
+        'area,Area,Área,cosmetic,"forgot to close',  # the rest of the file becomes the note
+    ],
+)
+def test_unclosed_quote(tmp_path, capsys, row):
+    path = tmp_path / "labels.csv"
+    path.write_text(
+        f"{','.join(HEADER)}\n{row}\nrama1,Rama CIIU4,Rama CIIU 4.1,real,\n", encoding=ENCODING
+    )
+    assert main([str(path)]) == 1
+    err = capsys.readouterr().err
+    assert "labels.csv" in err and "row 2 cannot be read as CSV" in err
+
+
+def test_row_numbers_count_a_multiline_cell_as_one_row(tmp_path, capsys):
+    path = write_labels(tmp_path / "labels.csv", [("p54a", "Horas\nen el", "Horas en el", "cosmetic", "")])
+    with path.open("a", encoding="utf-8", newline="") as f:
+        f.write("rama1,Rama CIIU4\r\n")
+    assert main([str(path)]) == 1
+    assert "row 3 has 2 fields" in capsys.readouterr().err
+
+
+def test_duplicate_variable(tmp_path, capsys):
+    path = write_labels(tmp_path / "labels.csv", [("p54a", *COSMETIC_PAIR, "cosmetic", ""), ("p54a", *COSMETIC_PAIR, "real", "")])
+    assert main([str(path)]) == 1
+    err = capsys.readouterr().err
+    assert "labels.csv" in err and "'p54a' appears more than once (again in row 3)" in err
+
+
+def test_row_without_a_variable_name(tmp_path, capsys):
+    path = write_labels(tmp_path / "labels.csv", [("p54a", *COSMETIC_PAIR, "cosmetic", ""), (" ", *REAL_PAIR, "real", "")])
+    assert main([str(path)]) == 1
+    err = capsys.readouterr().err
+    assert "labels.csv" in err and "row 3 has no variable name" in err
+
+
+def test_repeated_column(tmp_path, capsys):
+    path = tmp_path / "labels.csv"
+    with path.open("w", encoding=ENCODING, newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(HEADER + ["label"])
+        writer.writerow(["p54a", *COSMETIC_PAIR, "real", "", ""])  # the second label would win
+    assert main([str(path)]) == 1
+    err = capsys.readouterr().err
+    assert "labels.csv" in err and "column 'label' appears more than once" in err
+
+
+def test_empty_trailing_columns_are_not_repeated_names(tmp_path, capsys):
+    path = tmp_path / "labels.csv"
+    with path.open("w", encoding=ENCODING, newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(HEADER + ["", ""])
+        writer.writerow(["p54a", *COSMETIC_PAIR, "cosmetic", "", "", ""])
+    assert main([str(path)]) == 0
+    assert "agreement: 1 of 1 (100%)" in capsys.readouterr().out

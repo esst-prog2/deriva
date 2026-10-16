@@ -1,13 +1,10 @@
-import csv
+import pytest
 
-from deriva.compare import align, classify_changes
-from deriva.output import ENCODING, summary, write_changes
+from deriva.compare import Change, align, classify_changes
+from deriva.output import reason, summary, write_changes
 from deriva.reader import Dictionary
 
-
-def read_csv(path):
-    with path.open(encoding=ENCODING, newline="") as f:
-        return list(csv.reader(f))
+from conftest import read_csv
 
 
 def test_changes_csv(tmp_path):
@@ -32,6 +29,25 @@ def test_changes_csv(tmp_path):
     ]
 
 
+def test_added_and_cosmetic_rows_with_accents(tmp_path):
+    a = Dictionary("2021", {"area": "Area"})
+    b = Dictionary("2025", {"area": "Área", "p99": "Año de nacimiento"})
+    alignment = align(a, b)
+    path = write_changes(classify_changes(alignment), alignment, tmp_path)
+
+    _, *rows = read_csv(path)
+    assert rows == [
+        [
+            "area",
+            "cosmetic",
+            "Area",
+            "Área",
+            "descriptions differ, but are identical after normalising accents, case, punctuation and whitespace",
+        ],
+        ["p99", "added", "", "Año de nacimiento", "only in 2025"],
+    ]
+
+
 def test_changes_csv_replaces_existing_file(tmp_path):
     (tmp_path / "deriva_2021_vs_2025.csv").write_text("old")
     alignment = align(Dictionary("2021", {}), Dictionary("2025", {}))
@@ -48,3 +64,8 @@ def test_self_comparison_writes_header_only(tmp_path):
     text = summary(alignment, changes, path)
     assert "unchanged     2" in text
     assert f"wrote {path}" in text
+
+
+def test_reason_for_an_unknown_change_kind():
+    with pytest.raises(ValueError, match="unchanged"):
+        reason(Change("area", "unchanged", "Area", "Area"), "2021", "2025")

@@ -4,11 +4,12 @@ import argparse
 import csv
 import io
 import sys
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 
 from deriva import DerivaError
-from deriva.output import ENCODING
+from deriva.output import DESCRIPTION_PREFIX, ENCODING, LABEL_COLUMN, NOTE_COLUMN, VARIABLE_COLUMN
 from deriva.rule import COSMETIC, REAL, UNCHANGED, classify
 
 LABELS = (COSMETIC, REAL)
@@ -37,24 +38,39 @@ def read_labels(path: Path) -> LabelsFile:
         text = path.read_text(encoding=ENCODING)
     except OSError as exc:
         raise DerivaError(f"{path}: cannot be read ({exc.strerror})") from exc
+    except UnicodeDecodeError as exc:
+        raise DerivaError(f'{path}: is not UTF-8 text; save it again as "CSV UTF-8"') from exc
 
     if not text.strip():
         raise DerivaError(f"{path}: file is empty")
     for delimiter in DELIMITERS:
         header = next(csv.reader(io.StringIO(text, newline=""), delimiter=delimiter))
-        descriptions = [c for c in header if c.startswith("description_")]
-        if {"variable", "label", "note"} <= set(header) and len(descriptions) == 2:
+        descriptions = [c for c in header if c.startswith(DESCRIPTION_PREFIX)]
+        if {VARIABLE_COLUMN, LABEL_COLUMN, NOTE_COLUMN} <= set(header) and len(descriptions) == 2:
             break
     else:
         raise DerivaError(
-            f"{path}: expected the columns variable, two description_<round> columns, "
-            "label and note, separated by , or ;"
+            f"{path}: expected the columns {VARIABLE_COLUMN}, two {DESCRIPTION_PREFIX}<round> columns, "
+            f"{LABEL_COLUMN} and {NOTE_COLUMN}, separated by , or ;"
         )
+    # Blank names are left alone: a spreadsheet can save empty trailing columns.
+    repeated = [name for name, n in Counter(header).items() if n > 1 and name.strip()]
+    if repeated:
+        raise DerivaError(f"{path}: column {repeated[0]!r} appears more than once in the header")
 
     rows = []
-    for record in csv.DictReader(io.StringIO(text, newline=""), delimiter=delimiter):
-        variable = (record["variable"] or "").strip()
-        a, b = record[descriptions[0]] or "", record[descriptions[1]] or ""
+    seen = set()
+    for row_number, fields in _records(path, text, delimiter):
+        if len(fields) != len(header):
+            raise DerivaError(f"{path}: row {row_number} has {len(fields)} fields; the header has {len(header)}")
+        record = dict(zip(header, fields))
+        variable = record[VARIABLE_COLUMN].strip()
+        if not variable:
+            raise DerivaError(f"{path}: row {row_number} has no variable name")
+        if variable in seen:
+            raise DerivaError(f"{path}: variable {variable!r} appears more than once (again in row {row_number})")
+        seen.add(variable)
+        a, b = record[descriptions[0]], record[descriptions[1]]
         verdict = classify(a, b)
         if verdict == UNCHANGED:
             raise DerivaError(f"{path}: {variable!r} has identical descriptions, so there is nothing to label")
@@ -63,20 +79,35 @@ def read_labels(path: Path) -> LabelsFile:
                 variable=variable,
                 description_a=a,
                 description_b=b,
-                label=_parse_label(path, variable, record["label"]),
-                note=(record["note"] or "").strip(),
+                label=_parse_label(path, variable, record[LABEL_COLUMN]),
+                note=record[NOTE_COLUMN].strip(),
                 verdict=verdict,
             )
         )
     return LabelsFile(
-        label_a=descriptions[0].removeprefix("description_"),
-        label_b=descriptions[1].removeprefix("description_"),
+        label_a=descriptions[0].removeprefix(DESCRIPTION_PREFIX),
+        label_b=descriptions[1].removeprefix(DESCRIPTION_PREFIX),
         rows=rows,
     )
 
 
-def _parse_label(path: Path, variable: str, raw: str | None) -> str | None:
-    label = (raw or "").strip().casefold()
+def _records(path: Path, text: str, delimiter: str):
+    """(row number, fields) for each non-empty row below the header, numbered as a
+    spreadsheet shows them: the header is row 1 and a multi-line cell is one row."""
+    # strict, so an unclosed quote is an error instead of swallowing the rows after it.
+    reader = csv.reader(io.StringIO(text, newline=""), delimiter=delimiter, strict=True)
+    row_number = 0
+    try:
+        for fields in reader:
+            row_number += 1
+            if row_number > 1 and fields:
+                yield row_number, fields
+    except csv.Error as exc:
+        raise DerivaError(f"{path}: row {row_number + 1} cannot be read as CSV ({exc})") from exc
+
+
+def _parse_label(path: Path, variable: str, raw: str) -> str | None:
+    label = raw.strip().casefold()
     if not label:
         return None
     if label not in LABELS:

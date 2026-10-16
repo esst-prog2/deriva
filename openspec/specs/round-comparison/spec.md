@@ -11,8 +11,8 @@ really.
 ### Requirement: Command takes two dictionary files
 deriva SHALL be run as `deriva <dictionary_A> <dictionary_B>`, where A is the earlier
 round and B the later one. Each round SHALL be labelled by the last four-digit year
-(19xx or 20xx) in its file name, or by the file name without extension when it contains
-no such year. When both files yield the same label, the rounds SHALL be labelled
+(19xx or 20xx) in its file name that is not part of a longer run of digits, or by the
+file name without extension when it contains no such year. When both files yield the same label, the rounds SHALL be labelled
 `<label>_a` and `<label>_b`.
 
 #### Scenario: Same label twice
@@ -22,6 +22,10 @@ no such year. When both files yield the same label, the rounds SHALL be labelled
 #### Scenario: Round labels from file names
 - **WHEN** deriva is run on `Diccionario de Datos_persona_anual_2021.xlsx` and `Diccionario de Datos_persona_anual_2025.xlsx`
 - **THEN** the rounds are labelled `2021` and `2025` in the summary and the output file names
+
+#### Scenario: Digits inside a longer number
+- **WHEN** a file is named `ronda_120215.xlsx` and another `anual_2021.xlsx`
+- **THEN** the first round is labelled `ronda_120215` and the second `2021`
 
 #### Scenario: Wrong number of arguments
 - **WHEN** deriva is run with one file or with three
@@ -48,6 +52,27 @@ For each variable in both rounds deriva SHALL classify the description as:
   whitespace;
 - `real` when they still differ after normalising.
 
+"Punctuation" SHALL mean every character in a Unicode punctuation category (`P*`), so
+characters such as `.`, `,`, `%` and `/` become whitespace. Characters in Unicode symbol
+categories (`S*`), such as `>`, `=`, `$` and `°`, SHALL be kept.
+
+"Removing accents" SHALL mean applying Unicode NFKD normalisation and dropping every
+combining mark in category `Mn`. This also folds compatibility characters, so `m²`
+becomes `m2` and `ñ` becomes `n`. "Ignoring case" SHALL mean Unicode case folding
+(`casefold`), so `ß` matches `ss`.
+
+#### Scenario: Superscript folded
+- **WHEN** the descriptions are `Superficie en m²` and `Superficie en m2`
+- **THEN** the variable is classified as cosmetic, because NFKD turns `²` into `2`
+
+#### Scenario: Percent sign dropped
+- **WHEN** the descriptions are `Ingreso en %` and `Ingreso en`
+- **THEN** the variable is classified as cosmetic, because `%` is Unicode punctuation
+
+#### Scenario: Symbols kept
+- **WHEN** the descriptions are `Ingreso en $` and `Ingreso en`
+- **THEN** the variable is classified as real, because `$` is a Unicode symbol
+
 #### Scenario: Accent only
 - **WHEN** the descriptions are `Area` and `Área`
 - **THEN** the variable is classified as cosmetic
@@ -68,9 +93,17 @@ For each variable in both rounds deriva SHALL classify the description as:
 - **WHEN** the descriptions are `Horas en el trabajo secundario` and `Horas en el`
 - **THEN** the variable is classified as real
 
+### Requirement: Report errors on stderr
+When deriva stops with an error, it SHALL print one message to stderr starting with
+`deriva: error: ` and SHALL exit with status 1.
+
+#### Scenario: Error message format
+- **WHEN** a dictionary has no `Nombre del campo` header
+- **THEN** stderr starts with `deriva: error: `, the message names the file, and the exit status is 1
+
 ### Requirement: Print a summary
 deriva SHALL print the number of variables in each round and the number of variables
-added, removed, cosmetically changed and really changed, followed by the path of the
+added, removed, cosmetically changed, really changed and unchanged, followed by the path of the
 changes CSV it wrote. deriva SHALL exit with status 0 whenever the comparison completes,
 whether or not changes were found.
 
@@ -86,15 +119,32 @@ whether or not changes were found.
 deriva SHALL write `deriva_<A>_vs_<B>.csv` to the current directory, replacing any
 existing file of that name, with the columns `variable`, `change`, `description_<A>`,
 `description_<B>` and `reason`, and one row per variable that was added, removed,
-cosmetically changed or really changed. Unchanged variables SHALL NOT appear. For an
+cosmetically changed or really changed. Rows SHALL be ordered real changes first, then
+cosmetic changes, then removed and then added variables. Unchanged variables SHALL NOT appear. For an
 added variable the A description SHALL be empty; for a removed variable the B description
 SHALL be empty. `reason` SHALL state in words why the row was classified as it was. The
 file SHALL be UTF-8 encoded and open with accents intact in Excel.
+
+When the changes CSV cannot be written, for example because a folder of that name is in
+the way or the directory is read-only, deriva SHALL exit with a non-zero status and an
+error naming the path.
 
 #### Scenario: Real change row
 - **WHEN** a variable's description changes from `Rama de actividad CIIU4` to `Rama de actividad CIIU 4.1`
 - **THEN** its row has `change` = `real`, both descriptions in full, and a reason stating the descriptions still differ after normalising accents, case, punctuation and whitespace
 
+#### Scenario: Row order
+- **WHEN** a comparison has one real change, one cosmetic change, one removed and one added variable
+- **THEN** the rows appear in the order real, cosmetic, removed, added
+
+#### Scenario: Added and cosmetic rows
+- **WHEN** a variable is added with the description `Año de nacimiento` and another changes from `Area` to `Área`
+- **THEN** the added row has an empty A description and the reason `only in <B>`, the cosmetic row's reason states the descriptions are identical after normalising, and the accented descriptions read back unchanged
+
 #### Scenario: No changes
 - **WHEN** a dictionary is compared with itself
 - **THEN** the CSV contains only the header row
+
+#### Scenario: Changes CSV cannot be written
+- **WHEN** a folder named `deriva_2021_a_vs_2021_b.csv` is in the current directory and a dictionary is compared with itself
+- **THEN** deriva exits with a non-zero status and an error naming that path

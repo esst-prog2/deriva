@@ -4,6 +4,7 @@ import re
 import zipfile
 from dataclasses import dataclass
 from pathlib import Path
+from xml.etree.ElementTree import ParseError
 
 from openpyxl import load_workbook
 from openpyxl.utils.exceptions import InvalidFileException
@@ -11,7 +12,7 @@ from openpyxl.utils.exceptions import InvalidFileException
 from deriva import DerivaError
 
 HEADER = "Nombre del campo"
-YEAR = re.compile(r"(?:19|20)\d\d")
+YEAR = re.compile(r"(?<!\d)(?:19|20)\d\d(?!\d)")  # not part of a longer run of digits
 
 
 @dataclass
@@ -21,7 +22,7 @@ class Dictionary:
 
 
 def round_label(path: Path) -> str:
-    """The last 19xx/20xx year in the file name, or the file name without extension."""
+    """The last standalone 19xx/20xx year in the file name, or the file name without extension."""
     years = YEAR.findall(path.stem)
     return years[-1] if years else path.stem
 
@@ -40,12 +41,15 @@ def read_dictionary(path: str | Path) -> Dictionary:
         raise DerivaError(f"{path}: file not found")
     try:
         workbook = load_workbook(path, read_only=True, data_only=True)
-    except (OSError, zipfile.BadZipFile, InvalidFileException, KeyError) as exc:
+    # openpyxl 3.1.5 raises AttributeError on any chartsheet when reading read-only.
+    except (OSError, zipfile.BadZipFile, InvalidFileException, KeyError, ParseError, AttributeError) as exc:
         raise DerivaError(f"{path}: cannot be opened as an .xlsx workbook ({exc})") from exc
 
     try:
         rows = workbook.worksheets[0].iter_rows(values_only=True)
         variables = _read_variables(path, rows)
+    except ParseError as exc:  # sheet XML is parsed only while the rows are read
+        raise DerivaError(f"{path}: first sheet cannot be read ({exc})") from exc
     finally:
         workbook.close()
     return Dictionary(label=round_label(path), variables=variables)
@@ -72,6 +76,8 @@ def _read_variables(path: Path, rows) -> dict[str, str]:
         raise DerivaError(
             f"{path}: no header row found; looked for {HEADER!r} in the first column"
         )
+    if not variables:
+        raise DerivaError(f"{path}: no variables found below the {HEADER!r} header")
     return variables
 
 

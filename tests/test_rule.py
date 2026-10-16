@@ -8,6 +8,7 @@ from deriva.rule import COSMETIC, REAL, UNCHANGED, classify, normalise
     [
         ("Area", "Area", UNCHANGED),
         ("Area", "Área", COSMETIC),
+        ("Superficie en m²", "Superficie en m2", COSMETIC),
         ("Rama de actividad", "rama de Actividad", COSMETIC),
         ("Ingreso  total.", "Ingreso total", COSMETIC),
         (" Ingreso total", "Ingreso total ", COSMETIC),
@@ -26,6 +27,17 @@ def test_punctuation_becomes_a_space():
 
 def test_symbols_are_kept():
     assert classify("Ingreso en $", "Ingreso en %") == REAL
+
+
+def test_percent_sign_is_punctuation():
+    # % is Unicode category Po, so it becomes a space like any other punctuation.
+    assert classify("Ingreso en %", "Ingreso en") == COSMETIC
+    assert normalise("50/50") == "50 50"
+
+
+def test_symbol_categories_are_kept():
+    assert classify("Ingreso en $", "Ingreso en") == REAL
+    assert normalise("Edad >= 15, 20 °C") == "edad >= 15 20 °c"
 
 
 def test_ene_loses_its_tilde():

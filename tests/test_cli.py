@@ -1,13 +1,11 @@
-import csv
 import re
 import shutil
 
 import pytest
 
 from deriva.cli import main
-from deriva.output import ENCODING
 
-from conftest import DICT_2021, DICT_2025, HEADER_ROW, METADATA
+from conftest import DICT_2021, DICT_2025, METADATA, read_csv
 
 
 @pytest.fixture(autouse=True)
@@ -36,8 +34,7 @@ def test_same_file_twice(capsys, tmp_path):
     assert main([str(DICT_2021), str(DICT_2021)]) == 0
     found = counts(capsys.readouterr().out)
     assert [found[k] for k in ("added", "removed", "cosmetic", "real")] == [0, 0, 0, 0]
-    with (tmp_path / "deriva_2021_a_vs_2021_b.csv").open(encoding=ENCODING) as f:
-        assert len(list(csv.reader(f))) == 1
+    assert len(read_csv(tmp_path / "deriva_2021_a_vs_2021_b.csv")) == 1
 
 
 def test_one_argument(capsys):
@@ -58,6 +55,7 @@ def test_sheet_without_header(capsys, make_workbook):
     bad = make_workbook(METADATA + [("area", "Area")], name="bad_2025.xlsx")
     assert main([str(DICT_2021), str(bad)]) == 1
     err = capsys.readouterr().err
+    assert err.startswith("deriva: error: ")
     assert "Nombre del campo" in err
     assert "bad_2025.xlsx" in err
 
@@ -67,7 +65,15 @@ def test_missing_file(capsys):
     assert "nope_2025.xlsx" in capsys.readouterr().err
 
 
-def test_console_script_runs(tmp_path):
+def test_changes_csv_cannot_be_written(capsys, tmp_path):
+    (tmp_path / "deriva_2021_a_vs_2021_b.csv").mkdir()  # a folder in the way
+    assert main([str(DICT_2021), str(DICT_2021)]) == 1
+    err = capsys.readouterr().err
+    assert err.startswith("deriva: error: ")
+    assert str(tmp_path / "deriva_2021_a_vs_2021_b.csv") in err and "cannot be written" in err
+
+
+def test_console_script_runs():
     import subprocess
 
     deriva = shutil.which("deriva")

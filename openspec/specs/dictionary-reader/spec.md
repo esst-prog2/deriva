@@ -21,9 +21,22 @@ SHALL NOT be taken as the header.
 - **WHEN** a sheet has `Nombre del campo` in row 2 instead of row 6
 - **THEN** the variables are read from row 3 onwards
 
+#### Scenario: Header with surrounding whitespace
+- **WHEN** the first-column cell reads `  Nombre del campo ` with spaces around the label
+- **THEN** it is taken as the header and the variables below it are read
+
 #### Scenario: Header missing
 - **WHEN** no cell in the first column reads exactly `Nombre del campo`
 - **THEN** deriva exits with a non-zero status and an error message that names the file and the header text `Nombre del campo` it looked for and did not find
+
+### Requirement: Reject a dictionary with no variables
+The reader SHALL stop with an error naming the file when the header is found but no
+variable follows it, rather than return an empty dictionary that would report every
+variable of the other round as added or removed.
+
+#### Scenario: Header without variables
+- **WHEN** the sheet has `Nombre del campo` and only empty rows below it
+- **THEN** deriva exits with a non-zero status and an error message naming the file
 
 ### Requirement: Read names and descriptions from the first two columns
 Below the header, the reader SHALL take the variable name from the first column and its
@@ -51,6 +64,14 @@ wherever it occurs, and SHALL continue reading after it.
 - **WHEN** an empty row sits between two variables
 - **THEN** both variables are read
 
+### Requirement: Reject a description without a name
+The reader SHALL stop with an error when a row below the header has a description but
+an empty variable name, naming the file and the row number.
+
+#### Scenario: Description without a name
+- **WHEN** a row below the header has an empty first cell and `Area` in the second
+- **THEN** deriva exits with a non-zero status and an error message naming the file and that row
+
 ### Requirement: Reject duplicate variable names
 The reader SHALL stop with an error when the same variable name appears more than once
 in one dictionary, naming the file and the duplicated variable.
@@ -62,10 +83,24 @@ in one dictionary, naming the file and the duplicated variable.
 ### Requirement: Read the first sheet of an xlsx workbook
 The reader SHALL read the first worksheet of an `.xlsx` workbook. A path that does not
 exist or cannot be opened as an `.xlsx` workbook SHALL produce an error naming the path.
+So SHALL a workbook whose first sheet is corrupt and a workbook with no ordinary
+worksheet, such as one holding only a chart sheet.
+
+#### Scenario: Several sheets
+- **WHEN** a workbook has two sheets and the second one is the active sheet
+- **THEN** the variables are read from the first sheet only
 
 #### Scenario: Missing file
 - **WHEN** a path given to deriva does not exist
 - **THEN** deriva exits with a non-zero status and an error message naming that path
+
+#### Scenario: Corrupt sheet
+- **WHEN** the workbook opens but its first sheet's XML is cut off, as in a download cut short
+- **THEN** deriva exits with a non-zero status and an error message naming the file
+
+#### Scenario: No ordinary worksheet
+- **WHEN** the workbook holds only a chart sheet
+- **THEN** deriva exits with a non-zero status and an error message naming the file
 
 ### Requirement: Real 2021 and 2025 dictionaries read correctly
 The reader SHALL read the 2021 and 2025 ENEMDU annual persona dictionaries in `data/`

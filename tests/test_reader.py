@@ -1,6 +1,8 @@
+import zipfile
 from pathlib import Path
 
 import pytest
+from openpyxl import Workbook
 
 from deriva import DerivaError
 from deriva.reader import distinct_labels, read_dictionary, round_label
@@ -26,6 +28,11 @@ def test_header_missing(make_workbook):
         read_dictionary(path)
     assert str(path) in str(error.value)
     assert "Nombre del campo" in str(error.value)
+
+
+def test_header_with_surrounding_whitespace(make_workbook):
+    path = make_workbook(METADATA + [("  Nombre del campo ", "Descripción del campo")] + VARIABLES)
+    assert read_dictionary(path).variables == {"area": "Area", "ciudad": "Ciudad"}
 
 
 def test_near_miss_is_not_the_header(make_workbook):
@@ -75,6 +82,28 @@ def test_duplicate_name(make_workbook):
     assert "p54a" in str(error.value)
 
 
+def test_description_without_a_name(make_workbook):
+    path = make_workbook([HEADER_ROW, VARIABLES[0], (None, "Area")])
+    with pytest.raises(DerivaError) as error:
+        read_dictionary(path)
+    assert str(path) in str(error.value)
+    assert "row 3" in str(error.value)
+
+
+def test_first_sheet_is_read_even_when_another_is_active(tmp_path):
+    workbook = Workbook()
+    first = workbook.active
+    for row in [HEADER_ROW] + VARIABLES:
+        first.append(row)
+    second = workbook.create_sheet("otra")
+    for row in [HEADER_ROW, ("p99", "Otra hoja")]:
+        second.append(row)
+    workbook.active = 1
+    path = tmp_path / "two_sheets_2021.xlsx"
+    workbook.save(path)
+    assert read_dictionary(path).variables == {"area": "Area", "ciudad": "Ciudad"}
+
+
 def test_missing_file(tmp_path):
     path = tmp_path / "nope_2021.xlsx"
     with pytest.raises(DerivaError, match="nope_2021.xlsx"):
@@ -97,6 +126,11 @@ def test_round_label_uses_the_last_year():
     assert round_label(Path("enemdu_1999_revised_2021.xlsx")) == "2021"
 
 
+def test_round_label_ignores_digits_inside_a_longer_number():
+    assert round_label(Path("ronda_120215.xlsx")) == "ronda_120215"
+    assert round_label(Path("anual_2021.xlsx")) == "2021"
+
+
 def test_round_label_without_a_year():
     assert round_label(Path("dictionary_persona.xlsx")) == "dictionary_persona"
 
@@ -109,3 +143,34 @@ def test_same_label_twice():
 def test_real_dictionaries_variable_counts():
     assert len(read_dictionary(DICT_2021).variables) == 151
     assert len(read_dictionary(DICT_2025).variables) == 139
+
+
+def test_corrupt_sheet(make_workbook, tmp_path):
+    good = make_workbook([HEADER_ROW] + VARIABLES)
+    path = tmp_path / "corrupt_2025.xlsx"
+    with zipfile.ZipFile(good) as source, zipfile.ZipFile(path, "w") as target:
+        for item in source.infolist():
+            data = source.read(item)
+            if item.filename == "xl/worksheets/sheet1.xml":
+                data = data[: len(data) // 2]  # as in a download cut short
+            target.writestr(item, data)
+    with pytest.raises(DerivaError, match="corrupt_2025.xlsx"):
+        read_dictionary(path)
+
+
+def test_no_ordinary_worksheet(tmp_path):
+    workbook = Workbook()
+    workbook.create_chartsheet()
+    workbook.remove(workbook.active)
+    path = tmp_path / "chart_only_2025.xlsx"
+    workbook.save(path)
+    with pytest.raises(DerivaError, match="chart_only_2025.xlsx"):
+        read_dictionary(path)
+
+
+def test_header_without_variables(make_workbook):
+    path = make_workbook(METADATA + [HEADER_ROW] + [(None, None)] * 3, name="empty_2025.xlsx")
+    with pytest.raises(DerivaError) as error:
+        read_dictionary(path)
+    assert str(path) in str(error.value)
+    assert "no variables" in str(error.value)

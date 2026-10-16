@@ -33,6 +33,17 @@ as real), so read both descriptions before trusting a verdict.
 
 Run the tests with `uv run pytest`.
 
+**Troubleshooting on macOS.** If `uv run deriva` fails with `No module named 'deriva'`,
+the project probably lives in an iCloud-synced folder (such as `Documents`): macOS marks
+the virtualenv's `.pth` files hidden, and Python 3.14 skips hidden `.pth` files. Unhide
+them (use the virtualenv folder in `UV_PROJECT_ENVIRONMENT` instead of `.venv` if you set one):
+
+```
+chflags nohidden .venv/lib/python*/site-packages/*.pth
+```
+
+or run with `PYTHONPATH=src uv run deriva ...`.
+
 ### Checking the rule against hand labels
 
 To measure how often the cosmetic/real rule agrees with a person, label the description

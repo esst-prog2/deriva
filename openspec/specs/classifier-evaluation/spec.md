@@ -14,11 +14,16 @@ using a blind labelling template and an agreement report that lists every disagr
 present in both rounds whose descriptions are not identical strings. `label` and `note`
 SHALL be empty. In this mode deriva SHALL NOT write the changes CSV and SHALL NOT print
 or write any cosmetic/real classification; it SHALL print only the variable counts, the
-added and removed counts, the number of rows written and the template path.
+added and removed counts, the number of variables whose descriptions differ, the number
+of rows written and the template path.
 
 #### Scenario: Template on the real files
 - **WHEN** `deriva --labels-template` is run on the 2021 and 2025 persona dictionaries in `data/`
 - **THEN** `labels_2021_vs_2025.csv` has 22 rows with both descriptions filled in and empty `label` and `note` columns
+
+#### Scenario: Both descriptions copied into the template
+- **WHEN** a variable's description changes from `Area` to `Área` and another from `Rama CIIU4` to `Rama CIIU 4.1`
+- **THEN** each template row holds the variable, its A description and its B description exactly as read, and nothing else is filled in
 
 #### Scenario: No verdict leaks
 - **WHEN** the template is generated
@@ -33,6 +38,14 @@ so labels already entered are never lost.
 - **WHEN** `labels_2021_vs_2025.csv` already exists and `deriva --labels-template` is run on the same rounds
 - **THEN** the existing file is left unchanged and deriva exits with a non-zero status naming it
 
+### Requirement: Report a labels template that cannot be written
+When the labels template cannot be written, for example because the current directory is
+read-only, deriva SHALL exit with a non-zero status and an error naming the path.
+
+#### Scenario: Read-only directory
+- **WHEN** `deriva --labels-template` is run in a directory it cannot write to
+- **THEN** deriva exits with a non-zero status and an error naming the template path
+
 ### Requirement: Evaluate labels against the rule
 `deriva-eval <labels.csv>` SHALL read a labels file in the template format, apply the
 same classification rule as deriva to the two descriptions in each row, and compare it
@@ -44,11 +57,103 @@ yet. The evaluation SHALL need only the labels file, not the dictionaries.
 - **WHEN** a row's label is `maybe`
 - **THEN** deriva-eval exits with a non-zero status and an error naming the variable and the invalid label
 
+### Requirement: Accept a labels file re-saved by a spreadsheet
+deriva-eval SHALL accept a labels file whose columns are separated by `,` or by `;`, as
+Excel in a Spanish locale saves CSV. It SHALL find the columns by their header names,
+so the columns MAY appear in any order and extra columns SHALL be ignored. The header
+SHALL contain `variable`, `label`, `note` and exactly two columns whose names start with
+`description_`; the text after `description_` names each round in the report. The
+first `description_` column in the header SHALL be treated as round A and the second as
+round B, whatever their names.
+
+#### Scenario: Description columns in reverse order
+- **WHEN** the header has `description_2025` before `description_2021`
+- **THEN** deriva-eval treats 2025 as round A and shows its description first in each disagreement
+
+#### Scenario: Semicolon-separated file
+- **WHEN** the labels file uses `;` between columns
+- **THEN** deriva-eval reads it as it would the same file with `,`
+
+#### Scenario: Columns reordered and an extra column
+- **WHEN** the columns are in the order `label`, `variable`, `note`, `description_2025`, `description_2021`, `extra`
+- **THEN** deriva-eval reads the rows correctly and ignores `extra`
+
+### Requirement: Reject an unusable labels file
+deriva-eval SHALL exit with a non-zero status and an error naming the file when the file
+is empty, when it is not UTF-8 text, when its header does not have the columns above, or
+when a row's two descriptions are identical strings, since such a row has no change to
+label; that error SHALL also name the variable. A file that is not UTF-8 SHALL get an
+error saying to save it again as "CSV UTF-8".
+
+It SHALL also stop with an error naming the file and the row number when a row has fewer
+or more fields than the header, or when a row cannot be read as CSV, such as a quote that
+is opened and never closed; it SHALL NOT read the rest of the file into that field. Row
+numbers SHALL count as a spreadsheet shows them: the header is row 1 and a cell spanning
+several lines is one row.
+
+It SHALL stop with an error naming the file and the variable when the same variable
+appears in more than one row, and with an error naming the file and the row number when
+a row's `variable` is empty.
+
+It SHALL stop with an error naming the file and the column when a column name appears
+more than once in the header, rather than read only one of those columns. Blank column
+names, as a spreadsheet saves for empty trailing columns, SHALL NOT count as repeated.
+
+#### Scenario: Empty file
+- **WHEN** the labels file is empty
+- **THEN** deriva-eval exits with a non-zero status and an error saying the file is empty
+
+#### Scenario: Wrong columns
+- **WHEN** the header is `name,description`
+- **THEN** deriva-eval exits with a non-zero status and an error listing the expected columns
+
+#### Scenario: Identical descriptions
+- **WHEN** a row's two descriptions are both `Area`
+- **THEN** deriva-eval exits with a non-zero status and an error naming that variable
+
+#### Scenario: File saved as Windows-1252
+- **WHEN** the labels file was saved by Excel in Windows-1252 and contains `Área`
+- **THEN** deriva-eval exits with a non-zero status and an error naming the file and saying to save it as "CSV UTF-8"
+
+#### Scenario: Row with fewer or more fields than the header
+- **WHEN** row 3 has 3 fields, or 6, and the header has 5
+- **THEN** deriva-eval exits with a non-zero status and an error naming the file and row 3
+
+#### Scenario: Unclosed quote
+- **WHEN** a field in row 2 opens a quote that is never closed, whether in a description or in the note
+- **THEN** deriva-eval exits with a non-zero status and an error naming the file and row 2, instead of reading the rest of the file into that field
+
+#### Scenario: Same variable twice
+- **WHEN** `p54a` appears in rows 2 and 3
+- **THEN** deriva-eval exits with a non-zero status and an error naming the file and `p54a`
+
+#### Scenario: Row without a variable name
+- **WHEN** row 3 has an empty `variable`
+- **THEN** deriva-eval exits with a non-zero status and an error naming the file and row 3
+
+#### Scenario: Repeated column
+- **WHEN** the header has two columns named `label`
+- **THEN** deriva-eval exits with a non-zero status and an error naming the file and `label`
+
+#### Scenario: Empty trailing columns
+- **WHEN** the header ends with two blank column names
+- **THEN** deriva-eval reads the file as it would without them
+
+### Requirement: Report errors on stderr
+When deriva-eval stops with an error, it SHALL print one message to stderr starting with
+`deriva-eval: error: ` and SHALL exit with status 1.
+
+#### Scenario: Error message format
+- **WHEN** a row's label is `maybe`
+- **THEN** stderr starts with `deriva-eval: error: ` and the exit status is 1
+
 ### Requirement: Report agreement and every disagreement
 deriva-eval SHALL print how many rows are labelled out of the total, a 2×2 table of
 hand label against rule verdict, the number and share of labelled rows where they agree,
 and a list of every disagreement with the variable, the hand label, the rule verdict,
-both descriptions and the note. It SHALL exit with status 0 when the evaluation completes.
+both descriptions and the note. Disagreements where the hand label is `real` and the rule
+says `cosmetic` SHALL be listed first, since those are real changes the rule would hide.
+It SHALL exit with status 0 when the evaluation completes.
 
 #### Scenario: Partly labelled file
 - **WHEN** 10 of 22 rows are labelled, 8 agree with the rule and 2 do not

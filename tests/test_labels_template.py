@@ -1,12 +1,11 @@
-import csv
+import os
 import re
 
 import pytest
 
 from deriva.cli import main
-from deriva.output import ENCODING
 
-from conftest import DICT_2021, DICT_2025
+from conftest import DICT_2021, DICT_2025, read_csv
 
 VERDICT = re.compile(r"\b(cosmetic|real)\b", re.IGNORECASE)
 TEMPLATE = "labels_2021_vs_2025.csv"
@@ -23,8 +22,7 @@ def run_template():
 
 def test_template_on_real_files(tmp_path):
     assert run_template() == 0
-    with (tmp_path / TEMPLATE).open(encoding=ENCODING, newline="") as f:
-        header, *rows = list(csv.reader(f))
+    header, *rows = read_csv(tmp_path / TEMPLATE)
     assert header == ["variable", "description_2021", "description_2025", "label", "note"]
     assert len(rows) == 22
     for variable, description_a, description_b, label, note in rows:
@@ -32,25 +30,40 @@ def test_template_on_real_files(tmp_path):
         assert label == "" and note == ""
 
 
+def test_both_descriptions_copied_into_template(tmp_path, make_workbook):
+    header = ("Nombre del campo", "Descripción del campo")
+    a = make_workbook(
+        [header, ("area", "Area"), ("rama1", "Rama CIIU4"), ("ciudad", "Ciudad")], name="dict_2021.xlsx"
+    )
+    b = make_workbook(
+        [header, ("area", "Área"), ("rama1", "Rama CIIU 4.1"), ("ciudad", "Ciudad")], name="dict_2025.xlsx"
+    )
+    assert main(["--labels-template", str(a), str(b)]) == 0
+    _, *rows = read_csv(tmp_path / TEMPLATE)
+    assert rows == [
+        ["area", "Area", "Área", "", ""],
+        ["rama1", "Rama CIIU4", "Rama CIIU 4.1", "", ""],
+    ]
+
+
 def test_no_changes_csv_is_written(tmp_path):
-    run_template()
+    assert run_template() == 0
     assert list(tmp_path.glob("deriva_*.csv")) == []
 
 
 def test_no_verdict_leaks(tmp_path, capsys):
-    run_template()
+    assert run_template() == 0
     captured = capsys.readouterr()
-    written = (tmp_path / TEMPLATE).read_text(encoding=ENCODING)
     # Descriptions themselves could contain the word, so only the non-description text
     # is checked: stdout, and the header and variable/label/note columns of the file.
     assert not VERDICT.search(captured.out + captured.err)
-    for row in csv.reader(written.splitlines()):
+    for row in read_csv(tmp_path / TEMPLATE):
         assert not VERDICT.search(" ".join([row[0], *row[3:]]))
     assert "22 rows to label" in captured.out
 
 
 def test_existing_template_is_never_overwritten(tmp_path, capsys):
-    run_template()
+    assert run_template() == 0
     path = tmp_path / TEMPLATE
     path.write_bytes(path.read_bytes() + "p54a,x,y,real,labelled by hand\n".encode())
     before = path.read_bytes()
@@ -58,3 +71,16 @@ def test_existing_template_is_never_overwritten(tmp_path, capsys):
     assert run_template() == 1
     assert path.read_bytes() == before
     assert TEMPLATE in capsys.readouterr().err
+
+
+def test_template_cannot_be_written(tmp_path, capsys):
+    tmp_path.chmod(0o555)
+    try:
+        if os.access(tmp_path, os.W_OK):
+            pytest.skip("cannot make a read-only folder here (running as root or on Windows)")
+        assert run_template() == 1
+    finally:
+        tmp_path.chmod(0o755)
+    err = capsys.readouterr().err
+    assert err.startswith("deriva: error: ")
+    assert str(tmp_path / TEMPLATE) in err and "cannot be written" in err
