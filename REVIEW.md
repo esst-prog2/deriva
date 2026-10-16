@@ -139,3 +139,19 @@ limit, while the reader now relies on how openpyxl 3.1.5 reports errors.
 
 **Did:** tightened the range to `openpyxl>=3.1.5,<4`, so it matches the version that
 was tested. `uv.lock` still pins 3.1.5.
+
+## 7. Dead code
+
+**Looked for:** functions, classes, constants, parameters, branches, imports and test
+helpers that nothing uses or that can never run.
+
+**Found:** almost none. Checked by reading every file, running `ruff` (unused imports,
+variables and arguments) and `vulture`, and running the tests under branch coverage
+(99%). Only findings: an unused import and an unused parameter in `tests/test_cli.py`.
+The only lines no test reaches are the two `if __name__ == "__main__"` blocks. The
+`assert` in `compare.py` can never fail, by design.
+
+**Did:**
+- Removed the unused import and parameter.
+- Kept the `__main__` blocks, so `python -m deriva.cli` still works, and kept the
+  `assert`, which documents a guarantee on purpose.

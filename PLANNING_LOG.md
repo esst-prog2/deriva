@@ -88,3 +88,7 @@
 2026-10-16 — Errors-that-disappear review, decision 10: no change to spike/run_spike.sh (no set -e, empty argument when a year file is missing, script exit status always 0); spike/ is the record of the 2026-10-05 run. — decided by: user
 2026-10-16 — Errors-that-disappear review: the cosmetic/real rule is not changed. — decided by: user
 2026-10-16 — Dependencies review: openpyxl range in pyproject.toml tightened from >=3.1 to >=3.1.5,<4, because the reader relies on how openpyxl 3.1.5 reports errors; uv.lock still pins 3.1.5; no other dependency changes. — decided by: user
+2026-10-16 — Dead-code review, decision 1: removed the unused HEADER_ROW import from tests/test_cli.py. — decided by: user
+2026-10-16 — Dead-code review, decision 2: removed the unused tmp_path parameter from test_console_script_runs in tests/test_cli.py; the autouse in_tmp_path fixture already changes into tmp_path. — decided by: user
+2026-10-16 — Dead-code review, decision 3: kept the if __name__ == "__main__" blocks in cli.py and evaluate.py, so python -m deriva.cli and python -m deriva.evaluate keep working, even though no test or doc uses them. — decided by: user
+2026-10-16 — Dead-code review, decision 4: kept the assert in compare.classify_changes that a differing pair is never UNCHANGED; it can never fail and documents that guarantee on purpose. — decided by: user

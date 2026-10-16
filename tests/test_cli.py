@@ -5,7 +5,7 @@ import pytest
 
 from deriva.cli import main
 
-from conftest import DICT_2021, DICT_2025, HEADER_ROW, METADATA, read_csv
+from conftest import DICT_2021, DICT_2025, METADATA, read_csv
 
 
 @pytest.fixture(autouse=True)
@@ -73,7 +73,7 @@ def test_changes_csv_cannot_be_written(capsys, tmp_path):
     assert str(tmp_path / "deriva_2021_a_vs_2021_b.csv") in err and "cannot be written" in err
 
 
-def test_console_script_runs(tmp_path):
+def test_console_script_runs():
     import subprocess
 
     deriva = shutil.which("deriva")
