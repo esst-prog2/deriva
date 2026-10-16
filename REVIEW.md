@@ -178,3 +178,28 @@ believable wrong result with exit status 0, each checked by running it:
   default file name in the `make_workbook` test helper (no current test affected).
 - Every other default I found is one the spec requires, such as an empty label meaning
   "not labelled yet".
+
+  ## 9. What should not be in git
+
+**Looked for:** in every tracked file and in the full history of all branches: large
+or raw data, generated outputs, keys, tokens, passwords, `.env` files, personal data,
+and OS or editor files.
+
+**Found:** no secrets, no `.env`, no large files and no OS files were ever committed;
+the whole history is 1.4 MB. `data/` holds INEC's public dictionaries (about 15 KB each,
+variable names and descriptions only, no respondents), which the tests and demo need.
+`eval/` holds my hand labels, which cannot be regenerated. Smaller points:
+- `.gitignore` did not cover `.DS_Store`, `*.numbers`, Excel lock files or coverage
+  output, so `git add .` would have committed the Finder file and the Numbers copy of
+  the labels.
+- My home folder path appears in the homework 5 transcripts in `eval/`.
+- The workbooks' metadata carries the names of INEC staff, and `pyproject.toml` has my
+  email.
+- `spike/sources.md` has no download links for the 2021 and 2025 dictionaries.
+
+**Did:**
+- Added `.DS_Store`, `*.numbers`, `~$*`, `.coverage` and `htmlcov/` to `.gitignore`.
+- Left the home path in history: it is not a secret, the files are homework evidence,
+  and removing it would mean rewriting the history of a shared repository.
+- Left the INEC metadata and my email: both are normal published metadata.
+- Open: add the source links for 2021 and 2025 to `spike/sources.md`.

@@ -7,3 +7,10 @@ dist/
 # deriva output written to the current directory
 /deriva_*.csv
 /labels_*.csv
+
+# OS, spreadsheet-app and coverage files
+.DS_Store
+*.numbers
+~$*
+.coverage
+htmlcov/

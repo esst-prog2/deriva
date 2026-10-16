@@ -102,3 +102,7 @@
 2026-10-16 — Quiet-defaults review, decision 7: no change to test_console_script_runs skipping when deriva is not on PATH; already decided in the errors-that-disappear review (decision 9). — decided by: user
 2026-10-16 — Quiet-defaults review, decision 8: no change to the make_workbook fixture's default name dict_2021.xlsx; no current test builds two workbooks without naming them. — decided by: user
 2026-10-16 — Quiet-defaults review: the cosmetic/real rule is not changed. — decided by: user
+2026-10-16 — What-should-not-be-in-git review, decision A: .gitignore now ignores .DS_Store, *.numbers, ~$* (Excel lock files), .coverage and htmlcov/; no file deleted, so .DS_Store and labels_2021_vs_2025.numbers stay on disk, untracked and ignored. — decided by: user
+2026-10-16 — What-should-not-be-in-git review, decision B: no change to the absolute home path in eval/hw5_red.txt, hw5_green.txt and hw5_real_use.txt; it is not a secret, the files are the homework 5 evidence, and removing it from history would mean rewriting a shared repo. — decided by: user
+2026-10-16 — What-should-not-be-in-git review, decision C: no change to the INEC staff names in the dictionaries' workbook metadata (published by INEC) or the author email in pyproject.toml (normal package metadata). — decided by: user
+2026-10-16 — What-should-not-be-in-git review, decision D: no change now; noted that spike/sources.md has download links only for 2022–2024, none for the 2021 and 2025 dictionaries. — decided by: user
