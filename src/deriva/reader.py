@@ -22,6 +22,7 @@ YEAR = re.compile(r"(?<!\d)(?:19|20)\d\d(?!\d)")  # not part of a longer run of 
 class Dictionary:
     label: str
     variables: dict[str, str]  # variable name -> description, in sheet order
+    layout: str = "2021"  # "2021" for the Nombre del campo layout, "pre-2021" for the older one
 
 
 def round_label(path: Path) -> str:
@@ -51,32 +52,32 @@ def read_dictionary(path: str | Path) -> Dictionary:
 
     try:
         rows = workbook.worksheets[0].iter_rows(values_only=True)
-        variables = _read_variables(path, rows)
+        variables, layout = _read_variables(path, rows)
     except ParseError as exc:  # sheet XML is parsed only while the rows are read
         raise DerivaError(f"{path}: first sheet cannot be read ({exc})") from exc
     finally:
         workbook.close()
-    return Dictionary(label=round_label(path), variables=variables)
+    return Dictionary(label=round_label(path), variables=variables, layout=layout)
 
 
-def _header_columns(row) -> tuple[int, int] | None:
-    """(name column, description column) if this row is a header of either layout."""
+def _header_columns(row) -> tuple[int, int, str] | None:
+    """(name column, description column, layout) if this row is a header of either layout."""
     cells = [_text(value) for value in row]
     if cells and cells[0] == HEADER:
-        return 0, 1
+        return 0, 1, "2021"
     if OLD_NAME_HEADER in cells and OLD_DESCRIPTION_HEADER in cells:
-        return cells.index(OLD_NAME_HEADER), cells.index(OLD_DESCRIPTION_HEADER)
+        return cells.index(OLD_NAME_HEADER), cells.index(OLD_DESCRIPTION_HEADER), "pre-2021"
     return None
 
 
-def _read_variables(path: Path, rows) -> dict[str, str]:
+def _read_variables(path: Path, rows) -> tuple[dict[str, str], str]:
     columns = None
     variables: dict[str, str] = {}
     for row_number, row in enumerate(rows, start=1):
         if columns is None:
             columns = _header_columns(row)
             continue
-        padded = tuple(row) + (None,) * (max(columns) + 1)
+        padded = tuple(row) + (None,) * (max(columns[:2]) + 1)
         name, description = _text(padded[columns[0]]), _text(padded[columns[1]], strip=False)
         if not name and not description:
             continue
@@ -93,7 +94,7 @@ def _read_variables(path: Path, rows) -> dict[str, str]:
         )
     if not variables:
         raise DerivaError(f"{path}: no variables found below the header")
-    return variables
+    return variables, columns[2]
 
 
 def _text(value, strip: bool = True) -> str:

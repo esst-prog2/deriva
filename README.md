@@ -81,6 +81,12 @@ Settle the rule before the first measurement. If you then change the rule becaus
 what the disagreements show, measure it again on a pair of rounds you have not looked
 at, not on the same labels.
 
+**History of every variable.** `uv run deriva-history data/` reads every dictionary in
+`data/`, orders the rounds by the date in the file name, and writes `deriva_history.html`:
+one page with each variable's description in every round, a search box, and each change
+between consecutive rounds of the same layout marked cosmetic or real by the second rule
+(`deriva-eval --rule v2`). The 2021 redesign is shown as a break, not compared.
+
 **Older dictionaries.** deriva also reads INEC's layout from before 2021 (header
 `CODIGO DE LA VARIABLE` / `PREGUNTA`, as in the 2019-12 and 2020-09 persona dictionaries
 in `data/`), taking the `PREGUNTA` column as the description. Compare two older rounds

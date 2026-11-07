@@ -14,6 +14,7 @@ dependencies = [
 [project.scripts]
 deriva = "deriva.cli:main"
 deriva-eval = "deriva.evaluate:main"
+deriva-history = "deriva.history:main"
 
 [dependency-groups]
 dev = [

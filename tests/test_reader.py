@@ -221,3 +221,10 @@ def test_older_layout_duplicate_name(make_workbook):
 def test_real_older_dictionaries_variable_counts():
     assert len(read_dictionary(DICT_2019_12).variables) == 155
     assert len(read_dictionary(DICT_2020_09).variables) == 97
+
+
+def test_layout_is_recorded(make_workbook):
+    new = make_workbook([HEADER_ROW, ("area", "Area")], name="new_2021.xlsx")
+    old = make_workbook([OLD_HEADER_ROW, (None, None, "area", "Area", "Area")], name="old_2019.xlsx")
+    assert read_dictionary(new).layout == "2021"
+    assert read_dictionary(old).layout == "pre-2021"
