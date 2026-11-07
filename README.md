@@ -81,6 +81,12 @@ Settle the rule before the first measurement. If you then change the rule becaus
 what the disagreements show, measure it again on a pair of rounds you have not looked
 at, not on the same labels.
 
+**Older dictionaries.** deriva also reads INEC's layout from before 2021 (header
+`CODIGO DE LA VARIABLE` / `PREGUNTA`, as in the 2019-12 and 2020-09 persona dictionaries
+in `data/`), taking the `PREGUNTA` column as the description. Compare two older rounds
+with each other, not an older round with a 2021+ round: the two layouts' text fields do
+not line up, so that comparison reports layout differences, not instrument changes.
+
 **A note on 2021.** INEC made methodological changes to ENEMDU between 2020 and May 2021,
 so the 2021 annual round straddles the redesign. Differences between 2021 and later rounds
 partly reflect that redesign; do not read their number as ordinary year-to-year drift.

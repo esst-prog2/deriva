@@ -174,3 +174,50 @@ def test_header_without_variables(make_workbook):
         read_dictionary(path)
     assert str(path) in str(error.value)
     assert "no variables" in str(error.value)
+
+
+# INEC's older layout (before 2021), as in the 2019-12 and 2020-09 dictionaries.
+OLD_METADATA = [(None, None, "Instituto Nacional de Estadística y Censos"), (None, "Introducción ")]
+OLD_HEADER_ROW = (None, None, "CODIGO DE LA VARIABLE", "NOMBRE DE LA VARIABLE", "PREGUNTA", "TIPO DE VARIABLE")
+DICT_2019_12 = DICT_2021.parent / "enemdu_personas_2019_12.xlsx"
+DICT_2020_09 = DICT_2021.parent / "diccionario_enemdu_personas_2020_09.xlsx"
+
+
+def test_older_layout_reads_code_and_question(make_workbook):
+    path = make_workbook(
+        OLD_METADATA
+        + [OLD_HEADER_ROW]
+        + [
+            (None, None, "area", "Area", "Área de residencia", "Identificadora"),
+            (None, None, " p03 ", "Edad", "¿Cuántos años cumplidos tiene?", "Cuantitativa"),
+        ]
+    )
+    assert read_dictionary(path).variables == {
+        "area": "Área de residencia",
+        "p03": "¿Cuántos años cumplidos tiene?",
+    }
+
+
+def test_older_layout_header_in_other_columns(make_workbook):
+    path = make_workbook([("PREGUNTA", "x", "CODIGO DE LA VARIABLE"), ("Edad", None, "p03")])
+    assert read_dictionary(path).variables == {"p03": "Edad"}
+
+
+def test_older_header_without_question_is_not_a_header(make_workbook):
+    path = make_workbook([(None, None, "CODIGO DE LA VARIABLE", "NOMBRE DE LA VARIABLE"), (None, None, "p03", "Edad")])
+    with pytest.raises(DerivaError) as error:
+        read_dictionary(path)
+    message = str(error.value)
+    assert str(path) in message
+    assert "Nombre del campo" in message and "CODIGO DE LA VARIABLE" in message and "PREGUNTA" in message
+
+
+def test_older_layout_duplicate_name(make_workbook):
+    path = make_workbook([OLD_HEADER_ROW, (None, None, "p03", "Edad", "a"), (None, None, "p03", "Edad", "b")])
+    with pytest.raises(DerivaError, match="p03"):
+        read_dictionary(path)
+
+
+def test_real_older_dictionaries_variable_counts():
+    assert len(read_dictionary(DICT_2019_12).variables) == 155
+    assert len(read_dictionary(DICT_2020_09).variables) == 97
