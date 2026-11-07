@@ -1,0 +1,7 @@
+variables: 2019-12 155, 2020-09 97, 2021 151
+2019-12 vs 2020-09, name: 87 shared, 76 differ, 11 of them among my 22 labelled variables
+2019-12 vs 2020-09, question: 87 shared, 25 differ, 4 of them among my 22 labelled variables
+2019-12 name vs 2021 description: 149 shared, 131 differ, 18 among my 22
+2019-12 question vs 2021 description: 149 shared, 130 differ, 18 among my 22
+2020-09 name vs 2021 description: 87 shared, 17 differ, 12 among my 22
+2020-09 question vs 2021 description: 87 shared, 75 differ, 12 among my 22
