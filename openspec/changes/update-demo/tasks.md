@@ -1,0 +1,5 @@
+- [x] 1. Rewrite README section 1 and record why (this change)
+- [ ] 2. `deriva-history <folder>`: read every persona dictionary in the folder, order the rounds by date, classify each change between consecutive rounds of the same layout with the second rule
+- [ ] 3. Write `deriva_history.html`: one self-contained page, a search box by variable, a timeline per variable with the text in each round, real changes highlighted, the 2021 redesign shown as a break
+- [ ] 4. Tests with small invented dictionaries; acceptance on `p76` in the real files
+- [ ] 5. Screenshots for the presentation
