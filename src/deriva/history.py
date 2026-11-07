@@ -93,121 +93,123 @@ MARK_TEXT = {
     COSMETIC: "Cosmetic",
     ADDED: "Added",
     REMOVED: "Removed",
-    BREAK: "Questionnaire redesign — not compared",
+    BREAK: "Dictionary layout redesigned — not compared",
     SAME: "",
 }
 
 PAGE = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>deriva · ENEMDU history</title>
+<title>deriva · ENEMDU questionnaire history</title>
 <style>
-:root {{
-  --bg: #f6f7f9; --card: #fff; --ink: #1b1f24; --muted: #5d6673; --line: #e3e6ea;
-  --accent: #23476b; --real: #b42318; --real-bg: #fdecea; --cos: #6b7280; --cos-bg: #f1f2f4;
-  --new: #1d5fa7; --new-bg: #e8f0fb; --ins: #d6f0dd; --del: #f9d7d3;
-}}
-@media (prefers-color-scheme: dark) {{ :root {{
-  --bg: #111418; --card: #1a1e24; --ink: #e8eaed; --muted: #9aa3ad; --line: #2a3038;
-  --accent: #8fb6e0; --real: #ff8a80; --real-bg: #3a1f1d; --cos: #a0a7b0; --cos-bg: #252a31;
-  --new: #8ab4f8; --new-bg: #1d2a3d; --ins: #1f3b28; --del: #4a2422;
-}} }}
-* {{ box-sizing: border-box; }}
-body {{ margin: 0; background: var(--bg); color: var(--ink);
-  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif; }}
-header {{ background: var(--accent); color: #fff; padding: 2rem 1rem 4.5rem; }}
-@media (prefers-color-scheme: dark) {{ header {{ background: #1c2b3d; }} }}
-.wrap {{ max-width: 72rem; margin: 0 auto; padding: 0 1rem; }}
-.eyebrow {{ text-transform: uppercase; letter-spacing: .08em; font-size: .75rem; opacity: .75; margin: 0; }}
-h1 {{ font-size: 1.9rem; margin: .2rem 0 .3rem; font-weight: 650; }}
-.rounds {{ margin: 0; opacity: .85; font-size: .9rem; }}
-.stats {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; margin-top: -3rem; }}
-.stat {{ background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: .9rem 1rem;
-  box-shadow: 0 1px 2px rgba(0,0,0,.05); }}
-.stat b {{ display: block; font-size: 1.6rem; font-weight: 650; }}
-.stat span {{ color: var(--muted); font-size: .85rem; }}
-.stat.real b {{ color: var(--real); }}
-.toolbar {{ position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 1rem 0 .8rem;
-  display: flex; flex-wrap: wrap; gap: .8rem 1.2rem; align-items: center; border-bottom: 1px solid var(--line); }}
-input[type=search] {{ font: inherit; padding: .55rem .8rem; width: min(22rem, 100%); border: 1px solid var(--line);
-  border-radius: 8px; background: var(--card); color: var(--ink); }}
-.toolbar label {{ color: var(--muted); font-size: .9rem; display: flex; gap: .4rem; align-items: center; }}
-.legend {{ margin-left: auto; display: flex; gap: .5rem; flex-wrap: wrap; }}
-.pill {{ display: inline-block; font-size: .72rem; font-weight: 600; letter-spacing: .02em; padding: .12rem .55rem;
-  border-radius: 999px; white-space: nowrap; }}
-.pill.real {{ color: var(--real); background: var(--real-bg); }}
-.pill.cosmetic {{ color: var(--cos); background: var(--cos-bg); }}
-.pill.added, .pill.removed {{ color: var(--new); background: var(--new-bg); }}
-.count {{ color: var(--muted); font-size: .85rem; margin: .8rem 0 0; }}
-section {{ background: var(--card); border: 1px solid var(--line); border-radius: 12px; margin: 1rem 0;
-  padding: 1rem 1.2rem; box-shadow: 0 1px 2px rgba(0,0,0,.04); }}
-section h2 {{ margin: 0 0 .6rem; font: 650 1.05rem ui-monospace, SFMono-Regular, Menlo, monospace;
-  display: flex; gap: .6rem; align-items: center; }}
-ol {{ list-style: none; margin: 0; padding: 0 0 0 1.2rem; border-left: 2px solid var(--line); }}
-li {{ position: relative; display: grid; grid-template-columns: 5.2rem 8.5rem 1fr; gap: .8rem;
-  padding: .45rem 0 .45rem .6rem; }}
-li::before {{ content: ""; position: absolute; left: -1.62rem; top: .85rem; width: .7rem; height: .7rem;
-  border-radius: 50%; background: var(--card); border: 2px solid var(--line); }}
-li.real::before {{ background: var(--real); border-color: var(--real); }}
-li.cosmetic::before {{ background: var(--cos); border-color: var(--cos); }}
-li.added::before, li.removed::before {{ background: var(--new); border-color: var(--new); }}
-li.real {{ background: var(--real-bg); border-radius: 8px; }}
-.round {{ font: 600 .85rem ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); padding-top: .1rem; }}
-.missing {{ color: var(--muted); font-style: italic; }}
-li.break {{ display: block; color: var(--muted); font-size: .82rem; font-style: italic; padding: .5rem .6rem;
-  border-top: 1px dashed var(--muted); border-bottom: 1px dashed var(--muted); margin: .3rem 0; }}
-li.break::before {{ display: none; }}
-ins {{ background: var(--ins); text-decoration: none; border-radius: 3px; padding: 0 .1rem; }}
-del {{ background: var(--del); border-radius: 3px; padding: 0 .1rem; }}
-footer {{ color: var(--muted); font-size: .8rem; padding: 2rem 0 3rem; }}
-@media (max-width: 640px) {{ .stats {{ grid-template-columns: repeat(2, 1fr); }}
-  li {{ grid-template-columns: 1fr; gap: .1rem; }} .legend {{ margin-left: 0; }} }}
+:root {{ --bg:#f7f8fa; --card:#fff; --ink:#111827; --muted:#6b7280; --line:#e5e7eb; --soft:#f3f4f6;
+  --brand:#0f3d5e; --real:#c0362c; --real-bg:#fdf0ef; --cos:#9ca3af; --new:#2563eb; --ins:#dcfce7; --del:#fee2e2; }}
+* {{ box-sizing:border-box; }}
+html {{ color-scheme: light; }}
+body {{ margin:0; background:var(--bg); color:var(--ink);
+  font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",sans-serif; -webkit-font-smoothing:antialiased; }}
+.wrap {{ max-width:76rem; margin:0 auto; padding:0 1.5rem; }}
+.top {{ background:var(--card); border-bottom:1px solid var(--line); }}
+.top .wrap {{ display:flex; align-items:center; justify-content:space-between; height:3.5rem; }}
+.brand {{ font-weight:700; letter-spacing:-.01em; color:var(--brand); display:flex; gap:.5rem; align-items:center; }}
+.brand i {{ width:.7rem; height:.7rem; border-radius:3px; background:var(--brand); display:inline-block; }}
+.src {{ color:var(--muted); font-size:.8rem; }}
+h1 {{ font-size:1.6rem; letter-spacing:-.02em; margin:2rem 0 .25rem; font-weight:700; }}
+.lead {{ color:var(--muted); margin:0 0 1.5rem; }}
+.grid {{ display:grid; gap:1rem; }}
+.kpis {{ grid-template-columns:repeat(4,1fr); }}
+.card {{ background:var(--card); border:1px solid var(--line); border-radius:10px; }}
+.kpi {{ padding:1rem 1.2rem; }}
+.kpi span {{ color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; font-weight:600; }}
+.kpi b {{ display:block; font-size:1.9rem; font-weight:700; letter-spacing:-.02em; margin-top:.15rem; }}
+.kpi.real b {{ color:var(--real); }}
+.panel {{ padding:1.1rem 1.2rem 1.2rem; margin-top:1rem; }}
+.panel h3 {{ margin:0 0 .9rem; font-size:.95rem; font-weight:650; }}
+.bars {{ display:grid; grid-template-columns:repeat({n_steps},1fr); gap:.6rem; align-items:end; }}
+.bar {{ text-align:center; font-size:.72rem; color:var(--muted); }}
+.stack {{ height:110px; display:flex; flex-direction:column-reverse; border-radius:5px; overflow:hidden; background:var(--soft); }}
+.stack i {{ display:block; }}
+.stack .r {{ background:var(--real); }} .stack .c {{ background:var(--cos); }} .stack .n {{ background:var(--new); }}
+.bar.brk .stack {{ background:repeating-linear-gradient(45deg,var(--soft),var(--soft) 6px,#e9ebee 6px,#e9ebee 12px); }}
+.bar b {{ display:block; color:var(--ink); font-size:.8rem; margin-top:.35rem; }}
+.key {{ display:flex; gap:1rem; margin-top:.9rem; color:var(--muted); font-size:.78rem; }}
+.key i {{ width:.65rem; height:.65rem; border-radius:2px; display:inline-block; margin-right:.35rem; vertical-align:-1px; }}
+.toolbar {{ position:sticky; top:0; z-index:5; background:var(--bg); padding:1rem 0; margin-top:.5rem;
+  display:flex; gap:1rem; align-items:center; flex-wrap:wrap; border-bottom:1px solid var(--line); }}
+input[type=search] {{ font:inherit; padding:.55rem .85rem; width:min(24rem,100%); border:1px solid var(--line);
+  border-radius:8px; background:var(--card); outline:none; }}
+input[type=search]:focus {{ border-color:var(--brand); box-shadow:0 0 0 3px rgba(15,61,94,.12); }}
+.seg {{ display:inline-flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--card); }}
+.seg button {{ font:inherit; font-size:.85rem; border:0; background:none; padding:.45rem .8rem; color:var(--muted); cursor:pointer; }}
+.seg button.on {{ background:var(--brand); color:#fff; }}
+.count {{ margin-left:auto; color:var(--muted); font-size:.85rem; }}
+.var {{ margin:1rem 0; overflow:hidden; }}
+.var header {{ display:flex; align-items:center; gap:.7rem; padding:.8rem 1.2rem; border-bottom:1px solid var(--line); }}
+.var h2 {{ margin:0; font:700 1rem ui-monospace,SFMono-Regular,Menlo,monospace; }}
+.var header .summary {{ color:var(--muted); font-size:.8rem; margin-left:auto; }}
+table {{ width:100%; border-collapse:collapse; }}
+td {{ padding:.55rem 1.2rem; border-bottom:1px solid var(--soft); vertical-align:top; }}
+tr:last-child td {{ border-bottom:0; }}
+td.r {{ width:6.5rem; white-space:nowrap; color:var(--muted); font:600 .8rem ui-monospace,SFMono-Regular,Menlo,monospace; padding-top:.7rem; }}
+td.m {{ width:8.5rem; white-space:nowrap; }}
+tr.real td {{ background:var(--real-bg); }} tr.real td.r {{ box-shadow:inset 3px 0 0 var(--real); }}
+tr.missing td.t {{ color:var(--cos); font-style:italic; }}
+tr.brk td {{ padding:.35rem 1.2rem; background:var(--soft); color:var(--muted); font-size:.75rem;
+  text-transform:uppercase; letter-spacing:.06em; font-weight:600; }}
+.tag {{ display:inline-block; font-size:.72rem; font-weight:650; padding:.12rem .5rem; border-radius:5px; }}
+.tag.real {{ color:var(--real); background:#fbe1de; }} .tag.cosmetic {{ color:#4b5563; background:var(--soft); }}
+.tag.added, .tag.removed {{ color:var(--new); background:#e0eafd; }}
+ins {{ background:var(--ins); text-decoration:none; padding:0 .15rem; border-radius:3px; }}
+del {{ background:var(--del); color:#7f1d1d; padding:0 .15rem; border-radius:3px; }}
+footer {{ color:var(--muted); font-size:.78rem; padding:1.5rem 0 3rem; }}
+@media (max-width:700px) {{ .kpis {{ grid-template-columns:repeat(2,1fr); }} td.m {{ width:auto; }} .count {{ margin-left:0; }} }}
 </style></head><body>
-<header><div class="wrap">
-<p class="eyebrow">deriva · ENEMDU persona dictionaries · INEC</p>
-<h1>How the questionnaire changed, variable by variable</h1>
-<p class="rounds">{rounds}</p>
-</div></header>
+<div class="top"><div class="wrap"><div class="brand"><i></i>deriva</div>
+<div class="src">ENEMDU persona dictionaries · INEC, CC-BY</div></div></div>
 <main class="wrap">
-<div class="stats">
-<div class="stat"><b>{n_rounds}</b><span>rounds</span></div>
-<div class="stat"><b>{variables}</b><span>variables</span></div>
-<div class="stat real"><b>{real}</b><span>real changes</span></div>
-<div class="stat"><b>{cosmetic}</b><span>cosmetic changes</span></div>
+<h1>How the ENEMDU questionnaire changed</h1>
+<p class="lead">{rounds_text}</p>
+<div class="grid kpis">
+<div class="card kpi"><span>Rounds</span><b>{n_rounds}</b></div>
+<div class="card kpi"><span>Variables</span><b>{variables}</b></div>
+<div class="card kpi real"><span>Real changes</span><b>{real}</b></div>
+<div class="card kpi"><span>Cosmetic changes</span><b>{cosmetic}</b></div>
 </div>
+<div class="card panel"><h3>Changes between consecutive rounds</h3>
+<div class="bars">{bars}</div>
+<div class="key"><span><i style="background:var(--real)"></i>Real</span><span><i style="background:var(--cos)"></i>Cosmetic</span>
+<span><i style="background:var(--new)"></i>Added or removed</span><span>Hatched: layout redesign, not compared</span></div></div>
 <div class="toolbar">
-<input type="search" id="q" placeholder="Search a variable, e.g. p76" autofocus>
-<label><input type="checkbox" id="onlyreal"> only real changes</label>
-<label><input type="checkbox" id="unchanged"> show unchanged variables</label>
-<div class="legend"><span class="pill real">Real change</span><span class="pill cosmetic">Cosmetic</span><span class="pill added">Added / removed</span></div>
+<input type="search" id="q" placeholder="Search a variable, e.g. p76">
+<div class="seg" id="seg"><button data-f="real" class="on">Real changes</button><button data-f="changed">Any change</button><button data-f="all">All variables</button></div>
+<span class="count" id="count"></span>
 </div>
-<p class="count" id="count"></p>
 {sections}
-<footer>Changes between consecutive rounds of the same layout are classified by deriva's second rule
-(<code>deriva-eval --rule v2</code>); words removed are <del>struck</del>, words added are <ins>highlighted</ins>.
-The 2021 redesign changed the dictionary layout, so 2020-12 and 2021 are not compared.</footer>
+<footer>Each change between consecutive rounds of the same dictionary layout is classified by deriva's second rule
+(<code>deriva-eval --rule v2</code>), which agreed with hand labels on 40 of 45 changes in a pair it was not built from.
+Removed words are <del>marked</del>, added words are <ins>highlighted</ins>. Generated by <code>deriva-history</code>.</footer>
 </main>
 <script>
-const q = document.getElementById("q"), only = document.getElementById("onlyreal"),
-      all = document.getElementById("unchanged"), count = document.getElementById("count");
-function filter() {{
-  const text = q.value.trim().toLowerCase(); let shown = 0;
-  for (const s of document.querySelectorAll("section")) {{
-    const hit = s.dataset.name.toLowerCase().includes(text);
-    const hide = !hit || (only.checked && s.dataset.real === "0") || (!all.checked && !text && s.dataset.changed === "0");
-    s.hidden = hide; if (!hide) shown++;
+const q=document.getElementById("q"), seg=document.getElementById("seg"), count=document.getElementById("count");
+let mode="real";
+function filter(){{
+  const t=q.value.trim().toLowerCase(); let n=0;
+  for(const s of document.querySelectorAll(".var")){{
+    const ok=s.dataset.name.toLowerCase().includes(t) && (t || mode==="all" || (mode==="real"? s.dataset.real!=="0" : s.dataset.changed!=="0"));
+    s.hidden=!ok; if(ok) n++;
   }}
-  count.textContent = shown + " variable" + (shown === 1 ? "" : "s") + " shown";
+  count.textContent=n+(n===1?" variable":" variables");
 }}
-for (const el of [q, only, all]) el.addEventListener("input", filter);
-filter();
+seg.addEventListener("click",e=>{{ if(!e.target.dataset.f) return; mode=e.target.dataset.f;
+  for(const b of seg.children) b.classList.toggle("on", b===e.target); filter(); }});
+q.addEventListener("input",filter); filter();
 </script>
 </body></html>
 """
 
 
 def _diff(before: str, after: str) -> str:
-    """The new text, with removed words struck and added words highlighted."""
+    """The new text, with removed words marked and added words highlighted."""
     a, b = before.split(), after.split()
     out = []
     for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, a, b).get_opcodes():
@@ -220,38 +222,67 @@ def _diff(before: str, after: str) -> str:
     return " ".join(out)
 
 
+def _bars(rounds: list[Round], history: dict[str, list[Entry]]) -> str:
+    steps = []
+    for i in range(1, len(rounds)):
+        marks = [entries[i].mark for entries in history.values()]
+        label = f"{rounds[i - 1].label} → {rounds[i].label}"
+        if BREAK in marks:
+            steps.append(f'<div class="bar brk"><div class="stack"></div><b>redesign</b>{label}</div>')
+            continue
+        r, c = marks.count(REAL), marks.count(COSMETIC)
+        n = marks.count(ADDED) + marks.count(REMOVED)
+        steps.append((r, c, n, label))
+    peak = max([sum(x[:3]) for x in steps if isinstance(x, tuple)] + [1])
+    out = []
+    for x in steps:
+        if isinstance(x, str):
+            out.append(x)
+            continue
+        r, c, n, label = x
+        seg = lambda k, cls: f'<i class="{cls}" style="height:{100 * k / peak:.1f}%" title="{k}"></i>' if k else ""
+        out.append(f'<div class="bar"><div class="stack">{seg(r, "r")}{seg(c, "c")}{seg(n, "n")}</div>'
+                   f"<b>{r} real</b>{label}</div>")
+    return "".join(out)
+
+
 def render(rounds: list[Round], history: dict[str, list[Entry]]) -> str:
     sections = []
     totals = {REAL: 0, COSMETIC: 0}
     for name, entries in history.items():
         real = sum(e.mark == REAL for e in entries)
+        cosmetic = sum(e.mark == COSMETIC for e in entries)
         changed = sum(e.mark in (REAL, COSMETIC, ADDED, REMOVED) for e in entries)
-        for mark in totals:
-            totals[mark] += sum(e.mark == mark for e in entries)
-        items, before = [], None
+        totals[REAL] += real
+        totals[COSMETIC] += cosmetic
+        rows, before = [], None
         for e in entries:
             if e.mark == BREAK:
-                items.append(f'<li class="break">{MARK_TEXT[BREAK]}</li>')
+                rows.append(f'<tr class="brk"><td colspan="3">{MARK_TEXT[BREAK]}</td></tr>')
+            kind = "same" if e.mark == BREAK else e.mark
             if e.text is None:
-                text = '<span class="missing">not in this round</span>'
+                kind, text = "missing", "not in this round"
             elif e.mark in (REAL, COSMETIC) and before is not None:
                 text = _diff(before, e.text)
             else:
                 text = html.escape(e.text)
-            pill = f'<span class="pill {e.mark}">{MARK_TEXT[e.mark]}</span>' if MARK_TEXT[e.mark] and e.mark != BREAK else ""
-            items.append(f'<li class="{e.mark}"><span class="round">{e.round}</span><span>{pill}</span><span>{text}</span></li>')
+            tag = f'<span class="tag {e.mark}">{MARK_TEXT[e.mark]}</span>' if e.mark in (REAL, COSMETIC, ADDED, REMOVED) else ""
+            rows.append(f'<tr class="{kind}"><td class="r">{e.round}</td><td class="m">{tag}</td><td class="t">{text}</td></tr>')
             before = e.text
-        badge = f'<span class="pill real">{real} real</span>' if real else ""
+        summary = f"{real} real · {cosmetic} cosmetic" if changed else "no changes"
         sections.append(
-            f'<section data-name="{html.escape(name)}" data-real="{real}" data-changed="{changed}">'
-            f"<h2>{html.escape(name)}{badge}</h2><ol>{''.join(items)}</ol></section>"
+            f'<section class="card var" data-name="{html.escape(name)}" data-real="{real}" data-changed="{changed}">'
+            f'<header><h2>{html.escape(name)}</h2><span class="summary">{summary}</span></header>'
+            f"<table>{''.join(rows)}</table></section>"
         )
     return PAGE.format(
-        rounds=" → ".join(r.label for r in rounds),
+        rounds_text=f"{len(rounds)} rounds, {rounds[0].label} to {rounds[-1].label}: every variable's description in each round, and what changed.",
         n_rounds=len(rounds),
         variables=len(history),
         real=totals[REAL],
         cosmetic=totals[COSMETIC],
+        n_steps=len(rounds) - 1,
+        bars=_bars(rounds, history),
         sections="\n".join(sections),
     )
 
