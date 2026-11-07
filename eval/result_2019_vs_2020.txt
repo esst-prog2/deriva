@@ -1,0 +1,157 @@
+labels_2019_vs_2020.csv: 24 of 25 rows labelled
+
+                 rule: cosmetic  rule: real
+  you: cosmetic               1          22
+  you: real                   0           1
+
+agreement: 2 of 24 (8%)
+
+disagreements: 22
+
+  p63  you: cosmetic  rule: real
+    2019: En el mes de NOVIEMBRE ¿cuál fue el monto en dinero que recibió (…) por la venta de los productos, bienes o servicios de su negocio o establecimiento? 
+Monto
+    2020: En el mes de MAYO ¿cuál fue el monto en dinero que recibió (…) por la venta de los productos, bienes o servicios de su negocio o establecimiento? 
+Monto
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p64a  you: cosmetic  rule: real
+    2019: En el mes de NOVIEMBRE ¿retiró de su negocio o tomó de lo que produce o vende, bienes, servicios o productos para el consumo del hogar? 
+Cod.
+    2020: En el mes de MAYO ¿retiró de su negocio o tomó de lo que produce o vende, bienes, servicios o productos para el consumo del hogar? 
+Cod.
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p64b  you: cosmetic  rule: real
+    2019: En el mes de NOVIEMBRE ¿retiró de su negocio o tomó de lo que produce o vende, bienes, servicios o productos para el consumo del hogar?  
+Monto
+    2020: En el mes de MAYO ¿retiró de su negocio o tomó de lo que produce o vende, bienes, servicios o productos para el consumo del hogar?  
+Monto
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p65  you: cosmetic  rule: real
+    2019: En el mes de NOVIEMBRE ¿cuánto gastó para el funcionamiento de su negocio en: compra de mercadería, pago de mano de obra, insumos o materia prima de los productos que vende, produce o los servicios que ofrece?
+Monto
+    2020: En el mes de MAYO ¿cuánto gastó para el funcionamiento de su negocio en: compra de mercadería, pago de mano de obra, insumos o materia prima de los productos que vende, produce o los servicios que ofrece?
+Monto
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p66  you: cosmetic  rule: real
+    2019: En el mes de NOVIEMBRE en su ocupación como (…) ¿cuánto dinero líquido recibió por concepto de sueldo o salario y otros ingresos?
+Monto
+    2020: En el mes de MAYO en su ocupación como (…) ¿cuánto dinero líquido recibió por concepto de sueldo o salario y otros ingresos?
+Monto
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p67  you: cosmetic  rule: real
+    2019: En el mes de NOVIEMBRE ¿cuánto le descontaron en total por las aportaciones al IESS, impuesto a la renta, comisariatos, almacenes, cooperativas, asociaciones, etc.? 
+Monto
+    2020: En el mes de MAYO ¿cuánto le descontaron en total por las aportaciones al IESS, impuesto a la renta, comisariatos, almacenes, cooperativas, asociaciones, etc.? 
+Monto
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p68a  you: cosmetic  rule: real
+    2019: En el mes de NOVIEMBRE, además de su ingreso monetario ¿recibió por su trabajo especies o servicios tales como: alimentos, vivienda, vestido, etc.?
+Cod.
+    2020: En el mes de MAYO, además de su ingreso monetario ¿recibió por su trabajo especies o servicios tales como: alimentos, vivienda, vestido, etc.?
+Cod.
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p68b  you: cosmetic  rule: real
+    2019: En el mes de NOVIEMBRE, además de su ingreso monetario ¿recibió por su trabajo especies o servicios tales como: alimentos, vivienda, vestido, etc.?
+Monto
+    2020: En el mes de MAYO, además de su ingreso monetario ¿recibió por su trabajo especies o servicios tales como: alimentos, vivienda, vestido, etc.?
+Monto
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p69  you: cosmetic  rule: real
+    2019: En su (s) otra (s) ocupación (es), ¿cuál fue su ingreso monetario total, ya sea como asalariado o por concepto de ganancia en el mes de NOVIEMBRE?
+Monto
+    2020: En su (s) otra (s) ocupación (es), ¿cuál fue su ingreso monetario total, ya sea como asalariado o por concepto de ganancia en el mes de MAYO?
+Monto
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p70a  you: cosmetic  rule: real
+    2019: En su (s) otra (s) ocupación (es) ¿recibió por su trabajo pago en especies o retiró del negocio o producción bienes o productos para el consumo del hogar, en el mes de NOVIEMBRE?
+Cod.
+    2020: En su (s) otra (s) ocupación (es) ¿recibió por su trabajo pago en especies o retiró del negocio o producción bienes o productos para el consumo del hogar, en el mes de MAYO?
+Cod.
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p70b  you: cosmetic  rule: real
+    2019: En su (s) otra (s) ocupación (es) ¿recibió por su trabajo pago en especies o retiró del negocio o producción bienes o productos para el consumo del hogar, en el mes de NOVIEMBRE?
+Monto
+    2020: En su (s) otra (s) ocupación (es) ¿recibió por su trabajo pago en especies o retiró del negocio o producción bienes o productos para el consumo del hogar, en el mes de MAYO?
+Monto
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p71a  you: cosmetic  rule: real
+    2019: ¿Recibió en el mes de NOVIEMBRE ingresos por concepto de intereses por: cuenta de ahorros, corrientes, préstamos a terceros, hipotecas; bonos por acciones; arriendo de casas, edificios, terrenos, maquinaria, etc.?
+Cod.
+    2020: ¿Recibió en el mes de MAYO ingresos por concepto de intereses por: cuenta de ahorros, corrientes, préstamos a terceros, hipotecas; bonos por acciones; arriendo de casas, edificios, terrenos, maquinaria, etc.?
+Cod.
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p71b  you: cosmetic  rule: real
+    2019: ¿Recibió en el mes de NOVIEMBRE ingresos por concepto de intereses por: cuenta de ahorros, corrientes, préstamos a terceros, hipotecas; bonos por acciones; arriendo de casas, edificios, terrenos, maquinaria, etc.?
+Monto.
+    2020: ¿Recibió en el mes de MAYO ingresos por concepto de intereses por: cuenta de ahorros, corrientes, préstamos a terceros, hipotecas; bonos por acciones; arriendo de casas, edificios, terrenos, maquinaria, etc.?
+Monto.
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p72a  you: cosmetic  rule: real
+    2019: ¿Recibió en el mes de NOVIEMBRE ingresos por concepto de pensión por: jubilación, orfandad, viudez, invalidez, enfermedad, divorcio, cesantía, etc.?
+Cod
+    2020: ¿Recibió en el mes de MAYO ingresos por concepto de pensión por: jubilación, orfandad, viudez, invalidez, enfermedad, divorcio, cesantía, etc.?
+Cod
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p72b  you: cosmetic  rule: real
+    2019: ¿Recibió en el mes de NOVIEMBRE ingresos por concepto de pensión por: jubilación, orfandad, viudez, invalidez, enfermedad, divorcio, cesantía, etc.?
+Monto
+    2020: ¿Recibió en el mes de MAYO ingresos por concepto de pensión por: jubilación, orfandad, viudez, invalidez, enfermedad, divorcio, cesantía, etc.?
+Monto
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p73a  you: cosmetic  rule: real
+    2019: ¿Recibió en el mes de NOVIEMBRE dinero o especies por regalos o donaciones de personas o instituciones que vivan dentro del país ?
+Cod.
+    2020: ¿Recibió en el mes de MAYO dinero o especies por regalos o donaciones de personas o instituciones que vivan dentro del país ?
+Cod.
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p73b  you: cosmetic  rule: real
+    2019: ¿Recibió en el mes de NOVIEMBRE dinero o especies por regalos o donaciones de personas o instituciones que vivan dentro del país ?
+Monto
+    2020: ¿Recibió en el mes de MAYO dinero o especies por regalos o donaciones de personas o instituciones que vivan dentro del país ?
+Monto
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p74a  you: cosmetic  rule: real
+    2019: ¿Recibió en el mes de NOVIEMBRE dinero o especies enviado por parte de familiares o amigos que vivan en el exterior?
+Cód.
+    2020: ¿Recibió en el mes de MAYO dinero o especies enviado por parte de familiares o amigos que vivan en el exterior?
+Cód.
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p74b  you: cosmetic  rule: real
+    2019: ¿Recibió en el mes de NOVIEMBRE dinero o especies enviado por parte de familiares o amigos que vivan en el exterior?
+Monto
+    2020: ¿Recibió en el mes de MAYO dinero o especies enviado por parte de familiares o amigos que vivan en el exterior?
+Monto
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p76  you: cosmetic  rule: real
+    2019: ¿Cuánto recibió en el mes de NOVIEMBRE por el BONO DE DESARROLLO HUMANO?
+    2020: ¿Cuánto recibió en el mes de MAYO por el BONO DE DESARROLLO HUMANO?
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  p78  you: cosmetic  rule: real
+    2019: ¿Cuánto recibió en el mes de NOVIEMBRE por el BONO DE DISCAPACIDAD JOAQUÍN GALLEGOS LARA?
+    2020: ¿Cuánto recibió en el mes de MAYO por el BONO DE DISCAPACIDAD JOAQUÍN GALLEGOS LARA?
+    note: only the reference month changed (NOVIEMBRE to MAYO)
+
+  ced01a  you: cosmetic  rule: real
+    2019: CED01A. Tiene cédula de identidad
+    2020: Tiene cédula de identidad
+    note: the variable code "CED01A." dropped from the start of the text

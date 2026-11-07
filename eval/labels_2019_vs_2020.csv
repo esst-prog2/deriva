@@ -2,66 +2,66 @@
 p47b,"¿Cuántas personas trabajan usualmente en la empresa o
 negocio?
 Cuántas","¿Cuántas personas trabajan usualmente en la empresa o
-negocio? Cuántas",,
+negocio? Cuántas",cosmetic,"only a line break before ""Cuántas"""
 p63,"En el mes de NOVIEMBRE ¿cuál fue el monto en dinero que recibió (…) por la venta de los productos, bienes o servicios de su negocio o establecimiento? 
 Monto","En el mes de MAYO ¿cuál fue el monto en dinero que recibió (…) por la venta de los productos, bienes o servicios de su negocio o establecimiento? 
-Monto",,
+Monto",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p64a,"En el mes de NOVIEMBRE ¿retiró de su negocio o tomó de lo que produce o vende, bienes, servicios o productos para el consumo del hogar? 
 Cod.","En el mes de MAYO ¿retiró de su negocio o tomó de lo que produce o vende, bienes, servicios o productos para el consumo del hogar? 
-Cod.",,
+Cod.",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p64b,"En el mes de NOVIEMBRE ¿retiró de su negocio o tomó de lo que produce o vende, bienes, servicios o productos para el consumo del hogar?  
 Monto","En el mes de MAYO ¿retiró de su negocio o tomó de lo que produce o vende, bienes, servicios o productos para el consumo del hogar?  
-Monto",,
+Monto",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p65,"En el mes de NOVIEMBRE ¿cuánto gastó para el funcionamiento de su negocio en: compra de mercadería, pago de mano de obra, insumos o materia prima de los productos que vende, produce o los servicios que ofrece?
 Monto","En el mes de MAYO ¿cuánto gastó para el funcionamiento de su negocio en: compra de mercadería, pago de mano de obra, insumos o materia prima de los productos que vende, produce o los servicios que ofrece?
-Monto",,
+Monto",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p66,"En el mes de NOVIEMBRE en su ocupación como (…) ¿cuánto dinero líquido recibió por concepto de sueldo o salario y otros ingresos?
 Monto","En el mes de MAYO en su ocupación como (…) ¿cuánto dinero líquido recibió por concepto de sueldo o salario y otros ingresos?
-Monto",,
+Monto",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p67,"En el mes de NOVIEMBRE ¿cuánto le descontaron en total por las aportaciones al IESS, impuesto a la renta, comisariatos, almacenes, cooperativas, asociaciones, etc.? 
 Monto","En el mes de MAYO ¿cuánto le descontaron en total por las aportaciones al IESS, impuesto a la renta, comisariatos, almacenes, cooperativas, asociaciones, etc.? 
-Monto",,
+Monto",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p68a,"En el mes de NOVIEMBRE, además de su ingreso monetario ¿recibió por su trabajo especies o servicios tales como: alimentos, vivienda, vestido, etc.?
 Cod.","En el mes de MAYO, además de su ingreso monetario ¿recibió por su trabajo especies o servicios tales como: alimentos, vivienda, vestido, etc.?
-Cod.",,
+Cod.",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p68b,"En el mes de NOVIEMBRE, además de su ingreso monetario ¿recibió por su trabajo especies o servicios tales como: alimentos, vivienda, vestido, etc.?
 Monto","En el mes de MAYO, además de su ingreso monetario ¿recibió por su trabajo especies o servicios tales como: alimentos, vivienda, vestido, etc.?
-Monto",,
+Monto",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p69,"En su (s) otra (s) ocupación (es), ¿cuál fue su ingreso monetario total, ya sea como asalariado o por concepto de ganancia en el mes de NOVIEMBRE?
 Monto","En su (s) otra (s) ocupación (es), ¿cuál fue su ingreso monetario total, ya sea como asalariado o por concepto de ganancia en el mes de MAYO?
-Monto",,
+Monto",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p70a,"En su (s) otra (s) ocupación (es) ¿recibió por su trabajo pago en especies o retiró del negocio o producción bienes o productos para el consumo del hogar, en el mes de NOVIEMBRE?
 Cod.","En su (s) otra (s) ocupación (es) ¿recibió por su trabajo pago en especies o retiró del negocio o producción bienes o productos para el consumo del hogar, en el mes de MAYO?
-Cod.",,
+Cod.",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p70b,"En su (s) otra (s) ocupación (es) ¿recibió por su trabajo pago en especies o retiró del negocio o producción bienes o productos para el consumo del hogar, en el mes de NOVIEMBRE?
 Monto","En su (s) otra (s) ocupación (es) ¿recibió por su trabajo pago en especies o retiró del negocio o producción bienes o productos para el consumo del hogar, en el mes de MAYO?
-Monto",,
+Monto",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p71a,"¿Recibió en el mes de NOVIEMBRE ingresos por concepto de intereses por: cuenta de ahorros, corrientes, préstamos a terceros, hipotecas; bonos por acciones; arriendo de casas, edificios, terrenos, maquinaria, etc.?
 Cod.","¿Recibió en el mes de MAYO ingresos por concepto de intereses por: cuenta de ahorros, corrientes, préstamos a terceros, hipotecas; bonos por acciones; arriendo de casas, edificios, terrenos, maquinaria, etc.?
-Cod.",,
+Cod.",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p71b,"¿Recibió en el mes de NOVIEMBRE ingresos por concepto de intereses por: cuenta de ahorros, corrientes, préstamos a terceros, hipotecas; bonos por acciones; arriendo de casas, edificios, terrenos, maquinaria, etc.?
 Monto.","¿Recibió en el mes de MAYO ingresos por concepto de intereses por: cuenta de ahorros, corrientes, préstamos a terceros, hipotecas; bonos por acciones; arriendo de casas, edificios, terrenos, maquinaria, etc.?
-Monto.",,
+Monto.",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p72a,"¿Recibió en el mes de NOVIEMBRE ingresos por concepto de pensión por: jubilación, orfandad, viudez, invalidez, enfermedad, divorcio, cesantía, etc.?
 Cod","¿Recibió en el mes de MAYO ingresos por concepto de pensión por: jubilación, orfandad, viudez, invalidez, enfermedad, divorcio, cesantía, etc.?
-Cod",,
+Cod",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p72b,"¿Recibió en el mes de NOVIEMBRE ingresos por concepto de pensión por: jubilación, orfandad, viudez, invalidez, enfermedad, divorcio, cesantía, etc.?
 Monto","¿Recibió en el mes de MAYO ingresos por concepto de pensión por: jubilación, orfandad, viudez, invalidez, enfermedad, divorcio, cesantía, etc.?
-Monto",,
+Monto",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p73a,"¿Recibió en el mes de NOVIEMBRE dinero o especies por regalos o donaciones de personas o instituciones que vivan dentro del país ?
 Cod.","¿Recibió en el mes de MAYO dinero o especies por regalos o donaciones de personas o instituciones que vivan dentro del país ?
-Cod.",,
+Cod.",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p73b,"¿Recibió en el mes de NOVIEMBRE dinero o especies por regalos o donaciones de personas o instituciones que vivan dentro del país ?
 Monto","¿Recibió en el mes de MAYO dinero o especies por regalos o donaciones de personas o instituciones que vivan dentro del país ?
-Monto",,
+Monto",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p74a,"¿Recibió en el mes de NOVIEMBRE dinero o especies enviado por parte de familiares o amigos que vivan en el exterior?
 Cód.","¿Recibió en el mes de MAYO dinero o especies enviado por parte de familiares o amigos que vivan en el exterior?
-Cód.",,
+Cód.",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p74b,"¿Recibió en el mes de NOVIEMBRE dinero o especies enviado por parte de familiares o amigos que vivan en el exterior?
 Monto","¿Recibió en el mes de MAYO dinero o especies enviado por parte de familiares o amigos que vivan en el exterior?
-Monto",,
-p76,¿Cuánto recibió en el mes de NOVIEMBRE por el BONO DE DESARROLLO HUMANO?,¿Cuánto recibió en el mes de MAYO por el BONO DE DESARROLLO HUMANO?,,
-p78,¿Cuánto recibió en el mes de NOVIEMBRE por el BONO DE DISCAPACIDAD JOAQUÍN GALLEGOS LARA?,¿Cuánto recibió en el mes de MAYO por el BONO DE DISCAPACIDAD JOAQUÍN GALLEGOS LARA?,,
-ced01a,CED01A. Tiene cédula de identidad,Tiene cédula de identidad,,
-secemp,Sectores de los Empleados (clasificación para >= 15 años),Sectorización de los empleados (15 años y más),,
-estrato,Plan de muestreo,Estrato,,
+Monto",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
+p76,¿Cuánto recibió en el mes de NOVIEMBRE por el BONO DE DESARROLLO HUMANO?,¿Cuánto recibió en el mes de MAYO por el BONO DE DESARROLLO HUMANO?,cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
+p78,¿Cuánto recibió en el mes de NOVIEMBRE por el BONO DE DISCAPACIDAD JOAQUÍN GALLEGOS LARA?,¿Cuánto recibió en el mes de MAYO por el BONO DE DISCAPACIDAD JOAQUÍN GALLEGOS LARA?,cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
+ced01a,CED01A. Tiene cédula de identidad,Tiene cédula de identidad,cosmetic,"the variable code ""CED01A."" dropped from the start of the text"
+secemp,Sectores de los Empleados (clasificación para >= 15 años),Sectorización de los empleados (15 años y más),,"unsure: ""Sectores"" vs ""Sectorización"" may or may not mean the same; left unlabelled"
+estrato,Plan de muestreo,Estrato,real,"different text: ""Plan de muestreo"" to ""Estrato"""
