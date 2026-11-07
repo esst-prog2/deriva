@@ -11,8 +11,11 @@ from pathlib import Path
 from deriva import DerivaError
 from deriva.output import DESCRIPTION_PREFIX, ENCODING, LABEL_COLUMN, NOTE_COLUMN, VARIABLE_COLUMN
 from deriva.rule import COSMETIC, REAL, UNCHANGED, classify
+from deriva.rule_v2 import classify_v2
 
 LABELS = (COSMETIC, REAL)
+# v1 is the rule deriva uses; v2 is the optional second rule, measured only on unseen pairs.
+RULES = {"v1": lambda a, b, variable: classify(a, b), "v2": classify_v2}
 DELIMITERS = (",", ";")  # Excel in a Spanish locale saves CSV with ";"
 
 
@@ -33,7 +36,7 @@ class LabelsFile:
     rows: list[Row]
 
 
-def read_labels(path: Path) -> LabelsFile:
+def read_labels(path: Path, rule: str = "v1") -> LabelsFile:
     try:
         text = path.read_text(encoding=ENCODING)
     except OSError as exc:
@@ -71,7 +74,7 @@ def read_labels(path: Path) -> LabelsFile:
             raise DerivaError(f"{path}: variable {variable!r} appears more than once (again in row {row_number})")
         seen.add(variable)
         a, b = record[descriptions[0]], record[descriptions[1]]
-        verdict = classify(a, b)
+        verdict = RULES[rule](a, b, variable)
         if verdict == UNCHANGED:
             raise DerivaError(f"{path}: {variable!r} has identical descriptions, so there is nothing to label")
         rows.append(
@@ -159,10 +162,17 @@ def main(argv: list[str] | None = None) -> int:
         description="Compare hand labels in a deriva labels file with deriva's cosmetic/real rule.",
     )
     parser.add_argument("labels_csv", help="labels file written by deriva --labels-template")
+    parser.add_argument(
+        "--rule",
+        choices=sorted(RULES),
+        default="v1",
+        help="v1 is the rule deriva uses (default); v2 is the optional second rule",
+    )
     args = parser.parse_args(argv)
     path = Path(args.labels_csv)
     try:
-        print(report(path, read_labels(path)))
+        text = report(path, read_labels(path, args.rule))
+        print(text if args.rule == "v1" else f"rule: {args.rule}\n{text}")
     except DerivaError as error:
         print(f"deriva-eval: error: {error}", file=sys.stderr)
         return 1
