@@ -45,8 +45,8 @@ def test_page_is_written(folder, capsys):
     assert main([str(folder)]) == 0
     page = (folder / "deriva_history.html").read_text(encoding="utf-8")
     assert 'data-name="p76" data-real="1"' in page
-    assert "questionnaire redesign: not compared" in page
-    assert "BONO o PENSIÓN" in page
+    assert "Questionnaire redesign" in page
+    assert "PENSIÓN" in page
     assert "wrote" in capsys.readouterr().out
 
 
