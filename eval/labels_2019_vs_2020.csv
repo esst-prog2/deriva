@@ -63,5 +63,5 @@ Monto",cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p76,¿Cuánto recibió en el mes de NOVIEMBRE por el BONO DE DESARROLLO HUMANO?,¿Cuánto recibió en el mes de MAYO por el BONO DE DESARROLLO HUMANO?,cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 p78,¿Cuánto recibió en el mes de NOVIEMBRE por el BONO DE DISCAPACIDAD JOAQUÍN GALLEGOS LARA?,¿Cuánto recibió en el mes de MAYO por el BONO DE DISCAPACIDAD JOAQUÍN GALLEGOS LARA?,cosmetic,only the reference month changed (NOVIEMBRE to MAYO)
 ced01a,CED01A. Tiene cédula de identidad,Tiene cédula de identidad,cosmetic,"the variable code ""CED01A."" dropped from the start of the text"
-secemp,Sectores de los Empleados (clasificación para >= 15 años),Sectorización de los empleados (15 años y más),,"unsure: ""Sectores"" vs ""Sectorización"" may or may not mean the same; left unlabelled"
+secemp,Sectores de los Empleados (clasificación para >= 15 años),Sectorización de los empleados (15 años y más),real,"unsure whether ""Sectores"" and ""Sectorización"" mean the same, so real: a researcher should check"
 estrato,Plan de muestreo,Estrato,real,"different text: ""Plan de muestreo"" to ""Estrato"""

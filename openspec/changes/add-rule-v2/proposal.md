@@ -22,3 +22,9 @@ v2 was built after seeing both labelled pairs, so its numbers there only show th
 14 of 22 on 2021 vs 2025 and 24 of 24 on 2019 vs 2020, still with 0 real changes
 called cosmetic. It is measured once, on a third pair labelled blind before v2 is run
 on it. If it hides a real change there, it is not adopted.
+
+## Result on the unseen pair (2026-11-07)
+
+2020-09 vs 2020-12, 45 changes labelled before either rule was run on it:
+v1 20 of 45 (44%), v2 40 of 45 (89%), and neither calls any of the 7 hand-real changes
+cosmetic. v2 meets the criterion above.

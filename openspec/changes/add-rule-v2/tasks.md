@@ -1,4 +1,4 @@
 - [x] 1. Tests for the three patterns, for real changes that must stay real, and for the first rule being unchanged
 - [x] 2. `deriva.rule_v2` and `deriva-eval --rule v1|v2`
 - [x] 3. Fit on the two seen pairs, recorded as fit, not as a measurement
-- [ ] 4. Find a third pair, label it blind, then run both rules on it once
+- [x] 4. Find a third pair, label it blind, then run both rules on it once

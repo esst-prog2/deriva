@@ -1,0 +1,6 @@
+variables: {'2019_06': 154, '2019_12': 155, '2020_09': 97, '2020_12': 164}
+2019_06 vs 2019_12: 147 shared, 21 descriptions differ, 0 of them identical to a pair already labelled
+2020_09 vs 2020_12: 89 shared, 45 descriptions differ, 1 of them identical to a pair already labelled
+2019_06 vs 2020_09: 87 shared, 4 descriptions differ, 3 of them identical to a pair already labelled
+2019_06 vs 2020_12: 145 shared, 73 descriptions differ, 0 of them identical to a pair already labelled
+2019_12 vs 2020_12: 148 shared, 53 descriptions differ, 0 of them identical to a pair already labelled

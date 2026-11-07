@@ -1,0 +1,94 @@
+﻿variable,description_2020_a,description_2020_b,label,note
+p09," ¿Cuál es la razón principal para que (…) no asista actualmente a la escuela, colegio o universidad?"," ¿Cuál es la razón principal para que (…) no asista actualmente a la escuela, colegio o universidad:",cosmetic,only punctuation changed
+p10a,¿Cuál es el nivel de isntrucción y año as alto aprobado? NIVEL,¿Cuál es el nivel de isntrucción y año más alto que aprobó (...)? NIVEL,cosmetic,"typo fixed (""as"" to ""más"") and ""aprobado"" to ""que aprobó (...)"""
+p10b,¿Cuál es el nivel de isntrucción y año as alto aprobado? AÑO APROBADO,¿Cuál es el nivel de isntrucción y año más alto que aprobó (...)? AÑO APROBADO,cosmetic,"typo fixed (""as"" to ""más"") and ""aprobado"" to ""que aprobó (...)"""
+p15,¿Cómo se identifica (…) según su cultura y costumbres?,¿Cómo se identifica (…) según su cultura y costumbres:,cosmetic,only punctuation changed
+p20,¿Qué hizo (..) la semana pasada?,¿Qué hizo (...) la semana pasada:,cosmetic,only punctuation changed
+p26,¿Porqué razón (…) trabajó la semana pasada 40 horas o más?,¿Por qué razón (…) trabajó la semana pasada 40 horas o más?,cosmetic,"""Porqué"" to ""Por qué"""
+p27,¿Desearía (…) trabajar mas horas de las que trabaja?,Tomando en cuenta el número de horas trabajadas la semana pasada o la última semana que trabajó ¿desearía (…):,real,the whole question text changed
+p28,Tomando en cuenta el número de horas trabajadas la semana pasada o la última semana que trabajó ¿desearía (…)?,¿Esta disponible (…) para trabajar horas adicionales a la semana?,real,the whole question text changed
+p32,¿Durante las últimas 4 semanas (…) hizo alguna gestión para buscar trabajo tal como?,¿Durante las últimas cuatro semanas (…) hizo alguna gestión para buscar trabajo tal como:,cosmetic,"""4"" to ""cuatro"""
+p34,¿ Por qué razón no busco trabajo (…)?,¿ Por qué razón no busco trabajo (…):,cosmetic,only punctuation changed
+p41,"¿En relación a su ocupación, qué trabajo
+realiza(ba) (…)?","¿En relación a su ocupación, qué trabajo realiza(ba) (…)?",cosmetic,only spacing or line breaks changed
+p44f,"¿(…) recibe por parte de su patrono o empleador:
+seguro social",¿(…) recibe por parte de su patrono o empleador: seguro social?,cosmetic,only punctuation changed
+p47a,"¿Cuántas personas trabajan usualmente en la empresa o
+negocio?
+Cod",¿Cuántas personas trabajan usualmente en la empresa o negocio? Cod,cosmetic,only spacing or line breaks changed
+p47b,"¿Cuántas personas trabajan usualmente en la empresa o
+negocio? Cuántas",¿Cuántas personas trabajan usualmente en la empresa o negocio? Cuántas,cosmetic,only spacing or line breaks changed
+p63,"En el mes de MAYO ¿cuál fue el monto en dinero que recibió (…) por la venta de los productos, bienes o servicios de su negocio o establecimiento? 
+Monto","En el mes de NOVIEMBRE ¿cuál fue el monto en dinero que recibió (…) por la venta de los productos, bienes o servicios de su negocio o establecimiento? 
+Monto",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p64a,"En el mes de MAYO ¿retiró de su negocio o tomó de lo que produce o vende, bienes, servicios o productos para el consumo del hogar? 
+Cod.","En el mes de NOVIEMBRE ¿retiró de su negocio o tomó de lo que produce o vende, bienes, servicios o productos para el consumo del hogar? 
+Cod.",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p64b,"En el mes de MAYO ¿retiró de su negocio o tomó de lo que produce o vende, bienes, servicios o productos para el consumo del hogar?  
+Monto","En el mes de NOVIEMBRE ¿retiró de su negocio o tomó de lo que produce o vende, bienes, servicios o productos para el consumo del hogar?  
+Monto",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p65,"En el mes de MAYO ¿cuánto gastó para el funcionamiento de su negocio en: compra de mercadería, pago de mano de obra, insumos o materia prima de los productos que vende, produce o los servicios que ofrece?
+Monto","En el mes de NOVIEMBRE ¿cuánto gastó para el funcionamiento de su negocio en: compra de mercadería, pago de mano de obra, insumos o materia prima de los productos que vende, produce o los servicios que ofrece?
+Monto",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p66,"En el mes de MAYO en su ocupación como (…) ¿cuánto dinero líquido recibió por concepto de sueldo o salario y otros ingresos?
+Monto","En el mes de NOVIEMBRE en su ocupación como (…) ¿cuánto dinero líquido recibió por concepto de sueldo o salario y otros ingresos?
+Monto",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p67,"En el mes de MAYO ¿cuánto le descontaron en total por las aportaciones al IESS, impuesto a la renta, comisariatos, almacenes, cooperativas, asociaciones, etc.? 
+Monto","En el mes de NOVIEMBRE ¿cuánto le descontaron en total por las aportaciones al IESS, impuesto a la renta, comisariatos, almacenes, cooperativas, asociaciones, etc.? 
+Monto",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p68a,"En el mes de MAYO, además de su ingreso monetario ¿recibió por su trabajo especies o servicios tales como: alimentos, vivienda, vestido, etc.?
+Cod.","En el mes de NOVIEMBRE, además de su ingreso monetario ¿recibió por su trabajo especies o servicios tales como: alimentos, vivienda, vestido, etc.?
+Cod.",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p68b,"En el mes de MAYO, además de su ingreso monetario ¿recibió por su trabajo especies o servicios tales como: alimentos, vivienda, vestido, etc.?
+Monto","En el mes de NOVIEMBRE, además de su ingreso monetario ¿recibió por su trabajo especies o servicios tales como: alimentos, vivienda, vestido, etc.?
+Monto",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p69,"En su (s) otra (s) ocupación (es), ¿cuál fue su ingreso monetario total, ya sea como asalariado o por concepto de ganancia en el mes de MAYO?
+Monto","En su (s) otra (s) ocupación (es), ¿cuál fue su ingreso monetario total, ya sea como asalariado o por concepto de ganancia en el mes de NOVIEMBRE?
+Monto",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p70a,"En su (s) otra (s) ocupación (es) ¿recibió por su trabajo pago en especies o retiró del negocio o producción bienes o productos para el consumo del hogar, en el mes de MAYO?
+Cod.","En su (s) otra (s) ocupación (es) ¿recibió por su trabajo pago en especies o retiró del negocio o producción bienes o productos para el consumo del hogar, en el mes de NOVIEMBRE?
+Cod.",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p70b,"En su (s) otra (s) ocupación (es) ¿recibió por su trabajo pago en especies o retiró del negocio o producción bienes o productos para el consumo del hogar, en el mes de MAYO?
+Monto","En su (s) otra (s) ocupación (es) ¿recibió por su trabajo pago en especies o retiró del negocio o producción bienes o productos para el consumo del hogar, en el mes de NOVIEMBRE?
+Monto",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p71a,"¿Recibió en el mes de MAYO ingresos por concepto de intereses por: cuenta de ahorros, corrientes, préstamos a terceros, hipotecas; bonos por acciones; arriendo de casas, edificios, terrenos, maquinaria, etc.?
+Cod.","¿Recibió en el mes de NOVIEMBRE ingresos por concepto de intereses por: cuenta de ahorros, corrientes, préstamos a terceros, hipotecas; bonos por acciones; arriendo de casas, edificios, terrenos, maquinaria, etc.?
+Cod.",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p71b,"¿Recibió en el mes de MAYO ingresos por concepto de intereses por: cuenta de ahorros, corrientes, préstamos a terceros, hipotecas; bonos por acciones; arriendo de casas, edificios, terrenos, maquinaria, etc.?
+Monto.","¿Recibió en el mes de NOVIEMBRE ingresos por concepto de intereses por: cuenta de ahorros, corrientes, préstamos a terceros, hipotecas; bonos por acciones; arriendo de casas, edificios, terrenos, maquinaria, etc.?
+Monto.",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p72a,"¿Recibió en el mes de MAYO ingresos por concepto de pensión por: jubilación, orfandad, viudez, invalidez, enfermedad, divorcio, cesantía, etc.?
+Cod","¿Recibió en el mes de NOVIEMBRE ingresos por concepto de pensión por: jubilación, orfandad, viudez, invalidez, enfermedad, divorcio, cesantía, etc.?
+Cod",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p72b,"¿Recibió en el mes de MAYO ingresos por concepto de pensión por: jubilación, orfandad, viudez, invalidez, enfermedad, divorcio, cesantía, etc.?
+Monto","¿Recibió en el mes de NOVIEMBRE ingresos por concepto de pensión por: jubilación, orfandad, viudez, invalidez, enfermedad, divorcio, cesantía, etc.?
+Monto",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p73a,"¿Recibió en el mes de MAYO dinero o especies por regalos o donaciones de personas o instituciones que vivan dentro del país ?
+Cod.","¿Recibió en el mes de NOVIEMBRE dinero o especies por regalos o donaciones de personas o instituciones que vivan dentro del país ?
+Cod.",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p73b,"¿Recibió en el mes de MAYO dinero o especies por regalos o donaciones de personas o instituciones que vivan dentro del país ?
+Monto","¿Recibió en el mes de NOVIEMBRE dinero o especies por regalos o donaciones de personas o instituciones que vivan dentro del país ?
+Monto",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p74a,"¿Recibió en el mes de MAYO dinero o especies enviado por parte de familiares o amigos que vivan en el exterior?
+Cód.","¿Recibió en el mes de NOVIEMBRE dinero o especies enviado por parte de familiares o amigos que vivan en el exterior?
+Cód.",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p74b,"¿Recibió en el mes de MAYO dinero o especies enviado por parte de familiares o amigos que vivan en el exterior?
+Monto","¿Recibió en el mes de NOVIEMBRE dinero o especies enviado por parte de familiares o amigos que vivan en el exterior?
+Monto",cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p76,¿Cuánto recibió en el mes de MAYO por el BONO DE DESARROLLO HUMANO?,¿Cuánto recibió en el mes de NOVIEMBRE por el BONO o PENSIÓN?,real,programme changed: BONO DE DESARROLLO HUMANO to BONO o PENSIÓN
+p78,¿Cuánto recibió en el mes de MAYO por el BONO DE DISCAPACIDAD JOAQUÍN GALLEGOS LARA?,¿Cuánto recibió en el mes de NOVIEMBRE por el BONO DE DISCAPACIDAD JOAQUÍN GALLEGOS LARA?,cosmetic,only the reference month changed (MAYO to NOVIEMBRE)
+p79,¿Recibe el BONO DE PROTECCIÓN FAMILIAR por la emergencia sanitaria COVID 19?,¿Recibió el BONO DE PROTECCIÓN FAMILIAR por la emergencia sanitaria COVID 19?,cosmetic,"""Recibe"" to ""Recibió"""
+p80,¿Cuánto recibió en el mes de REFERENCIA por el BONO DE DISCAPACIDAD JOAQUÍN GALLEGOS LARA?,¿Cuánto recibió (…) por el BONO DE PROTECCIÓN FAMILIAR?,real,programme changed: BONO DE DISCAPACIDAD JOAQUÍN GALLEGOS LARA to BONO DE PROTECCIÓN FAMILIAR
+sd021,"¿La semana pasada que no tenía trabajo USTED, que actividades realizó:
+Estudió o estuvo capacitándose?","¿La semana pasada que no tenía trabajo USTED, que actividades realizó: Estudió o estuvo capacitándose?",cosmetic,only spacing or line breaks changed
+sd022,"¿La semana pasada que no tenía trabajo USTED, que actividades realizó:
+Hizo actividades de esparcimiento (deporte)??","¿La semana pasada que no tenía trabajo USTED, que actividades realizó: Hizo actividades de esparcimiento (deporte)?",cosmetic,only punctuation changed
+sd023,"¿La semana pasada que no tenía trabajo USTED, que actividades realizó:
+Realizó alguna gestión para buscar trabajo??","¿La semana pasada que no tenía trabajo USTED, que actividades realizó: Realizó alguna gestión para buscar trabajo?",cosmetic,only punctuation changed
+sd024,"¿La semana pasada que no tenía trabajo USTED, que actividades realizó:
+Ayudó o se dedicó a otras labores del hogar o la familia???","¿La semana pasada que no tenía trabajo USTED, que actividades realizó: Ayudó o se dedicó a otras labores del hogar o la familia?",cosmetic,only punctuation changed
+sd025,"¿La semana pasada que no tenía trabajo USTED, que actividades realizó:
+Ayudó como voluntario/a?","¿La semana pasada que no tenía trabajo USTED, que actividades realizó: Ayudó como voluntario/a?",cosmetic,only spacing or line breaks changed
+ced01a,Tiene cédula de identidad,¿Tiene (...) Cédula de Identidad o Ciudadania Ecuatoriana?,real,"question widened to ""Cédula de Identidad o Ciudadania Ecuatoriana"""
+estrato,Estrato,Plan de muestreo,real,"""Estrato"" to ""Plan de muestreo""; should be checked"
+secemp,Sectorización de los empleados (15 años y más),Sectores de los Empleados (clasificación para >= 15 años),real,"unsure whether ""Sectorización"" and ""Sectores"" mean the same, so real"

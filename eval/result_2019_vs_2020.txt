@@ -1,10 +1,10 @@
-labels_2019_vs_2020.csv: 24 of 25 rows labelled
+labels_2019_vs_2020.csv: 25 of 25 rows labelled
 
                  rule: cosmetic  rule: real
   you: cosmetic               1          22
-  you: real                   0           1
+  you: real                   0           2
 
-agreement: 2 of 24 (8%)
+agreement: 3 of 25 (12%)
 
 disagreements: 22
 

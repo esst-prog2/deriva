@@ -1,0 +1,8 @@
+2020_a: 97 variables
+2020_b: 164 variables
+
+  added        75
+  removed       8
+  descriptions differing   45  (not classified, so labelling stays blind)
+
+wrote eval/labels_2020_a_vs_2020_b.csv with 45 rows to label
