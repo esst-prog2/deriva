@@ -98,118 +98,116 @@ MARK_TEXT = {
 }
 
 PAGE = """<!doctype html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>deriva · ENEMDU questionnaire history</title>
+<title>deriva: how the ENEMDU questionnaire changed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
 <style>
-:root {{ --bg:#f7f8fa; --card:#fff; --ink:#111827; --muted:#6b7280; --line:#e5e7eb; --soft:#f3f4f6;
-  --brand:#0f3d5e; --real:#c0362c; --real-bg:#fdf0ef; --cos:#9ca3af; --new:#2563eb; --ins:#dcfce7; --del:#fee2e2; }}
+:root {{ --paper:#fcfdfe; --ink:#1c2b4a; --soft:#5a6782; --rule:#d5dfec; --grid:#eef3f9;
+  --pencil:#c8102e; --graphite:#9aa3b2; --marker:#fff1a8; --new:#2f6fb5; }}
 * {{ box-sizing:border-box; }}
-html {{ color-scheme: light; }}
-body {{ margin:0; background:var(--bg); color:var(--ink);
-  font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",sans-serif; -webkit-font-smoothing:antialiased; }}
-.wrap {{ max-width:76rem; margin:0 auto; padding:0 1.5rem; }}
-.top {{ background:var(--card); border-bottom:1px solid var(--line); }}
-.top .wrap {{ display:flex; align-items:center; justify-content:space-between; height:3.5rem; }}
-.brand {{ font-weight:700; letter-spacing:-.01em; color:var(--brand); display:flex; gap:.5rem; align-items:center; }}
-.brand i {{ width:.7rem; height:.7rem; border-radius:3px; background:var(--brand); display:inline-block; }}
-.src {{ color:var(--muted); font-size:.8rem; }}
-h1 {{ font-size:1.6rem; letter-spacing:-.02em; margin:2rem 0 .25rem; font-weight:700; }}
-.lead {{ color:var(--muted); margin:0 0 1.5rem; }}
-.grid {{ display:grid; gap:1rem; }}
-.kpis {{ grid-template-columns:repeat(4,1fr); }}
-.card {{ background:var(--card); border:1px solid var(--line); border-radius:10px; }}
-.kpi {{ padding:1rem 1.2rem; }}
-.kpi span {{ color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; font-weight:600; }}
-.kpi b {{ display:block; font-size:1.9rem; font-weight:700; letter-spacing:-.02em; margin-top:.15rem; }}
-.kpi.real b {{ color:var(--real); }}
-.panel {{ padding:1.1rem 1.2rem 1.2rem; margin-top:1rem; }}
-.panel h3 {{ margin:0 0 .9rem; font-size:.95rem; font-weight:650; }}
-.bars {{ display:grid; grid-template-columns:repeat({n_steps},1fr); gap:.6rem; align-items:end; }}
-.bar {{ text-align:center; font-size:.72rem; color:var(--muted); }}
-.stack {{ height:110px; display:flex; flex-direction:column-reverse; border-radius:5px; overflow:hidden; background:var(--soft); }}
-.stack i {{ display:block; }}
-.stack .r {{ background:var(--real); }} .stack .c {{ background:var(--cos); }} .stack .n {{ background:var(--new); }}
-.bar.brk .stack {{ background:repeating-linear-gradient(45deg,var(--soft),var(--soft) 6px,#e9ebee 6px,#e9ebee 12px); }}
-.bar b {{ display:block; color:var(--ink); font-size:.8rem; margin-top:.35rem; }}
-.key {{ display:flex; gap:1rem; margin-top:.9rem; color:var(--muted); font-size:.78rem; }}
-.key i {{ width:.65rem; height:.65rem; border-radius:2px; display:inline-block; margin-right:.35rem; vertical-align:-1px; }}
-.toolbar {{ position:sticky; top:0; z-index:5; background:var(--bg); padding:1rem 0; margin-top:.5rem;
-  display:flex; gap:1rem; align-items:center; flex-wrap:wrap; border-bottom:1px solid var(--line); }}
-input[type=search] {{ font:inherit; padding:.55rem .85rem; width:min(24rem,100%); border:1px solid var(--line);
-  border-radius:8px; background:var(--card); outline:none; }}
-input[type=search]:focus {{ border-color:var(--brand); box-shadow:0 0 0 3px rgba(15,61,94,.12); }}
-.seg {{ display:inline-flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--card); }}
-.seg button {{ font:inherit; font-size:.85rem; border:0; background:none; padding:.45rem .8rem; color:var(--muted); cursor:pointer; }}
-.seg button.on {{ background:var(--brand); color:#fff; }}
-.count {{ margin-left:auto; color:var(--muted); font-size:.85rem; }}
-.var {{ margin:1rem 0; overflow:hidden; }}
-.var header {{ display:flex; align-items:center; gap:.7rem; padding:.8rem 1.2rem; border-bottom:1px solid var(--line); }}
-.var h2 {{ margin:0; font:700 1rem ui-monospace,SFMono-Regular,Menlo,monospace; }}
-.var header .summary {{ color:var(--muted); font-size:.8rem; margin-left:auto; }}
-table {{ width:100%; border-collapse:collapse; }}
-td {{ padding:.55rem 1.2rem; border-bottom:1px solid var(--soft); vertical-align:top; }}
-tr:last-child td {{ border-bottom:0; }}
-td.r {{ width:6.5rem; white-space:nowrap; color:var(--muted); font:600 .8rem ui-monospace,SFMono-Regular,Menlo,monospace; padding-top:.7rem; }}
-td.m {{ width:8.5rem; white-space:nowrap; }}
-tr.real td {{ background:var(--real-bg); }} tr.real td.r {{ box-shadow:inset 3px 0 0 var(--real); }}
-tr.missing td.t {{ color:var(--cos); font-style:italic; }}
-tr.brk td {{ padding:.35rem 1.2rem; background:var(--soft); color:var(--muted); font-size:.75rem;
-  text-transform:uppercase; letter-spacing:.06em; font-weight:600; }}
-.tag {{ display:inline-block; font-size:.72rem; font-weight:650; padding:.12rem .5rem; border-radius:5px; }}
-.tag.real {{ color:var(--real); background:#fbe1de; }} .tag.cosmetic {{ color:#4b5563; background:var(--soft); }}
-.tag.added, .tag.removed {{ color:var(--new); background:#e0eafd; }}
-ins {{ background:var(--ins); text-decoration:none; padding:0 .15rem; border-radius:3px; }}
-del {{ background:var(--del); color:#7f1d1d; padding:0 .15rem; border-radius:3px; }}
-footer {{ color:var(--muted); font-size:.78rem; padding:1.5rem 0 3rem; }}
-@media (max-width:700px) {{ .kpis {{ grid-template-columns:repeat(2,1fr); }} td.m {{ width:auto; }} .count {{ margin-left:0; }} }}
-</style></head><body>
-<div class="top"><div class="wrap"><div class="brand"><i></i>deriva</div>
-<div class="src">ENEMDU persona dictionaries · INEC, CC-BY</div></div></div>
-<main class="wrap">
-<h1>How the ENEMDU questionnaire changed</h1>
-<p class="lead">{rounds_text}</p>
-<div class="grid kpis">
-<div class="card kpi"><span>Rounds</span><b>{n_rounds}</b></div>
-<div class="card kpi"><span>Variables</span><b>{variables}</b></div>
-<div class="card kpi real"><span>Real changes</span><b>{real}</b></div>
-<div class="card kpi"><span>Cosmetic changes</span><b>{cosmetic}</b></div>
+body {{ margin:0; background:var(--paper); color:var(--ink); font:15px/1.5 "Public Sans",system-ui,sans-serif; }}
+.page {{ max-width:68rem; margin:0 auto; padding:2.5rem 1.5rem 4rem; }}
+.mast {{ display:flex; justify-content:space-between; align-items:baseline; border-bottom:2px solid var(--ink); padding-bottom:.6rem; }}
+.mast strong {{ font-weight:800; font-size:1.05rem; }}
+.mast span {{ color:var(--soft); font-size:.85rem; }}
+.lede {{ font:400 2.1rem/1.2 "Source Serif 4",Georgia,serif; max-width:40rem; margin:2rem 0 .8rem; letter-spacing:-.01em; }}
+.lede em {{ font-style:normal; background:linear-gradient(transparent 62%,var(--marker) 62%); }}
+.sub {{ color:var(--soft); max-width:40rem; margin:0 0 2rem; }}
+.controls {{ display:flex; flex-wrap:wrap; gap:.8rem 1.4rem; align-items:center; padding:.9rem 0; border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule); position:sticky; top:0; background:var(--paper); z-index:3; }}
+.controls input[type=search] {{ font:inherit; border:0; border-bottom:2px solid var(--ink); background:transparent; padding:.3rem 0; width:16rem; outline:none; color:var(--ink); }}
+.controls input[type=search]:focus {{ border-color:var(--pencil); }}
+.controls label {{ display:flex; gap:.4rem; align-items:center; color:var(--soft); font-size:.9rem; cursor:pointer; }}
+.controls input[type=radio] {{ accent-color:var(--ink); }}
+.shown {{ margin-left:auto; color:var(--soft); font-size:.85rem; }}
+.map {{ width:100%; border-collapse:collapse; margin-top:1rem; }}
+.map th {{ font-weight:600; font-size:.78rem; color:var(--soft); text-align:center; padding:.4rem 0; }}
+.map th.q {{ text-align:left; }}
+.map th.redesign {{ color:var(--graphite); font-weight:400; font-style:italic; }}
+.map td {{ border-top:1px solid var(--grid); padding:0; }}
+.map td.cell {{ width:4.2rem; text-align:center; height:2.6rem; }}
+.map td.cut {{ width:1.6rem; background:repeating-linear-gradient(135deg,transparent 0 5px,var(--grid) 5px 7px); }}
+.dot {{ display:inline-block; width:.8rem; height:.8rem; border-radius:50%; vertical-align:middle; }}
+.dot.real {{ background:var(--pencil); }} .dot.cosmetic {{ border:2px solid var(--graphite); }}
+.dot.added, .dot.removed {{ width:.9rem; height:2px; border-radius:0; background:var(--new); }}
+.dot.same {{ width:4px; height:4px; background:var(--rule); }}
+.dot.missing {{ width:0; }}
+tr.row {{ cursor:pointer; }} tr.row:hover td {{ background:var(--grid); }}
+tr.row:focus-visible {{ outline:2px solid var(--pencil); outline-offset:-2px; }}
+td.q {{ padding:.45rem .8rem .45rem 0; }}
+td.q b {{ font-weight:600; margin-right:.5rem; }}
+td.q span {{ color:var(--soft); font-size:.86rem; }}
+tr.detail td {{ border-top:0; padding:0 0 1.4rem; }}
+.sheet {{ border-left:3px solid var(--ink); margin-left:.2rem; padding:.2rem 0 .2rem 1.2rem; }}
+.entry {{ display:grid; grid-template-columns:5.5rem 1fr; gap:1rem; padding:.45rem 0; }}
+.entry .when {{ color:var(--soft); font-size:.85rem; padding-top:.15rem; }}
+.entry .text {{ font:400 1.02rem/1.6 "Source Serif 4",Georgia,serif; max-width:46rem; }}
+.entry.real .when {{ color:var(--pencil); font-weight:600; }}
+.entry.real .text {{ border-left:2px solid var(--pencil); margin-left:-1.32rem; padding-left:1.2rem; }}
+.entry .note {{ display:block; font:600 .78rem "Public Sans",sans-serif; color:var(--pencil); margin-top:.15rem; }}
+.entry.cosmetic .note {{ color:var(--graphite); }}
+.entry.missing .text {{ color:var(--graphite); font-style:italic; }}
+.cutline {{ color:var(--graphite); font-size:.82rem; font-style:italic; padding:.5rem 0; border-top:1px dashed var(--rule); border-bottom:1px dashed var(--rule); margin:.3rem 0; }}
+del {{ color:var(--pencil); text-decoration:line-through 2px var(--pencil); }}
+ins {{ text-decoration:none; background:var(--marker); }}
+.key {{ display:flex; flex-wrap:wrap; gap:1.4rem; color:var(--soft); font-size:.85rem; margin:1.6rem 0 0; }}
+.key span {{ display:flex; gap:.45rem; align-items:center; }}
+footer {{ color:var(--soft); font-size:.82rem; margin-top:2.5rem; max-width:44rem; }}
+@media (max-width:760px) {{ .lede {{ font-size:1.6rem; }} .map td.cell {{ width:2rem; }} .map th {{ font-size:.65rem; }} .shown {{ margin-left:0; }} }}
+</style></head><body><div class="page">
+<div class="mast"><strong>deriva</strong><span>ENEMDU persona dictionaries, INEC</span></div>
+<p class="lede">Between {first} and {last}, <em>{real} questions changed</em> in a way a researcher should check.</p>
+<p class="sub">{n_rounds} rounds of the survey, {variables} variables, {cosmetic} further changes that only touch the wording.
+Click a question to read every version of it.</p>
+<div class="controls">
+<input type="search" id="q" placeholder="Find a variable, e.g. p76" aria-label="Find a variable">
+<label><input type="radio" name="f" value="real" checked> Questions to check</label>
+<label><input type="radio" name="f" value="changed"> Any change</label>
+<label><input type="radio" name="f" value="all"> Every variable</label>
+<span class="shown" id="shown"></span>
 </div>
-<div class="card panel"><h3>Changes between consecutive rounds</h3>
-<div class="bars">{bars}</div>
-<div class="key"><span><i style="background:var(--real)"></i>Real</span><span><i style="background:var(--cos)"></i>Cosmetic</span>
-<span><i style="background:var(--new)"></i>Added or removed</span><span>Hatched: layout redesign, not compared</span></div></div>
-<div class="toolbar">
-<input type="search" id="q" placeholder="Search a variable, e.g. p76">
-<div class="seg" id="seg"><button data-f="real" class="on">Real changes</button><button data-f="changed">Any change</button><button data-f="all">All variables</button></div>
-<span class="count" id="count"></span>
+<table class="map">
+<thead><tr><th class="q">Question</th>{head}</tr></thead>
+<tbody>
+{rows}
+</tbody></table>
+<div class="key"><span><i class="dot real"></i>Real change</span><span><i class="dot cosmetic"></i>Wording only</span>
+<span><i class="dot added"></i>Added or removed</span><span><i class="dot same"></i>Same as before</span>
+<span>Shaded column: the dictionary layout redesigned in 2021, not compared</span></div>
+<footer>Each change between two consecutive rounds of the same layout is classified by deriva's second rule
+(deriva-eval --rule v2), which agreed with my hand labels on 40 of 45 changes in a pair of rounds it was not built from.
+In each question, struck words were removed and highlighted words were added.</footer>
 </div>
-{sections}
-<footer>Each change between consecutive rounds of the same dictionary layout is classified by deriva's second rule
-(<code>deriva-eval --rule v2</code>), which agreed with hand labels on 40 of 45 changes in a pair it was not built from.
-Removed words are <del>marked</del>, added words are <ins>highlighted</ins>. Generated by <code>deriva-history</code>.</footer>
-</main>
 <script>
-const q=document.getElementById("q"), seg=document.getElementById("seg"), count=document.getElementById("count");
-let mode="real";
+const q=document.getElementById("q"), shown=document.getElementById("shown");
 function filter(){{
-  const t=q.value.trim().toLowerCase(); let n=0;
-  for(const s of document.querySelectorAll(".var")){{
-    const ok=s.dataset.name.toLowerCase().includes(t) && (t || mode==="all" || (mode==="real"? s.dataset.real!=="0" : s.dataset.changed!=="0"));
-    s.hidden=!ok; if(ok) n++;
+  const t=q.value.trim().toLowerCase(), f=document.querySelector("input[name=f]:checked").value; let n=0;
+  for(const r of document.querySelectorAll("tr.row")){{
+    const ok=r.dataset.name.toLowerCase().includes(t) && (t || f==="all" || (f==="real" ? r.dataset.real!=="0" : r.dataset.changed!=="0"));
+    r.hidden=!ok; const d=r.nextElementSibling; if(!ok) d.hidden=true; if(ok) n++;
   }}
-  count.textContent=n+(n===1?" variable":" variables");
+  shown.textContent=n+(n===1?" question":" questions");
 }}
-seg.addEventListener("click",e=>{{ if(!e.target.dataset.f) return; mode=e.target.dataset.f;
-  for(const b of seg.children) b.classList.toggle("on", b===e.target); filter(); }});
-q.addEventListener("input",filter); filter();
+function toggle(r){{ const d=r.nextElementSibling; d.hidden=!d.hidden; r.setAttribute("aria-expanded", String(!d.hidden)); }}
+for(const r of document.querySelectorAll("tr.row")){{
+  r.addEventListener("click",()=>toggle(r));
+  r.addEventListener("keydown",e=>{{ if(e.key==="Enter"||e.key===" "){{ e.preventDefault(); toggle(r); }} }});
+}}
+q.addEventListener("input",()=>{{ filter(); const v=[...document.querySelectorAll("tr.row")].filter(r=>!r.hidden);
+  if(v.length===1){{ v[0].nextElementSibling.hidden=false; }} }});
+for(const i of document.querySelectorAll("input[name=f]")) i.addEventListener("change",filter);
+filter();
 </script>
 </body></html>
 """
 
+NOTE = {REAL: "Real change", COSMETIC: "Wording only", ADDED: "Added", REMOVED: "Removed"}
+
 
 def _diff(before: str, after: str) -> str:
-    """The new text, with removed words marked and added words highlighted."""
+    """The new text, with removed words struck and added words highlighted."""
     a, b = before.split(), after.split()
     out = []
     for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, a, b).get_opcodes():
@@ -222,69 +220,60 @@ def _diff(before: str, after: str) -> str:
     return " ".join(out)
 
 
-def _bars(rounds: list[Round], history: dict[str, list[Entry]]) -> str:
-    steps = []
-    for i in range(1, len(rounds)):
-        marks = [entries[i].mark for entries in history.values()]
-        label = f"{rounds[i - 1].label} → {rounds[i].label}"
-        if BREAK in marks:
-            steps.append(f'<div class="bar brk"><div class="stack"></div><b>redesign</b>{label}</div>')
-            continue
-        r, c = marks.count(REAL), marks.count(COSMETIC)
-        n = marks.count(ADDED) + marks.count(REMOVED)
-        steps.append((r, c, n, label))
-    peak = max([sum(x[:3]) for x in steps if isinstance(x, tuple)] + [1])
-    out = []
-    for x in steps:
-        if isinstance(x, str):
-            out.append(x)
-            continue
-        r, c, n, label = x
-        seg = lambda k, cls: f'<i class="{cls}" style="height:{100 * k / peak:.1f}%" title="{k}"></i>' if k else ""
-        out.append(f'<div class="bar"><div class="stack">{seg(r, "r")}{seg(c, "c")}{seg(n, "n")}</div>'
-                   f"<b>{r} real</b>{label}</div>")
-    return "".join(out)
+def _short(text: str, width: int = 70) -> str:
+    text = " ".join(text.split())
+    return text if len(text) <= width else text[: width - 1].rsplit(" ", 1)[0] + "…"
 
 
 def render(rounds: list[Round], history: dict[str, list[Entry]]) -> str:
-    sections = []
-    totals = {REAL: 0, COSMETIC: 0}
+    head = []
+    for i, r in enumerate(rounds):
+        if i and rounds[i - 1].dictionary.layout != r.dictionary.layout:
+            head.append('<th class="redesign" title="Dictionary layout redesigned, not compared"></th>')
+        head.append(f"<th>{r.label}</th>")
+    rows, real_total, cos_total = [], 0, 0
     for name, entries in history.items():
         real = sum(e.mark == REAL for e in entries)
         cosmetic = sum(e.mark == COSMETIC for e in entries)
         changed = sum(e.mark in (REAL, COSMETIC, ADDED, REMOVED) for e in entries)
-        totals[REAL] += real
-        totals[COSMETIC] += cosmetic
-        rows, before = [], None
+        real_total += real
+        cos_total += cosmetic
+        latest = next((e.text for e in reversed(entries) if e.text), "")
+        cells, sheet, before = [], [], None
         for e in entries:
             if e.mark == BREAK:
-                rows.append(f'<tr class="brk"><td colspan="3">{MARK_TEXT[BREAK]}</td></tr>')
-            kind = "same" if e.mark == BREAK else e.mark
+                cells.append('<td class="cut"></td>')
+                sheet.append('<div class="cutline">Dictionary layout redesigned in 2021, not compared</div>')
+            dot = "missing" if e.text is None else (e.mark if e.mark in NOTE else "same")
+            cells.append(f'<td class="cell"><i class="dot {dot}" title="{e.round}"></i></td>')
             if e.text is None:
-                kind, text = "missing", "not in this round"
+                text, kind = "Not in this round", "missing"
             elif e.mark in (REAL, COSMETIC) and before is not None:
-                text = _diff(before, e.text)
+                text, kind = _diff(before, e.text), e.mark
             else:
-                text = html.escape(e.text)
-            tag = f'<span class="tag {e.mark}">{MARK_TEXT[e.mark]}</span>' if e.mark in (REAL, COSMETIC, ADDED, REMOVED) else ""
-            rows.append(f'<tr class="{kind}"><td class="r">{e.round}</td><td class="m">{tag}</td><td class="t">{text}</td></tr>')
+                text, kind = html.escape(e.text), e.mark
+            note = f'<span class="note">{NOTE[e.mark]}</span>' if e.mark in NOTE else ""
+            sheet.append(f'<div class="entry {kind}"><div class="when">{e.round}{note}</div><div class="text">{text}</div></div>')
             before = e.text
-        summary = f"{real} real · {cosmetic} cosmetic" if changed else "no changes"
-        sections.append(
-            f'<section class="card var" data-name="{html.escape(name)}" data-real="{real}" data-changed="{changed}">'
-            f'<header><h2>{html.escape(name)}</h2><span class="summary">{summary}</span></header>'
-            f"<table>{''.join(rows)}</table></section>"
+        n_cols = len(cells) + 1
+        rows.append(
+            f'<tr class="row" tabindex="0" aria-expanded="false" data-name="{html.escape(name)}" data-real="{real}" data-changed="{changed}">'
+            f'<td class="q"><b>{html.escape(name)}</b><span>{html.escape(_short(latest))}</span></td>{"".join(cells)}</tr>'
+            f'<tr class="detail" hidden><td colspan="{n_cols}"><div class="sheet">{"".join(sheet)}</div></td></tr>'
         )
     return PAGE.format(
-        rounds_text=f"{len(rounds)} rounds, {rounds[0].label} to {rounds[-1].label}: every variable's description in each round, and what changed.",
-        n_rounds=len(rounds),
-        variables=len(history),
-        real=totals[REAL],
-        cosmetic=totals[COSMETIC],
-        n_steps=len(rounds) - 1,
-        bars=_bars(rounds, history),
-        sections="\n".join(sections),
+        first=_month(rounds[0].label), last=rounds[-1].label,
+        real=real_total, cosmetic=cos_total, n_rounds=len(rounds), variables=len(history),
+        head="".join(head), rows="\n".join(rows),
     )
+
+
+MONTHS = "January February March April May June July August September October November December".split()
+
+
+def _month(label: str) -> str:
+    year, _, month = label.partition("-")
+    return f"{MONTHS[int(month) - 1]} {year}" if month else year
 
 
 def main(argv: list[str] | None = None) -> int:
