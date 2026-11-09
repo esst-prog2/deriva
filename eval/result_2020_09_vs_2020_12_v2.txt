@@ -1,0 +1,35 @@
+rule: v2
+labels_2020_09_vs_2020_12.csv: 45 of 45 rows labelled
+
+                 rule: cosmetic  rule: real
+  you: cosmetic              33           5
+  you: real                   0           7
+
+agreement: 40 of 45 (89%)
+
+disagreements: 5
+
+  p10a  you: cosmetic  rule: real
+    2020_a: ¿Cuál es el nivel de isntrucción y año as alto aprobado? NIVEL
+    2020_b: ¿Cuál es el nivel de isntrucción y año más alto que aprobó (...)? NIVEL
+    note: typo fixed ("as" to "más") and "aprobado" to "que aprobó (...)"
+
+  p10b  you: cosmetic  rule: real
+    2020_a: ¿Cuál es el nivel de isntrucción y año as alto aprobado? AÑO APROBADO
+    2020_b: ¿Cuál es el nivel de isntrucción y año más alto que aprobó (...)? AÑO APROBADO
+    note: typo fixed ("as" to "más") and "aprobado" to "que aprobó (...)"
+
+  p26  you: cosmetic  rule: real
+    2020_a: ¿Porqué razón (…) trabajó la semana pasada 40 horas o más?
+    2020_b: ¿Por qué razón (…) trabajó la semana pasada 40 horas o más?
+    note: "Porqué" to "Por qué"
+
+  p32  you: cosmetic  rule: real
+    2020_a: ¿Durante las últimas 4 semanas (…) hizo alguna gestión para buscar trabajo tal como?
+    2020_b: ¿Durante las últimas cuatro semanas (…) hizo alguna gestión para buscar trabajo tal como:
+    note: "4" to "cuatro"
+
+  p79  you: cosmetic  rule: real
+    2020_a: ¿Recibe el BONO DE PROTECCIÓN FAMILIAR por la emergencia sanitaria COVID 19?
+    2020_b: ¿Recibió el BONO DE PROTECCIÓN FAMILIAR por la emergencia sanitaria COVID 19?
+    note: "Recibe" to "Recibió"

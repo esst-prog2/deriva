@@ -12,6 +12,9 @@ from openpyxl.utils.exceptions import InvalidFileException
 from deriva import DerivaError
 
 HEADER = "Nombre del campo"
+# INEC's older layout (before 2021): name and question columns, anywhere in the header row.
+OLD_NAME_HEADER = "CODIGO DE LA VARIABLE"
+OLD_DESCRIPTION_HEADER = "PREGUNTA"
 YEAR = re.compile(r"(?<!\d)(?:19|20)\d\d(?!\d)")  # not part of a longer run of digits
 
 
@@ -19,6 +22,7 @@ YEAR = re.compile(r"(?<!\d)(?:19|20)\d\d(?!\d)")  # not part of a longer run of 
 class Dictionary:
     label: str
     variables: dict[str, str]  # variable name -> description, in sheet order
+    layout: str = "2021"  # "2021" for the Nombre del campo layout, "pre-2021" for the older one
 
 
 def round_label(path: Path) -> str:
@@ -35,7 +39,8 @@ def distinct_labels(label_a: str, label_b: str) -> tuple[str, str]:
 
 
 def read_dictionary(path: str | Path) -> Dictionary:
-    """Read the variable names and descriptions below the `Nombre del campo` header."""
+    """Read the variable names and descriptions below the `Nombre del campo` header,
+    or below the older layout's `CODIGO DE LA VARIABLE` / `PREGUNTA` header."""
     path = Path(path)
     if not path.is_file():
         raise DerivaError(f"{path}: file not found")
@@ -47,23 +52,33 @@ def read_dictionary(path: str | Path) -> Dictionary:
 
     try:
         rows = workbook.worksheets[0].iter_rows(values_only=True)
-        variables = _read_variables(path, rows)
+        variables, layout = _read_variables(path, rows)
     except ParseError as exc:  # sheet XML is parsed only while the rows are read
         raise DerivaError(f"{path}: first sheet cannot be read ({exc})") from exc
     finally:
         workbook.close()
-    return Dictionary(label=round_label(path), variables=variables)
+    return Dictionary(label=round_label(path), variables=variables, layout=layout)
 
 
-def _read_variables(path: Path, rows) -> dict[str, str]:
-    header_found = False
+def _header_columns(row) -> tuple[int, int, str] | None:
+    """(name column, description column, layout) if this row is a header of either layout."""
+    cells = [_text(value) for value in row]
+    if cells and cells[0] == HEADER:
+        return 0, 1, "2021"
+    if OLD_NAME_HEADER in cells and OLD_DESCRIPTION_HEADER in cells:
+        return cells.index(OLD_NAME_HEADER), cells.index(OLD_DESCRIPTION_HEADER), "pre-2021"
+    return None
+
+
+def _read_variables(path: Path, rows) -> tuple[dict[str, str], str]:
+    columns = None
     variables: dict[str, str] = {}
     for row_number, row in enumerate(rows, start=1):
-        name, description = (tuple(row) + (None, None))[:2]
-        if not header_found:
-            header_found = _text(name) == HEADER
+        if columns is None:
+            columns = _header_columns(row)
             continue
-        name, description = _text(name), _text(description, strip=False)
+        padded = tuple(row) + (None,) * (max(columns[:2]) + 1)
+        name, description = _text(padded[columns[0]]), _text(padded[columns[1]], strip=False)
         if not name and not description:
             continue
         if not name:
@@ -72,13 +87,14 @@ def _read_variables(path: Path, rows) -> dict[str, str]:
             raise DerivaError(f"{path}: variable {name!r} appears more than once (again in row {row_number})")
         variables[name] = description
 
-    if not header_found:
+    if columns is None:
         raise DerivaError(
-            f"{path}: no header row found; looked for {HEADER!r} in the first column"
+            f"{path}: no header row found; looked for {HEADER!r} in the first column, "
+            f"or {OLD_NAME_HEADER!r} with {OLD_DESCRIPTION_HEADER!r} in one row"
         )
     if not variables:
-        raise DerivaError(f"{path}: no variables found below the {HEADER!r} header")
-    return variables
+        raise DerivaError(f"{path}: no variables found below the header")
+    return variables, columns[2]
 
 
 def _text(value, strip: bool = True) -> str:

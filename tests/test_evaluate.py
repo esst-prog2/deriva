@@ -209,3 +209,21 @@ def test_empty_trailing_columns_are_not_repeated_names(tmp_path, capsys):
         writer.writerow(["p54a", *COSMETIC_PAIR, "cosmetic", "", "", ""])
     assert main([str(path)]) == 0
     assert "agreement: 1 of 1 (100%)" in capsys.readouterr().out
+
+
+def test_rule_v2_option(tmp_path, capsys):
+    rows = [("p66", "En el mes de NOVIEMBRE", "En el mes de MAYO", "cosmetic", "")]
+    path = write_labels(tmp_path / "labels.csv", rows)
+    assert main([str(path)]) == 0
+    assert "agreement: 0 of 1 (0%)" in capsys.readouterr().out
+    assert main([str(path), "--rule", "v2"]) == 0
+    out = capsys.readouterr().out
+    assert out.startswith("rule: v2\n")
+    assert "agreement: 1 of 1 (100%)" in out
+
+
+def test_unknown_rule(tmp_path, capsys):
+    path = write_labels(tmp_path / "labels.csv", [("p66", *REAL_PAIR, "real", "")])
+    with pytest.raises(SystemExit) as exit:
+        main([str(path), "--rule", "v3"])
+    assert exit.value.code != 0

@@ -81,6 +81,18 @@ Settle the rule before the first measurement. If you then change the rule becaus
 what the disagreements show, measure it again on a pair of rounds you have not looked
 at, not on the same labels.
 
+**History of every variable.** `uv run deriva-history data/` reads every dictionary in
+`data/`, orders the rounds by the date in the file name, and writes `deriva_history.html`:
+one page with each variable's description in every round, a search box, and each change
+between consecutive rounds of the same layout marked cosmetic or real by the second rule
+(`deriva-eval --rule v2`). The 2021 redesign is shown as a break, not compared.
+
+**Older dictionaries.** deriva also reads INEC's layout from before 2021 (header
+`CODIGO DE LA VARIABLE` / `PREGUNTA`, as in the 2019-12 and 2020-09 persona dictionaries
+in `data/`), taking the `PREGUNTA` column as the description. Compare two older rounds
+with each other, not an older round with a 2021+ round: the two layouts' text fields do
+not line up, so that comparison reports layout differences, not instrument changes.
+
 **A note on 2021.** INEC made methodological changes to ENEMDU between 2020 and May 2021,
 so the 2021 annual round straddles the redesign. Differences between 2021 and later rounds
 partly reflect that redesign; do not read their number as ordinary year-to-year drift.
@@ -88,19 +100,21 @@ partly reflect that redesign; do not read their number as ordinary year-to-year 
 ## 1. The demo
 
 I open a terminal and run
-`deriva "Diccionario de Datos_persona_anual_2021.xlsx" "Diccionario de Datos_persona_anual_2025.xlsx"`.
-It prints that the 2021 round has 151 variables and 2025 has 139: 12 variables were removed,
-none were added, and 22 descriptions changed. Classified by hand, 19 of those changes are
-cosmetic and 3 are real (`p54a`, `p77`, `rama1`), counting a change as real when a
-researcher comparing the two rounds would need to check whether the variable still
-measures the same thing. deriva's rule agrees on 12 of the 22: it never files a real change
-as cosmetic, but it flags 10 cosmetic ones as real, such as `13er` → `13vo` and
-`per` → `por cápita` ([eval/result.txt](eval/result.txt)). I open the CSV it wrote next to
-the files, and the 3 real ones are among its real rows with both descriptions side by side,
-including `rama1` moving from CIIU4 to CIIU 4.1 and `p54a` losing the words "trabajo
-secundario". Then I run
-it on 2021 against 2022 and it reports the same 12 removals and zero description changes —
-the point being that it does not invent differences where the instrument stayed still.
+`deriva "Diccionario de Datos_persona_anual_2021.xlsx" "Diccionario de Datos_persona_anual_2025.xlsx"`:
+it reports 151 and 139 variables, 12 removed, none added and 22 descriptions changed, and
+writes `deriva_2021_vs_2025.csv` with both descriptions side by side. I classified those
+22 by hand before seeing any verdict: 19 are cosmetic and 3 are real (`p54a`, `p77`,
+`rama1`), and the first rule agrees on 12 of 22, never hiding a real change but flagging
+cosmetic ones such as `13er` → `13vo` as real ([eval/result.txt](eval/result.txt)).
+So I built a second rule and measured it on a pair of rounds it never saw:
+`deriva-eval labels_2020_09_vs_2020_12.csv --rule v2` shows 40 of 45 agreements against
+20 of 45 for the first rule, still with none of my 7 real changes hidden
+([eval/result_2020_09_vs_2020_12_v2.txt](eval/result_2020_09_vs_2020_12_v2.txt)).
+Then I run `deriva-history data/`, and it writes `deriva_history.html` from the nine
+persona dictionaries from June 2019 to 2025. In the browser I search `p76`, and its
+timeline shows the question in every round, with December 2020 marked as a real change
+from "BONO DE DESARROLLO HUMANO" to "BONO o PENSIÓN" and the 2021 redesign shown as a
+break, not as a change.
 
 ## 2. The shape
 
