@@ -60,3 +60,35 @@ def test_p76_on_the_real_files():
     marks = {e.round: e.mark for e in history["p76"]}
     assert marks["2020-12"] == REAL
     assert marks["2021"] == BREAK
+
+
+def test_hand_label_replaces_the_second_rule(folder):
+    rounds = read_rounds(folder)
+    hand = {("BONO DE DESARROLLO HUMANO", "BONO o PENSIÓN"): COSMETIC}
+    entry = build_history(rounds, hand)["p76"][1]
+    assert (entry.mark, entry.by_hand) == (COSMETIC, True)
+    other = build_history(rounds, hand)["p66"][1]
+    assert (other.mark, other.by_hand) == (COSMETIC, False)
+
+
+def test_page_says_who_decided(folder, capsys):
+    labels = folder / "labels"
+    labels.mkdir()
+    (labels / "labels_x.csv").write_text(
+        "variable,description_a,description_b,label,note\n"
+        "p76,BONO DE DESARROLLO HUMANO,BONO o PENSIÓN,real,\n",
+        encoding="utf-8",
+    )
+    assert main([str(folder), "--labels", str(labels)]) == 0
+    page = (folder / "deriva_history.html").read_text(encoding="utf-8")
+    assert "the 1 marks that match a change I labelled by hand" in page
+    assert "dot real hand" in page
+
+
+def test_p10a_on_the_real_files_shows_my_label():
+    # The second rule calls this typo fix real; my hand label says cosmetic.
+    from deriva.history import read_hand_labels
+
+    history = build_history(read_rounds(DATA), read_hand_labels(DATA.parent / "eval"))
+    entry = {e.round: e for e in history["p10a"]}["2020-12"]
+    assert (entry.mark, entry.by_hand) == (COSMETIC, True)

@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from deriva import DerivaError
+from deriva.evaluate import read_labels
 from deriva.reader import Dictionary, read_dictionary
 from deriva.rule import COSMETIC, REAL
 from deriva.rule_v2 import classify_v2
@@ -31,6 +32,7 @@ class Entry:
     round: str
     text: str | None  # None when the variable is not in this round
     mark: str  # compared with the previous round: real, cosmetic, added, removed, break, same
+    by_hand: bool = False  # the mark is my hand label, not the second rule's verdict
 
 
 def round_of(path: Path) -> tuple[str, tuple[int, int]]:
@@ -58,14 +60,28 @@ def read_rounds(folder: Path) -> list[Round]:
     return rounds
 
 
-def build_history(rounds: list[Round]) -> dict[str, list[Entry]]:
-    """variable -> one entry per round, in order of first appearance."""
+def read_hand_labels(folder: Path) -> dict[tuple[str, str], str]:
+    """(description before, description after) -> my label, from every labels_*.csv in folder."""
+    labels = {}
+    for path in sorted(folder.glob("labels_*.csv")):
+        for row in read_labels(path).rows:
+            if row.label is not None:
+                labels[(row.description_a, row.description_b)] = row.label
+    return labels
+
+
+def build_history(rounds: list[Round], hand: dict[tuple[str, str], str] | None = None) -> dict[str, list[Entry]]:
+    """variable -> one entry per round, in order of first appearance.
+
+    A change I labelled by hand gets my label; every other change gets the second rule's."""
+    hand = hand or {}
     names = list(dict.fromkeys(name for r in rounds for name in r.dictionary.variables))
     history = {}
     for name in names:
         entries, previous = [], None
         for r in rounds:
             text = r.dictionary.variables.get(name)
+            by_hand = False
             if previous is None:
                 mark = SAME
             elif previous.dictionary.layout != r.dictionary.layout:
@@ -80,9 +96,11 @@ def build_history(rounds: list[Round]) -> dict[str, list[Entry]]:
                     mark = REMOVED
                 elif before == text:
                     mark = SAME
+                elif (before, text) in hand:
+                    mark, by_hand = hand[(before, text)], True
                 else:
                     mark = classify_v2(before, text, name)
-            entries.append(Entry(r.label, text, mark))
+            entries.append(Entry(r.label, text, mark, by_hand))
             previous = r
         history[name] = entries
     return history
@@ -132,11 +150,14 @@ body {{ margin:0; background:var(--paper); color:var(--ink); font:15px/1.5 "Publ
 .dot {{ display:inline-block; width:.8rem; height:.8rem; border-radius:50%; vertical-align:middle; }}
 .dot.real {{ background:var(--pencil); }} .dot.cosmetic {{ border:2px solid var(--graphite); }}
 .dot.added, .dot.removed {{ width:.9rem; height:2px; border-radius:0; background:var(--new); }}
+.dot.hand {{ box-shadow:0 0 0 3px var(--paper),0 0 0 4.5px var(--ink); }}
+.map th small {{ display:block; font-weight:400; font-size:.68rem; color:var(--ink); height:1rem; }}
+.who {{ color:var(--soft); font-size:.88rem; max-width:44rem; margin:1.2rem 0 0; }}
 .dot.same {{ width:4px; height:4px; background:var(--rule); }}
 .dot.missing {{ width:0; }}
 tr.row {{ cursor:pointer; }} tr.row:hover td {{ background:var(--grid); }}
 tr.row:focus-visible {{ outline:2px solid var(--pencil); outline-offset:-2px; }}
-td.q {{ padding:.45rem .8rem .45rem 0; }}
+td.q {{ padding:.45rem .8rem .45rem 0; max-width:22rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }}
 td.q b {{ font-weight:600; margin-right:.5rem; }}
 td.q span {{ color:var(--soft); font-size:.86rem; }}
 tr.detail td {{ border-top:0; padding:0 0 1.4rem; }}
@@ -168,6 +189,7 @@ Click a question to read every version of it.</p>
 <label><input type="radio" name="f" value="all"> Every variable</label>
 <span class="shown" id="shown"></span>
 </div>
+<p class="who">Who decided each mark: the {hand} marks that match a change I labelled by hand (between {hand_steps}) show my label and are ringed. Every other mark is the verdict of deriva's second rule, which no one has checked; it agreed with my labels on 40 of 45 changes in a pair it was not built from.</p>
 <table class="map">
 <thead><tr><th class="q">Question</th>{head}</tr></thead>
 <tbody>
@@ -175,10 +197,9 @@ Click a question to read every version of it.</p>
 </tbody></table>
 <div class="key"><span><i class="dot real"></i>Real change</span><span><i class="dot cosmetic"></i>Wording only</span>
 <span><i class="dot added"></i>Added or removed</span><span><i class="dot same"></i>Same as before</span>
-<span>Shaded column: the dictionary layout redesigned in 2021, not compared</span></div>
-<footer>Each change between two consecutive rounds of the same layout is classified by deriva's second rule
-(deriva-eval --rule v2), which agreed with my hand labels on 40 of 45 changes in a pair of rounds it was not built from.
-In each question, struck words were removed and highlighted words were added.</footer>
+<span><i class="dot real hand"></i>Ringed: checked by hand</span><span>Shaded column: the dictionary layout redesigned in 2021, not compared</span></div>
+<footer>In each question, struck words were removed and highlighted words were added.
+Generated by deriva-history from the INEC dictionaries in data/ and my labels in eval/.</footer>
 </div>
 <script>
 const q=document.getElementById("q"), shown=document.getElementById("shown");
@@ -230,7 +251,9 @@ def render(rounds: list[Round], history: dict[str, list[Entry]]) -> str:
     for i, r in enumerate(rounds):
         if i and rounds[i - 1].dictionary.layout != r.dictionary.layout:
             head.append('<th class="redesign" title="Dictionary layout redesigned, not compared"></th>')
-        head.append(f"<th>{r.label}</th>")
+        checked = any(entries[i].by_hand for entries in history.values())
+        tick = "checked by hand" if checked else ""
+        head.append(f"<th>{r.label}<small>{tick}</small></th>")
     rows, real_total, cos_total = [], 0, 0
     for name, entries in history.items():
         real = sum(e.mark == REAL for e in entries)
@@ -245,14 +268,19 @@ def render(rounds: list[Round], history: dict[str, list[Entry]]) -> str:
                 cells.append('<td class="cut"></td>')
                 sheet.append('<div class="cutline">Dictionary layout redesigned in 2021, not compared</div>')
             dot = "missing" if e.text is None else (e.mark if e.mark in NOTE else "same")
-            cells.append(f'<td class="cell"><i class="dot {dot}" title="{e.round}"></i></td>')
+            hand = " hand" if e.by_hand else ""
+            who = "my label" if e.by_hand else "second rule"
+            title = f"{e.round}: {NOTE[e.mark]} ({who})" if e.mark in NOTE else e.round
+            cells.append(f'<td class="cell"><i class="dot {dot}{hand}" title="{html.escape(title)}"></i></td>')
             if e.text is None:
                 text, kind = "Not in this round", "missing"
             elif e.mark in (REAL, COSMETIC) and before is not None:
                 text, kind = _diff(before, e.text), e.mark
             else:
                 text, kind = html.escape(e.text), e.mark
-            note = f'<span class="note">{NOTE[e.mark]}</span>' if e.mark in NOTE else ""
+            who = "checked by hand" if e.by_hand else "second rule"
+            note = f'<span class="note">{NOTE[e.mark]}<br>{who}</span>' if e.mark in (REAL, COSMETIC) else (
+                f'<span class="note">{NOTE[e.mark]}</span>' if e.mark in NOTE else "")
             sheet.append(f'<div class="entry {kind}"><div class="when">{e.round}{note}</div><div class="text">{text}</div></div>')
             before = e.text
         n_cols = len(cells) + 1
@@ -261,9 +289,14 @@ def render(rounds: list[Round], history: dict[str, list[Entry]]) -> str:
             f'<td class="q"><b>{html.escape(name)}</b><span>{html.escape(_short(latest))}</span></td>{"".join(cells)}</tr>'
             f'<tr class="detail" hidden><td colspan="{n_cols}"><div class="sheet">{"".join(sheet)}</div></td></tr>'
         )
+    hand_total = sum(e.by_hand for entries in history.values() for e in entries)
+    steps = [f"{rounds[i - 1].label} and {rounds[i].label}" for i in range(1, len(rounds))
+             if any(entries[i].by_hand for entries in history.values())]
+    questions = sum(any(e.mark == REAL for e in entries) for entries in history.values())
     return PAGE.format(
+        hand=hand_total, hand_steps=", ".join(steps) or "none",
         first=_month(rounds[0].label), last=rounds[-1].label,
-        real=real_total, cosmetic=cos_total, n_rounds=len(rounds), variables=len(history),
+        real=questions, cosmetic=cos_total, n_rounds=len(rounds), variables=len(history),
         head="".join(head), rows="\n".join(rows),
     )
 
@@ -282,10 +315,16 @@ def main(argv: list[str] | None = None) -> int:
         description="Write deriva_history.html: each variable's description in every round of a folder.",
     )
     parser.add_argument("folder", help="folder with one persona dictionary (.xlsx) per round")
+    parser.add_argument(
+        "--labels",
+        default="eval",
+        help="folder with my labels_*.csv files; their labels replace the second rule's (default: eval)",
+    )
     args = parser.parse_args(argv)
     try:
         rounds = read_rounds(Path(args.folder))
-        history = build_history(rounds)
+        labels = Path(args.labels)
+        history = build_history(rounds, read_hand_labels(labels) if labels.is_dir() else {})
         path = Path.cwd() / OUTPUT
         try:
             path.write_text(render(rounds, history), encoding="utf-8")
