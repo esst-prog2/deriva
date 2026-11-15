@@ -45,7 +45,7 @@ def test_page_is_written(folder, capsys):
     assert main([str(folder)]) == 0
     page = (folder / "deriva_history.html").read_text(encoding="utf-8")
     assert 'data-name="p76" data-real="1"' in page
-    assert "layout redesigned" in page
+    assert "Redesign break: the dictionary layout changed in 2021" in page
     assert "PENSIÓN" in page
     assert "wrote" in capsys.readouterr().out
 
@@ -81,7 +81,7 @@ def test_page_says_who_decided(folder, capsys):
     )
     assert main([str(folder), "--labels", str(labels)]) == 0
     page = (folder / "deriva_history.html").read_text(encoding="utf-8")
-    assert "the 1 marks that match a change I labelled by hand" in page
+    assert "Who decided each mark: double-ringed marks (1) are my hand labels; every other mark is deriva's second rule, not checked by hand." in page
     assert "dot real hand" in page
 
 
@@ -100,3 +100,24 @@ def test_page_opens_already_searched_from_the_link(folder):
     page = (folder / "deriva_history.html").read_text(encoding="utf-8")
     assert 'new URLSearchParams(location.search).get("q")' in page
     assert "q.value=asked; search();" in page
+
+
+def test_legend_comes_before_the_table(folder):
+    # A stranger must see what the marks mean before reading them.
+    assert main([str(folder)]) == 0
+    page = (folder / "deriva_history.html").read_text(encoding="utf-8")
+    assert page.index('class="key"') < page.index('<table class="map"')
+    for meaning in ("Real change", "Cosmetic change", "Added / removed", "Empty: not in this round",
+                    "Redesign break: not compared", "Double ring: checked by hand"):
+        assert meaning in page
+
+
+def test_one_vocabulary(folder):
+    # The same words as the promo page: cosmetic change, checked by hand, second rule not checked by hand.
+    assert main([str(folder)]) == 0
+    page = (folder / "deriva_history.html").read_text(encoding="utf-8")
+    for old in ("Wording only", "my label)", "Questions to check", "Every variable"):
+        assert old not in page
+    assert "Cosmetic change (second rule, not checked by hand)" in page
+    assert "Real changes <span class=\"n\">(1)</span>" in page
+    assert "All variables <span class=\"n\">(3)</span>" in page

@@ -233,8 +233,8 @@ p { max-width: 68ch; margin: 0 0 1rem; }
       <ul class="bubbles" aria-label="The four answers deriva gives for each question">
         <li><span class="mark dash" aria-hidden="true"></span>added <span class="code">1</span></li>
         <li><span class="mark dash" aria-hidden="true"></span>removed <span class="code">2</span></li>
-        <li><span class="mark cosmetic" aria-hidden="true"></span>reworded cosmetically <span class="code">3</span></li>
-        <li><span class="mark real" aria-hidden="true"></span>really changed <span class="code">4</span></li>
+        <li><span class="mark cosmetic" aria-hidden="true"></span>cosmetic change <span class="code">3</span></li>
+        <li><span class="mark real" aria-hidden="true"></span>real change <span class="code">4</span></li>
       </ul>
       <div class="go">
         <span class="say">See it on a real question</span>
@@ -257,21 +257,21 @@ p { max-width: 68ch; margin: 0 0 1rem; }
         <thead><tr><th scope="col">Round</th><th scope="col">Wording in the dictionary</th><th scope="col"><span class="sr">Mark</span></th><th scope="col">Change from the round before</th></tr></thead>
         <tbody>
           <tr><td class="round">2019-06</td><td>¿Cuánto recibió en el mes de MAYO por el BONO DE DESARROLLO HUMANO?</td><td class="m"></td><td class="what">first round</td></tr>
-          <tr><td class="round">2019-12</td><td>¿Cuánto recibió en el mes de NOVIEMBRE por el BONO DE DESARROLLO HUMANO?</td><td class="m"><span class="mark cosmetic" aria-hidden="true"></span></td><td class="what">cosmetic (rule, unchecked)</td></tr>
-          <tr><td class="round">2020-09</td><td>¿Cuánto recibió en el mes de MAYO por el BONO DE DESARROLLO HUMANO?</td><td class="m"><span class="mark cosmetic hand" aria-hidden="true"></span></td><td class="what">cosmetic (checked by hand)</td></tr>
-          <tr class="real"><td class="round">2020-12</td><td>¿Cuánto recibió en el mes de NOVIEMBRE por el <ins>BONO o PENSIÓN</ins>?</td><td class="m"><span class="mark real hand" aria-hidden="true"></span></td><td class="what">real (checked by hand)</td></tr>
+          <tr><td class="round">2019-12</td><td>¿Cuánto recibió en el mes de NOVIEMBRE por el BONO DE DESARROLLO HUMANO?</td><td class="m"><span class="mark cosmetic" aria-hidden="true"></span></td><td class="what">cosmetic change (second rule, not checked by hand)</td></tr>
+          <tr><td class="round">2020-09</td><td>¿Cuánto recibió en el mes de MAYO por el BONO DE DESARROLLO HUMANO?</td><td class="m"><span class="mark cosmetic hand" aria-hidden="true"></span></td><td class="what">cosmetic change (checked by hand)</td></tr>
+          <tr class="real"><td class="round">2020-12</td><td>¿Cuánto recibió en el mes de NOVIEMBRE por el <ins>BONO o PENSIÓN</ins>?</td><td class="m"><span class="mark real hand" aria-hidden="true"></span></td><td class="what">real change (checked by hand)</td></tr>
           <tr class="cut"><td colspan="4">The 2021 redesign changed the dictionary layout: a break in the series.</td></tr>
-          <tr><td class="round">2021</td><td>Monto que recibió por el Bono de Desarrollo Humano</td><td class="m"></td><td class="what">not compared (break)</td></tr>
+          <tr><td class="round">2021</td><td>Monto que recibió por el Bono de Desarrollo Humano</td><td class="m"></td><td class="what">redesign break: not compared</td></tr>
           <tr><td class="round">2022</td><td>Monto que recibió por el Bono de Desarrollo Humano</td><td class="m"></td><td class="what">same</td></tr>
           <tr><td class="round">2023</td><td>Monto que recibió por el Bono de Desarrollo Humano</td><td class="m"></td><td class="what">same</td></tr>
-          <tr><td class="round">2024</td><td>Monto que recibió por el BONO DE DESARROLLO HUMANO</td><td class="m"><span class="mark cosmetic hand" aria-hidden="true"></span></td><td class="what">cosmetic (checked by hand)</td></tr>
+          <tr><td class="round">2024</td><td>Monto que recibió por el BONO DE DESARROLLO HUMANO</td><td class="m"><span class="mark cosmetic hand" aria-hidden="true"></span></td><td class="what">cosmetic change (checked by hand)</td></tr>
           <tr><td class="round">2025</td><td>Monto que recibió por el BONO DE DESARROLLO HUMANO</td><td class="m"></td><td class="what">same</td></tr>
         </tbody>
       </table>
       <div class="runnote">
         <span><span class="mark real" aria-hidden="true"></span>real change</span>
         <span><span class="mark cosmetic" aria-hidden="true"></span>cosmetic change</span>
-        <span><span class="mark cosmetic hand" aria-hidden="true"></span>ringed: checked by hand</span>
+        <span><span class="mark cosmetic hand" aria-hidden="true"></span>double ring: checked by hand</span>
       </div>
       <p>INEC doesn't make that easy. The dictionaries change layout, file names and column counts from round to round, and the 2021 methodological redesign breaks the series in the middle.</p>
     </div>
@@ -345,7 +345,7 @@ p { max-width: 68ch; margin: 0 0 1rem; }
       <ul class="facts">
         <li><span>On 2021 vs 2025 I labelled all 22 changes by hand before running the rule. The default rule agreed on 12 of 22 and <strong>never hid a real change</strong>. Its mistakes go the safe way: it flags cosmetic edits like <code>13er</code> → <code>13vo</code> as real.</span></li>
         <li><span>A second rule, tested on a pair of rounds it had never seen (Sept vs Dec 2020), agreed on 40 of 45, again hiding none of the 7 real changes.</span></li>
-        <li><span>On the history page, every mark says who decided it: my hand label where I made one, the rule (unchecked) everywhere else.</span></li>
+        <li><span>On the history page, every mark says who decided it: my hand label where I made one, the second rule (unchecked) everywhere else.</span></li>
       </ul>
       <p class="verdict">deriva shows you what moved. Whether two rounds are still comparable for your analysis is your decision.</p>
     </div>

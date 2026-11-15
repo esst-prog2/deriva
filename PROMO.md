@@ -49,7 +49,7 @@ not just against itself:
 - A second rule, tested on a pair of rounds it had never seen (Sept vs Dec 2020), agreed on
   40 of 45, again hiding none of the 7 real changes.
 - On the history page, every mark says who decided it: my hand label where I made one, the
-  rule (unchecked) everywhere else.
+  second rule (unchecked) everywhere else.
 
 deriva shows you what moved. Whether two rounds are still comparable for your analysis is
 your decision.
