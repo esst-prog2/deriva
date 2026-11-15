@@ -131,7 +131,7 @@ body {{ margin:0; background:var(--paper); color:var(--ink); font:15px/1.5 "Publ
 .mast strong {{ font-weight:800; font-size:1.05rem; }}
 .mast span {{ color:var(--soft); font-size:.85rem; }}
 .lede {{ font:400 2.1rem/1.2 "Source Serif 4",Georgia,serif; max-width:40rem; margin:2rem 0 .8rem; letter-spacing:-.01em; }}
-.lede em {{ font-style:normal; background:linear-gradient(transparent 62%,var(--marker) 62%); }}
+.lede em {{ font-style:normal; font-weight:600; }}
 .sub {{ color:var(--soft); max-width:40rem; margin:0 0 2rem; }}
 .controls {{ display:flex; flex-wrap:wrap; gap:.8rem 1.4rem; align-items:center; padding:.9rem 0; border-top:1px solid var(--rule);
   border-bottom:1px solid var(--rule); position:sticky; top:0; background:var(--paper); z-index:3; }}
@@ -178,7 +178,8 @@ tr.detail td {{ border-top:0; padding:0 0 1.4rem; }}
 .entry.cosmetic .note {{ color:var(--soft); }}
 .entry.missing .text {{ color:var(--graphite); font-style:italic; }}
 .cutline {{ color:var(--soft); font-size:.82rem; font-style:italic; padding:.5rem 0; border-top:1px dashed var(--rule); border-bottom:1px dashed var(--rule); margin:.3rem 0; }}
-del {{ color:var(--pencil); text-decoration:line-through 2px var(--pencil); }}
+del {{ color:var(--soft); text-decoration:line-through 1.5px var(--soft); }}
+.entry.real del {{ color:var(--pencil); text-decoration-color:var(--pencil); }}
 ins {{ text-decoration:none; background:var(--marker); }}
 .key {{ flex-basis:100%; display:flex; flex-wrap:wrap; gap:.4rem 1.2rem; color:var(--ink); font-size:.82rem; margin:0; padding-top:.6rem; border-top:1px solid var(--grid); }}
 .key .swatch {{ display:inline-block; width:1.4rem; height:.8rem; background:repeating-linear-gradient(135deg,transparent 0 5px,var(--rule) 5px 7px); vertical-align:middle; }}
@@ -216,12 +217,12 @@ Click a row to read every version of that question.</p>
 <label><input type="radio" name="f" value="changed"><i class="dot cosmetic"></i>Any change <span class="n">({changed_vars})</span></label>
 <label><input type="radio" name="f" value="all"><i class="dot same"></i>All variables <span class="n">({variables})</span></label>
 <span class="shown" id="shown"></span>
-<div class="key" aria-label="What the marks mean"><span><i class="dot real"></i>Real change</span><span><i class="dot cosmetic"></i>Cosmetic change</span><span><i class="dot added"></i>Added / removed</span><span><i class="dot same"></i>Same</span><span><i class="blank"></i>Empty: not in this round</span><span><i class="swatch"></i>Redesign break: not compared</span><span><i class="dot real hand"></i>Double ring: checked by hand</span></div>
+<div class="key" aria-label="What the marks mean"><span><i class="dot real"></i>Real change</span><span><i class="dot cosmetic"></i>Cosmetic change</span><span><i class="dot added"></i>Added / removed</span><span><i class="dot same"></i>Same</span><span><i class="blank"></i>Empty: nothing to compare (not in this round, or just after the redesign)</span><span><i class="swatch"></i>Redesign break: not compared</span><span><i class="dot real hand"></i>Double ring: checked by hand</span></div>
 </div>
-<div class="who"><p style="margin:0">Who decided each mark: double-ringed marks ({hand}) are my hand labels; every other mark is deriva's second rule, not checked by hand.</p>
+<div class="who"><p style="margin:0">Who decided each mark: double-ringed marks ({hand}) are my hand labels; every other red dot or grey ring is deriva's second rule, not checked by hand. Added, removed and same come straight from the dictionaries.</p>
 <details><summary>How the marks were decided</summary>
 <p>I labelled changes by hand between {hand_steps}. A label applies to every change with exactly the same wording before and after, so one label can mark several variables and rounds; that is why {hand} marks carry a hand label.</p>
-<p>Every other mark is the verdict of deriva's second rule. No one has checked those marks one by one; tested on a pair of rounds it was not built from (September vs December 2020), the second rule agreed with my labels on 40 of 45 changes and hid none of the 7 real ones.</p>
+<p>Every other red dot or grey ring is the verdict of deriva's second rule. No one has checked those marks one by one; tested on a pair of rounds it was not built from (September vs December 2020), the second rule agreed with my labels on 40 of 45 changes and hid none of the 7 real ones.</p>
 </details></div>
 <table class="map">
 <thead><tr><th class="q">Question</th>{head}</tr></thead>
@@ -311,10 +312,18 @@ def render(rounds: list[Round], history: dict[str, list[Entry]]) -> str:
             if e.mark == BREAK:
                 cells.append('<td class="cut"></td>')
                 sheet.append(f'<div class="cutline">Redesign break: the dictionary layout changed in {e.round}, so {e.round} is not compared with the round before</div>')
-            dot = "missing" if e.text is None else (e.mark if e.mark in NOTE else "same")
+            # The first round after a redesign is not compared, so it gets no mark at all.
+            dot = "missing" if e.text is None or e.mark == BREAK else (e.mark if e.mark in NOTE else "same")
             hand = " hand" if e.by_hand else ""
             who = BY_HAND if e.by_hand else BY_RULE
-            title = f"{e.round}: {NOTE[e.mark]} ({who})" if e.mark in NOTE else e.round
+            if e.mark in (REAL, COSMETIC):
+                title = f"{e.round}: {NOTE[e.mark]} ({who})"
+            elif e.mark in NOTE:
+                title = f"{e.round}: {NOTE[e.mark]}"
+            elif e.mark == BREAK:
+                title = f"{e.round}: first round after the redesign, not compared"
+            else:
+                title = e.round
             cells.append(f'<td class="cell"><i class="dot {dot}{hand}" title="{html.escape(title)}"></i></td>')
             if e.text is None:
                 text, kind = "Not in this round", "missing"

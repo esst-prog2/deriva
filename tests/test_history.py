@@ -81,7 +81,7 @@ def test_page_says_who_decided(folder, capsys):
     )
     assert main([str(folder), "--labels", str(labels)]) == 0
     page = (folder / "deriva_history.html").read_text(encoding="utf-8")
-    assert "Who decided each mark: double-ringed marks (1) are my hand labels; every other mark is deriva's second rule, not checked by hand." in page
+    assert "Who decided each mark: double-ringed marks (1) are my hand labels; every other red dot or grey ring is deriva's second rule, not checked by hand. Added, removed and same come straight from the dictionaries." in page
     assert "dot real hand" in page
 
 
@@ -107,7 +107,7 @@ def test_legend_comes_before_the_table(folder):
     assert main([str(folder)]) == 0
     page = (folder / "deriva_history.html").read_text(encoding="utf-8")
     assert page.index('class="key"') < page.index('<table class="map"')
-    for meaning in ("Real change", "Cosmetic change", "Added / removed", "Empty: not in this round",
+    for meaning in ("Real change", "Cosmetic change", "Added / removed", "Empty: nothing to compare",
                     "Redesign break: not compared", "Double ring: checked by hand"):
         assert meaning in page
 
@@ -131,3 +131,23 @@ def test_phone_summary_lists_where_each_variable_changed(folder):
     p76 = p76[: p76.index("</tr>")]
     assert '<span class="sum"><span><i class="dot real"></i>2020-12</span><span><i class="dot removed"></i>2022</span></span>' in p76
     assert ".map td.cell, .map td.cut {{ display:none; }}".replace("{{", "{").replace("}}", "}") in page
+
+
+def test_marks_only_claim_what_was_decided(folder):
+    # Added/removed come from the dictionaries, so their tooltips name no decider,
+    # and the first round after the redesign gets no "same" dot.
+    assert main([str(folder)]) == 0
+    page = (folder / "deriva_history.html").read_text(encoding="utf-8")
+    assert 'title="2022: Removed"' in page
+    assert "Removed (second rule" not in page
+    p76 = page[page.index('data-name="p76"'):]
+    p76 = p76[: p76.index("</tr>")]
+    assert '<td class="cut"></td><td class="cell"><i class="dot missing" title="2021: first round after the redesign, not compared">' in p76
+
+
+def test_red_is_only_for_real_changes(folder):
+    assert main([str(folder)]) == 0
+    page = (folder / "deriva_history.html").read_text(encoding="utf-8")
+    assert "del { color:var(--soft);" in page
+    assert ".entry.real del { color:var(--pencil);" in page
+    assert "var(--marker) 62%" not in page  # the lede no longer uses the added-words yellow
