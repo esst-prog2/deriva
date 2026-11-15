@@ -131,7 +131,8 @@
       <div id="trans" class="abs">Translated from the Spanish codebook</div>
       <div class="instr abs" id="in1">Same name in every round.</div>
       <div class="instr abs" id="in2">Same question?</div>
-      <div class="instr abs" id="in3" data-hold="reading time for the Dec 2020 change">December 2020: <b>a different question.</b></div>
+      <div class="instr abs" id="in3" data-hold="reading time: why it is a different question"><b>Before:</b> one cash-transfer programme. <b>After:</b> any bonus or pension.</div>
+      <div class="instr abs" id="in3b" data-hold="reading time: what pooling would mean">Pool the rounds and you're comparing two different amounts.</div>
       <div class="instr abs" id="in4"><b>deriva</b> compares every round's variable dictionaries (codebooks).</div>
 
       <!-- p76 across nine dictionaries -->
@@ -191,7 +192,7 @@
       const T = (t) => { for (let i = 0; i < BP.length - 1; i++) { const [a, x] = BP[i], [b, y] = BP[i + 1]; if (t >= a && t <= b) return x + (t - a) * (y - x) / (b - a); } return t; };
       // U() then stretches that 30 s cut to 38 s, giving the extra time only to the reading moments
       // (opener, the Dec 2020 change with its gloss, the hand-check table, the end card).
-      const UB = [[0, 0], [4.0, 6.0], [10.6, 12.6], [12.9, 14.9], [15.55, 20.15], [23.1, 27.7], [23.55, 28.15], [26.1, 32.2], [27.85, 33.95], [30, 38]];
+      const UB = [[0, 0], [4.0, 6.0], [10.6, 12.6], [12.9, 14.9], [15.55, 22.15], [23.1, 29.7], [23.55, 30.15], [26.1, 34.2], [27.85, 35.95], [30, 40]];
       const U = (t) => { for (let i = 0; i < UB.length - 1; i++) { const [a, x] = UB[i], [b, y] = UB[i + 1]; if (t >= a && t <= b) return x + (t - a) * (y - x) / (b - a); } return t; };
       const tl = { fromTo: (e, f, g, t) => tl0.fromTo(e, f, g, U(T(t))), set: (e, v, t) => tl0.set(e, v, U(T(t))) };
       const R = { immediateRender: false };
@@ -236,7 +237,10 @@
 
       // 12.4 – 15.4  deriva is written into the Tool field
       tl.fromTo("#tool-word", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power2.out", ...R }, 12.45);
-      swap("#in3", "#in4", 12.75);
+      // Why it is a different question (final times): the first line, then what pooling would mean
+      tl0.fromTo("#in3", { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(8px)", duration: 0.18, ease: "power2.in", immediateRender: false }, 18.85);
+      tl0.fromTo("#in3b", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 18.99);
+      swap("#in3b", "#in4", 12.75);
 
       // 15.4 – 21.2  the row of rounds becomes the subject
       out(["#qbox", "#wording", "#trans", "#in4"], 15.4, 0.22);
