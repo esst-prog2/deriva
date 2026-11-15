@@ -1,6 +1,6 @@
 # deriva — promo page content (draft)
 
-Audience assumed: researchers and analysts who use ENEMDU across several rounds.
+Audience: researchers and analysts who use ENEMDU across several rounds.
 
 ---
 
@@ -64,6 +64,16 @@ your decision.
 - Comparing a pre-2021 round with a 2021+ round directly (the layouts don't line up)
 
 ## Get started
+
+1. Install [uv](https://docs.astral.sh/uv/).
+2. Clone the repository:
+
+   ```
+   git clone https://github.com/esst-prog2/deriva
+   cd deriva
+   ```
+
+3. Install and run:
 
 ```
 uv sync
