@@ -3,7 +3,7 @@
 GOAL:    a stranger leaves knowing that a survey variable can keep its name while its question changes,
          and that deriva shows where; they want to open the promo page.
 OUTPUT:  HyperFrames, 1280 x 720, 30 fps, delivered as docs/promo.mp4 (small, H.264).
-TIME:    30 s x 30 = 900 frames. No beat grid until a music bed is chosen.
+TIME:    38 s x 30 = 1140 frames (was 30 s; the extra 8 s went to the reading moments: opener, Dec 2020 change + gloss, hand-check table, end card). No beat grid until a music bed is chosen.
 LOOK:    the promo page's questionnaire sheet (DESIGN.md), as a medium:
          desk #e6ecf4 ground; sheet #fdfeff inset 32/28 px, shadow 0 18px 48px -20px rgba(18,22,29,.22);
          form ink #2a5bb0 carries every printed structure (rules 1.5 px, number boxes, labels, instruction lines);

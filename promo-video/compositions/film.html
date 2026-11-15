@@ -86,7 +86,8 @@
     #grid { position: absolute; left: 620px; top: 30px; }
     #grid table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
     #grid th { font-size: 19px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--form); font-variation-settings: "wdth" 70; padding: 6px 10px; text-align: center; }
-    #grid th.rh { text-align: left; padding-left: 0; width: 180px; }
+    #grid th.rh { text-align: left; padding-left: 0; padding-right: 16px; width: 190px; line-height: 1.25; }
+    #grid th { line-height: 1.25; }
     #grid td { border: 1.5px solid var(--form-line); text-align: center; width: 160px; height: 110px; font-size: 54px; font-weight: 700; font-variation-settings: "wdth" 80; }
     #grid td.agree { background: var(--form-tint); }
     #grid td.zero { border: 3px solid var(--ink); }
@@ -127,7 +128,7 @@
         <div class="line" id="wl2"><span class="w">por</span> <span class="w">el</span> <span id="old"><span class="w">BONO</span> <span class="w">DE</span> <span class="w">DESARROLLO</span> <span class="w">HUMANO?</span><span id="strike"></span></span></div>
         <div class="line" id="wl3"><span id="new">BONO o PENSIÓN?</span></div>
       </div>
-      <div id="gloss" class="abs">Human Development Bonus → bonus or pension</div>
+      <div id="gloss" class="abs" data-hold="reading time for the Dec 2020 change">Human Development Bonus → bonus or pension</div>
       <div class="instr abs" id="in1">Same name in every round.</div>
       <div class="instr abs" id="in2">Same question?</div>
       <div class="instr abs" id="in3">December 2020: <b>a different question.</b></div>
@@ -163,11 +164,11 @@
       <div id="trust" class="abs">
         <span class="label">2021 vs 2025, default rule</span>
         <div class="t-h">22 changes checked by hand.</div>
-        <div id="t-zero">deriva never called a real change cosmetic.</div>
+        <div id="t-zero" data-hold="reading time for the hand-check result">deriva never called a real change cosmetic.</div>
           <div id="grid"><table>
-          <tr><td style="border:0;height:auto"></td><th>Rule: cosmetic</th><th>Rule: real</th></tr>
-          <tr><th class="rh">Hand: cosmetic</th><td class="agree gc" id="g1">9</td><td class="gc" id="g2">10</td></tr>
-          <tr><th class="rh">Hand: real</th><td class="zero" id="g3">0<small>real hidden</small></td><td class="agree gc" id="g4">3</td></tr>
+          <tr><td style="border:0;height:auto"></td><th>deriva said:<br>cosmetic</th><th>deriva said:<br>real</th></tr>
+          <tr><th class="rh">Checked by hand:<br>cosmetic</th><td class="agree gc" id="g1">9</td><td class="gc" id="g2">10</td></tr>
+          <tr><th class="rh">Checked by hand:<br>real</th><td class="zero" id="g3">0<small>real hidden</small></td><td class="agree gc" id="g4">3</td></tr>
         </table></div>
       </div>
 
@@ -188,7 +189,11 @@
       // (opener 0-4 s, then each beat shifted, the hand-check and end card shortened).
       const BP = [[0, 4.0], [2.85, 6.6], [7.5, 10.6], [12.45, 15.55], [12.75, 15.7], [15.4, 18.1], [21.2, 23.1], [21.45, 23.25], [22.4, 23.55], [25.2, 26.1], [26.9, 27.35], [27.95, 27.85], [30, 30]];
       const T = (t) => { for (let i = 0; i < BP.length - 1; i++) { const [a, x] = BP[i], [b, y] = BP[i + 1]; if (t >= a && t <= b) return x + (t - a) * (y - x) / (b - a); } return t; };
-      const tl = { fromTo: (e, f, g, t) => tl0.fromTo(e, f, g, T(t)), set: (e, v, t) => tl0.set(e, v, T(t)) };
+      // U() then stretches that 30 s cut to 38 s, giving the extra time only to the reading moments
+      // (opener, the Dec 2020 change with its gloss, the hand-check table, the end card).
+      const UB = [[0, 0], [4.0, 6.0], [10.6, 12.6], [12.9, 14.9], [15.55, 20.15], [23.1, 27.7], [23.55, 28.15], [26.1, 32.2], [27.85, 33.95], [30, 38]];
+      const U = (t) => { for (let i = 0; i < UB.length - 1; i++) { const [a, x] = UB[i], [b, y] = UB[i + 1]; if (t >= a && t <= b) return x + (t - a) * (y - x) / (b - a); } return t; };
+      const tl = { fromTo: (e, f, g, t) => tl0.fromTo(e, f, g, U(T(t))), set: (e, v, t) => tl0.set(e, v, U(T(t))) };
       const R = { immediateRender: false };
       const q = (s) => document.querySelectorAll("#root " + s);
 
@@ -203,11 +208,11 @@
       const moveCur = (i, t, d = 0.4) => tl.fromTo("#cur", { x: slotX(i - 1) }, { x: slotX(i), duration: d, ease: "power2.inOut", ...R }, t);
 
       // Opener (final times): the problem; the reading head runs back and forth over the rounds
-      tl0.fromTo("#op2", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 0.3);
+      tl0.fromTo("#op2", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, U(0.3));
       [[0, 8, 0.5, 0.55], [8, 2, 1.15, 0.5], [2, 6, 1.75, 0.4], [6, 1, 2.25, 0.4], [1, 7, 2.75, 0.35], [7, 0, 3.2, 0.45]].forEach(([a, b, t, d]) =>
-        tl0.fromTo("#cur", { x: slotX(a) }, { x: slotX(b), duration: d, ease: "power2.inOut", immediateRender: false }, t));
-      tl0.fromTo(["#op1", "#op2"], { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power2.in", immediateRender: false }, 3.8);
-      tl0.fromTo(["#qbox", "#wording", "#hv-p76", "#rv1"], { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 3.95);
+        tl0.fromTo("#cur", { x: slotX(a) }, { x: slotX(b), duration: d, ease: "power2.inOut", immediateRender: false }, U(t)));
+      tl0.fromTo(["#op1", "#op2"], { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power2.in", immediateRender: false }, U(3.8));
+      tl0.fromTo(["#qbox", "#wording", "#hv-p76", "#rv1"], { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, U(3.95));
 
       // the question inks in, like an entry being written
       tl.fromTo(q("#wording .w"), { color: "#8d98ab" }, { color: "#12161d", duration: 0.16, stagger: 0.07, ease: "power2.out" }, 0.05);
