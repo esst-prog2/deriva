@@ -22,3 +22,7 @@ htmlcov/
 /promo-video/renders/
 /promo-video/.waveform-cache/
 /promo-video/.thumbnails/
+
+# impeccable live-mode runtime state (the config is kept)
+/.impeccable/live/*
+!/.impeccable/live/config.json

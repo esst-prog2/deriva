@@ -62,13 +62,13 @@ code, kbd { font-family: var(--mono); font-size: .9em; }
 
 /* A question: number box, body, and a margin of skip instructions */
 .q {
-  display: grid; grid-template-columns: 3.25rem minmax(0, 1fr) 13rem; column-gap: clamp(1rem, 2.5vw, 2rem);
-  padding: clamp(2rem, 4vw, 3rem) 0; border-top: 1.5px solid var(--form);
+  display: grid; grid-template-columns: 4.75rem minmax(0, 1fr) 13rem; column-gap: clamp(1rem, 2.5vw, 2rem);
+  padding: clamp(2rem, 4vw, 3rem) 0; border-top: 3px solid var(--form);
 }
 .q:first-of-type { border-top: 0; padding-top: 0; }
 .qnum {
-  width: 3.25rem; height: 3.25rem; display: grid; place-items: center; background: var(--form); color: #fff;
-  font-weight: 700; font-size: 1.35rem; font-variation-settings: "wdth" 80; font-variant-numeric: tabular-nums;
+  width: 4.75rem; height: 4.75rem; display: grid; place-items: center; background: var(--form); color: #fff;
+  font-weight: 700; font-size: 2.1rem; font-variation-settings: "wdth" 80; font-variant-numeric: tabular-nums;
 }
 .qbody { min-width: 0; }
 .qbody > :first-child { margin-top: 0; }
@@ -77,7 +77,7 @@ h1 {
   font-size: clamp(2.3rem, 5vw, 4.25rem); line-height: 1.02; font-weight: 700; letter-spacing: -.025em;
   margin: 0 0 1.25rem; max-width: 19ch;
 }
-h2 { font-size: clamp(1.6rem, 3vw, 2.35rem); line-height: 1.12; font-weight: 700; letter-spacing: -.02em; margin: .2rem 0 1rem; max-width: 24ch; }
+h2 { font-size: clamp(1.9rem, 3.8vw, 3rem); line-height: 1.12; font-weight: 700; letter-spacing: -.025em; margin: .2rem 0 1rem; max-width: 20ch; font-variation-settings: "wdth" 80; }
 h3 { font-size: 1.2rem; line-height: 1.25; font-weight: 700; margin: 0 0 .4rem; }
 .deck { font-size: clamp(1.3rem, 2.4vw, 1.85rem); line-height: 1.25; font-weight: 600; font-variation-settings: "wdth" 85; letter-spacing: -.01em; max-width: 32ch; margin: -.25rem 0 1.25rem; text-wrap: balance; }
 .instr { color: var(--form-deep); font-style: italic; max-width: 62ch; font-size: 1.1rem; margin: 0 0 1.75rem; }
@@ -119,6 +119,29 @@ p { max-width: 68ch; margin: 0 0 1rem; }
 .btn:hover { background: var(--form-deep); text-decoration: none; }
 .btn svg { width: 1.1em; height: 1.1em; }
 .go .alt a { font-weight: 600; }
+
+/* Q1: a band of form blue, the one drenched surface on the sheet */
+.q.band {
+  background: var(--form); color: var(--sheet);
+  margin: 0 calc(-1 * var(--gutter)); padding: clamp(2.25rem, 5vw, 4rem) var(--gutter);
+}
+.band .qnum { background: var(--sheet); color: var(--form); }
+.band h1 { color: var(--sheet); font-size: clamp(2.6rem, 6.4vw, 5.5rem); max-width: 15ch; letter-spacing: -.03em; font-variation-settings: "wdth" 80; }
+.band .deck { color: #e3ebfa; font-size: clamp(1.35rem, 2.6vw, 2rem); max-width: 30ch; }
+.band .instr { color: #d4e1f7; margin-bottom: 0; }
+.band .skip { color: #dfe8f8; }
+.band .skip a { color: var(--sheet); }
+.band ::selection { background: var(--sheet); color: var(--form-deep); }
+
+/* Q1 answer: the legend, the button and the film, aligned to the question body */
+.answer { padding: clamp(1.75rem, 4vw, 2.75rem) 0 clamp(2rem, 4vw, 3rem) calc(4.75rem + clamp(1rem, 2.5vw, 2rem)); }
+.answer .bubbles { font-size: 1.15rem; gap: .75rem 2.25rem; }
+.answer .mark { width: 1.3rem; height: 1.3rem; }
+.answer .mark.dash { width: 1.3rem; height: 2.5px; }
+.answer .btn { font-size: 1.2rem; padding: 1rem 1.6rem; }
+
+/* Q4: "Run it on your machine" */
+.runit { margin: 2.5rem 0 0; font-size: 1.2rem; }
 
 /* Q1: the 30-second film */
 .film { margin: 2.25rem 0 0; max-width: 46rem; }
@@ -169,15 +192,15 @@ p { max-width: 68ch; margin: 0 0 1rem; }
 .grid2 { border-collapse: collapse; font-variant-numeric: tabular-nums; width: 100%; max-width: 26rem; }
 .grid2 th { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--form); font-variation-settings: "wdth" 70; padding: .3rem .5rem; text-align: center; }
 .grid2 th[scope=row] { text-align: left; padding-left: 0; }
-.grid2 td { border: 1.5px solid var(--form-line); text-align: center; font-size: 1.6rem; font-weight: 700; font-variation-settings: "wdth" 80; height: 3.6rem; width: 33%; }
+.grid2 td { border: 1.5px solid var(--form-line); text-align: center; font-size: 2.1rem; font-weight: 700; font-variation-settings: "wdth" 80; height: 4.2rem; width: 33%; }
 .grid2 td.agree { background: var(--form-tint); }
 .grid2 td.hidden { border: 2.5px solid var(--ink); position: relative; }
 .grid2 td small { display: block; font-size: .68rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft); font-variation-settings: "wdth" 70; }
-.score { font-size: 1.05rem; font-weight: 600; margin: .75rem 0 0; }
+.score { font-size: 1.2rem; font-weight: 600; margin: .75rem 0 0; }
 .facts { padding: 0; margin: 0 0 1.5rem; list-style: none; display: grid; gap: .9rem; max-width: 68ch; }
 .facts li { display: grid; grid-template-columns: 1.4rem minmax(0, 1fr); gap: .6rem; }
 .facts li::before { content: ""; width: .55rem; height: .55rem; margin-top: .6rem; background: var(--form); }
-.verdict { font-size: 1.25rem; line-height: 1.45; font-weight: 600; max-width: 46ch; border-top: 1.5px solid var(--ink); padding-top: 1rem; margin-top: 2rem; }
+.verdict { font-size: 1.5rem; line-height: 1.45; font-weight: 600; max-width: 46ch; border-top: 3px solid var(--ink); padding-top: 1rem; margin-top: 2rem; }
 
 /* Q6: boxes left empty on purpose */
 .notdone { list-style: none; padding: 0; margin: 1.25rem 0 0; display: grid; gap: .75rem; max-width: 68ch; }
@@ -200,7 +223,8 @@ p { max-width: 68ch; margin: 0 0 1rem; }
   .formhead .cell { border-left: 0; border-top: 1px solid var(--form-line); }
   .formhead .cell:first-child { border-top: 0; }
   .formhead .cell:nth-child(odd):not(:first-child) { border-left: 1px solid var(--form-line); }
-  .q { grid-template-columns: 3.25rem minmax(0, 1fr); }
+  .q { grid-template-columns: 4.75rem minmax(0, 1fr); }
+  .answer { padding-left: 0; }
   .skip { grid-column: 2; padding-top: 1.25rem; }
 }
 @media (max-width: 40rem) {
@@ -209,7 +233,7 @@ p { max-width: 68ch; margin: 0 0 1rem; }
   .formhead { grid-template-columns: minmax(0, 1fr); }
   .formhead .cell:nth-child(odd):not(:first-child) { border-left: 0; }
   .q { grid-template-columns: minmax(0, 1fr); }
-  .qnum { width: 2.5rem; height: 2.5rem; font-size: 1.1rem; margin-bottom: 1rem; }
+  .qnum { width: 3.25rem; height: 3.25rem; font-size: 1.5rem; margin-bottom: 1rem; }
   .skip { grid-column: 1; padding-top: 2rem; }
   .tallies { grid-template-columns: minmax(0, 1fr); }
   .run td.what, .run thead th:last-child { display: none; }
@@ -222,7 +246,6 @@ p { max-width: 68ch; margin: 0 0 1rem; }
 </head>
 <body>
 <main class="sheet">
-
   <header class="formhead" aria-label="About this page">
     <div class="cell"><span class="label">Tool</span><span class="wordmark">deriva</span></div>
     <div class="cell"><span class="label">Survey</span><span class="entry">ENEMDU, Ecuador</span></div>
@@ -230,43 +253,41 @@ p { max-width: 68ch; margin: 0 0 1rem; }
     <div class="cell"><span class="label">Rounds covered</span><span class="entry">June 2019 to 2025</span></div>
     <div class="cell"><span class="label">Code</span><span class="entry nowrap"><a href="https://github.com/esst-prog2/deriva">github.com/esst-prog2/deriva</a></span></div>
   </header>
-
-  <section class="q" id="q1" aria-labelledby="h1">
+  <section class="q band" id="q1" aria-labelledby="h1">
     <div class="qnum" aria-hidden="true">1</div>
     <div class="qbody">
       <h1 id="h1">Is it still the same question?</h1>
       <p class="deck">Find out without going back and forth between codebooks.</p>
       <p class="instr">deriva reads the variable dictionaries (codebooks) of ENEMDU rounds and tells you which questions were added, removed, reworded cosmetically or really changed, with both wordings side by side, so you decide whether the rounds still compare. It covers the persona module, from June 2019 to 2025.</p>
-      <ul class="bubbles" aria-label="The four answers deriva gives for each question">
+    </div>
+    <aside class="skip">If you already know the problem, go to <a href="#q3"><svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>question 3</a> to look a question up, or <a href="#q4"><svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>question 4</a> to run deriva.</aside>
+  </section>
+  <div class="answer">
+    <ul class="bubbles" aria-label="The four answers deriva gives for each question">
         <li><span class="mark dash" aria-hidden="true"></span>added <span class="code">1</span></li>
         <li><span class="mark dash" aria-hidden="true"></span>removed <span class="code">2</span></li>
         <li><span class="mark cosmetic" aria-hidden="true"></span>cosmetic change <span class="code">3</span></li>
         <li><span class="mark real" aria-hidden="true"></span>real change <span class="code">4</span></li>
       </ul>
-      <div class="go">
+    <div class="go">
         <span class="say">See it on a real question</span>
         <span class="route" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M1 1l8 4-8 4z"/></svg></span>
         <a class="btn" href="history.html?q=p76">Open the history of p76
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg></a>
         <p class="alt">If you would rather run it yourself, go to <a href="#q4"><svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>question 4</a>.</p>
       </div>
-      <figure class="film">
+    <figure class="film">
         <video controls muted playsinline preload="none" poster="promo-poster.jpg" width="1280" height="720" aria-describedby="film-cap">
           <source src="promo.mp4" type="video/mp4">
           <a href="promo.mp4">Download the 30-second video (MP4)</a>
         </video>
         <figcaption id="film-cap">deriva in 30 seconds, no voice: the question <code>p76</code> keeps its name while its wording changes in December 2020 (“Human Development Bonus” becomes “bonus or pension”), and deriva marks the change across nine rounds. The only sound is soft pencil ticks; it starts muted.</figcaption>
       </figure>
-    </div>
-    <aside class="skip">If you already know the problem, go to <a href="#q3"><svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>question 3</a> to look a question up, or <a href="#q4"><svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>question 4</a> to run deriva.</aside>
-  </section>
-
+  </div>
   <section class="q" id="q2" aria-labelledby="h2">
     <div class="qnum" aria-hidden="true">2</div>
     <div class="qbody">
-      <h2 id="h2">Is <code>p76</code> the same question in every round?</h2>
-      <p>You want to run a trend from 2019 to 2025. The variable is called <code>p76</code> in every round, so it must be the same question. It isn't: in December 2020 “BONO DE DESARROLLO HUMANO” became “BONO o PENSIÓN”. Nothing in the microdata tells you that, and a check that matches variable names won't either, because the name never changed. The only way to find out is to open each round's dictionary and read the questions one by one.</p>
-      <table class="run">
+      <h2 id="h2">Is <code>p76</code> the same question in every round?</h2><p>You want to run a trend from 2019 to 2025. The variable is called <code>p76</code> in every round, so it must be the same question. It isn't: in December 2020 “BONO DE DESARROLLO HUMANO” became “BONO o PENSIÓN”. Nothing in the microdata tells you that, and a check that matches variable names won't either, because the name never changed. The only way to find out is to open each round's dictionary and read the questions one by one.</p><table class="run">
         <caption>The wording of <code>p76</code> in nine dictionaries, as deriva-history shows it</caption>
         <thead><tr><th scope="col">Round</th><th scope="col">Wording in the dictionary</th><th scope="col"><span class="sr">Mark</span></th><th scope="col">Change from the round before</th></tr></thead>
         <tbody>
@@ -281,25 +302,20 @@ p { max-width: 68ch; margin: 0 0 1rem; }
           <tr><td class="round">2024</td><td>Monto que recibió por el BONO DE DESARROLLO HUMANO</td><td class="m"><span class="mark cosmetic hand" aria-hidden="true"></span></td><td class="what">cosmetic change (checked by hand)</td></tr>
           <tr><td class="round">2025</td><td>Monto que recibió por el BONO DE DESARROLLO HUMANO</td><td class="m"></td><td class="what">same</td></tr>
         </tbody>
-      </table>
-      <div class="runnote">
+      </table><div class="runnote">
         <span><span class="mark real" aria-hidden="true"></span>real change</span>
         <span><span class="mark cosmetic" aria-hidden="true"></span>cosmetic change</span>
         <span><span class="mark cosmetic hand" aria-hidden="true"></span>double ring: checked by hand</span>
-      </div>
-      <p>INEC doesn't make that easy. The dictionaries change layout, file names and column counts from round to round, and the 2021 methodological redesign breaks the series in the middle. Each dictionary gives you one round's wording; it doesn't say what changed since the round before.</p>
+      </div><p>INEC doesn't make that easy. The dictionaries change layout, file names and column counts from round to round, and the 2021 methodological redesign breaks the series in the middle. Each dictionary gives you one round's wording; it doesn't say what changed since the round before.</p>
     </div>
     <aside class="skip">Only need to check a question before you use it? Go to <a href="#q3"><svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>question 3</a>. Comparing dictionaries for your own indicators? Go to <a href="#q4"><svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>question 4</a>.</aside>
   </section>
-
   <section class="q" id="q3" aria-labelledby="h3q">
     <div class="qnum" aria-hidden="true">3</div>
     <div class="qbody">
-      <h2 id="h3q">Need to check one question before you use it?</h2>
-      <p>Open the history page and type a variable name, such as <code>p76</code>. You see its wording in every round it appears in, from June 2019 to 2025, with each change marked: a red dot for a real change, a grey ring for a cosmetic one, a double ring where I checked it by hand, and a dash where the variable was added or removed. The 2021 redesign is shown as a break, not compared. Click a row to read every version in full.</p>
-      <p>Don't know the variable name? Choose “All variables” and scroll: each row shows the name next to a short form of the question.</p>
-      <p>There is nothing to install. It runs in your browser.</p>
-      <div class="go">
+      <h2 id="h3q">Need to check one question before you use it?</h2><p>Open the history page and type a variable name, such as <code>p76</code>. You see its wording in every round it appears in, from June 2019 to 2025, with each change marked: a red dot for a real change, a grey ring for a cosmetic one, a double ring where I checked it by hand, and a dash where the variable was added or removed. The 2021 redesign is shown as a break, not compared. Click a row to read every version in full.</p>
+<p>Don't know the variable name? Choose “All variables” and scroll: each row shows the name next to a short form of the question.</p>
+<p>There is nothing to install. It runs in your browser.</p><div class="go">
         <span class="say">Look a question up</span>
         <span class="route" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M1 1l8 4-8 4z"/></svg></span>
         <a class="btn" href="history.html">Open the history page
@@ -308,13 +324,10 @@ p { max-width: 68ch; margin: 0 0 1rem; }
     </div>
     <aside class="skip">If you want to know how far to trust the marks, go to <a href="#q5"><svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>question 5</a>.</aside>
   </section>
-
   <section class="q" id="q4" aria-labelledby="h4">
     <div class="qnum" aria-hidden="true">4</div>
     <div class="qbody">
-      <h2 id="h4">Building indicators across rounds?</h2>
-      <p>Run deriva on two dictionaries and you get the whole list, not one question at a time.</p>
-      <div class="parts">
+      <h2 id="h4">Building indicators across rounds?</h2><p>Run deriva on two dictionaries and you get the whole list, not one question at a time.</p><div class="parts">
         <div class="part">
           <span class="sub" aria-hidden="true">a</span>
           <div>
@@ -339,26 +352,20 @@ p { max-width: 68ch; margin: 0 0 1rem; }
             <div class="cmd"><pre><code><span class="ln"><span class="pr">$ </span>deriva --labels-template 2021.xlsx 2025.xlsx</span><span class="ln"><span class="pr">$ </span>deriva-eval labels_2021_vs_2025.csv</span></code></pre></div>
           </div>
         </div>
-      </div>
-      <h3 style="margin-top:2.5rem">Run it on your machine.</h3>
-      <ol class="steps">
+      </div><h3 class="runit">Run it on your machine.</h3><ol class="steps">
         <li><div><p>Install <a href="https://docs.astral.sh/uv/">uv</a>.</p></div></li>
         <li><div><p>Clone the repository:</p>
           <div class="cmd"><pre><code><span class="ln">git clone https://github.com/esst-prog2/deriva</span><span class="ln">cd deriva</span></code></pre><button class="copy" type="button">Copy</button></div></div></li>
         <li><div><p>Install and run:</p>
           <div class="cmd"><pre><code><span class="ln">uv sync</span><span class="ln">uv run deriva "data/Diccionario de Datos_persona_anual_2021.xlsx" "data/Diccionario de Datos_persona_anual_2025.xlsx"</span><span class="ln">uv run deriva-history data/</span></code></pre><button class="copy" type="button">Copy</button></div></div></li>
-      </ol>
-      <p>The dictionaries are in the repository, so this runs from a fresh clone.</p>
+      </ol><p>The dictionaries are in the repository, so this runs from a fresh clone.</p>
     </div>
     <aside class="skip">If you want proof before running it on your own rounds, go to <a href="#q5"><svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>question 5</a>.</aside>
   </section>
-
   <section class="q" id="q5" aria-labelledby="h5">
     <div class="qnum" aria-hidden="true">5</div>
     <div class="qbody">
-      <h2 id="h5">Can you trust its verdicts?</h2>
-      <p>“Cosmetic” or “real” is a judgement call, so deriva was tested against human judgement, not just against itself.</p>
-      <div class="tallies">
+      <h2 id="h5">Can you trust its verdicts?</h2><p>“Cosmetic” or “real” is a judgement call, so deriva was tested against human judgement, not just against itself.</p><div class="tallies">
         <figure class="tally" style="margin:0">
           <h3>2021 vs 2025, default rule</h3>
           <p class="meta">22 changes, labelled by hand before running the rule</p>
@@ -383,22 +390,18 @@ p { max-width: 68ch; margin: 0 0 1rem; }
           </table>
           <p class="score">Agreed on 40 of 45.</p>
         </figure>
-      </div>
-      <ul class="facts">
+      </div><ul class="facts">
         <li><span>On 2021 vs 2025 I labelled all 22 changes by hand before running the rule. The default rule agreed on 12 of 22 and <strong>never hid a real change</strong>. Its mistakes go the safe way: it flags cosmetic edits like <code>13er</code> → <code>13vo</code> as real.</span></li>
         <li><span>A second rule, tested on a pair of rounds it had never seen (Sept vs Dec 2020), agreed on 40 of 45, again hiding none of the 7 real changes.</span></li>
         <li><span>On the history page, every red dot and grey ring says who decided it: my hand label where I made one, the second rule (unchecked) everywhere else. Added, removed and same marks come straight from the dictionaries.</span></li>
-      </ul>
-      <p class="verdict">deriva shows you what moved. Whether two rounds are still comparable for your analysis is your decision.</p>
+      </ul><p class="verdict">deriva shows you what moved. Whether two rounds are still comparable for your analysis is your decision.</p>
     </div>
     <aside class="skip">To see what it doesn't cover, go to <a href="#q6"><svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>question 6</a>.</aside>
   </section>
-
   <section class="q" id="q6" aria-labelledby="h6">
     <div class="qnum" aria-hidden="true">6</div>
     <div class="qbody">
-      <h2 id="h6">What doesn't it do (yet)?</h2>
-      <ul class="notdone">
+      <h2 id="h6">What doesn't it do (yet)?</h2><ul class="notdone">
         <li><span>Other surveys, and ENEMDU's vivienda/hogar dictionaries. It reads the persona dictionaries only, for now</span></li>
         <li><span>Response categories and value labels (they aren't in the dictionaries)</span></li>
         <li><span>Renamed variables</span></li>
@@ -408,7 +411,6 @@ p { max-width: 68ch; margin: 0 0 1rem; }
     </div>
     <aside class="skip"></aside>
   </section>
-
   <footer class="end">
     <strong>End of questionnaire</strong>
     <p>Built on public ENEMDU data from INEC (CC-BY). <a href="https://github.com/esst-prog2/deriva">Code on GitHub</a>.</p>

@@ -6,6 +6,9 @@ colors:
   form-blue-deep: "#1c4590"
   form-line: "#a9c0e6"
   form-tint: "#edf3fc"
+  band-deck: "#e3ebfa"
+  band-instruction: "#d4e1f7"
+  band-margin: "#dfe8f8"
   real-red: "#c8102e"
   real-tint: "#fdf2f3"
   real-highlight: "#fde3e6"
@@ -30,18 +33,18 @@ typography:
     fontVariation: "\"wdth\" 125"
   display:
     fontFamily: "Archivo, Helvetica Neue, Arial, sans-serif"
-    fontSize: "clamp(2.3rem, 5vw, 4.25rem)"
+    fontSize: "clamp(2.6rem, 6.4vw, 5.5rem)"
     fontWeight: 700
     lineHeight: 1.02
-    letterSpacing: "-0.025em"
-    fontVariation: "\"wdth\" 85"
+    letterSpacing: "-0.03em"
+    fontVariation: "\"wdth\" 80"
   headline:
     fontFamily: "Archivo, Helvetica Neue, Arial, sans-serif"
-    fontSize: "clamp(1.6rem, 3vw, 2.35rem)"
+    fontSize: "clamp(1.9rem, 3.8vw, 3rem)"
     fontWeight: 700
     lineHeight: 1.12
-    letterSpacing: "-0.02em"
-    fontVariation: "\"wdth\" 85"
+    letterSpacing: "-0.025em"
+    fontVariation: "\"wdth\" 80"
   title:
     fontFamily: "Archivo, Helvetica Neue, Arial, sans-serif"
     fontSize: "1.2rem"
@@ -68,7 +71,7 @@ typography:
     fontVariation: "\"wdth\" 70"
   numeral:
     fontFamily: "Archivo, Helvetica Neue, Arial, sans-serif"
-    fontSize: "1.35rem"
+    fontSize: "2.1rem"
     fontWeight: 700
     lineHeight: 1
     fontFeature: "\"tnum\""
@@ -104,7 +107,7 @@ components:
     backgroundColor: "{colors.form-blue}"
     textColor: "{colors.sheet}"
     rounded: "{rounded.none}"
-    size: "3.25rem"
+    size: "4.75rem"
     typography: "{typography.numeral}"
   sub-number:
     backgroundColor: "{colors.sheet}"
@@ -173,6 +176,7 @@ A drop-out form palette: cool, pale blues for everything printed, near-black for
 - **Deep Form Blue** (form-blue-deep): the same ink where it must read as text: links, italic instruction lines, skip-margin text, button hover.
 - **Form Line** (form-line): the light ruling. Internal cell dividers, table row rules, tally-grid borders, the empty bubble outline.
 - **Field Tint** (form-tint): the pre-printed fill of a field. The lead header cell, agreeing tally cells, the hatch colour of the break band.
+- **Band tones** (band-deck, band-instruction, band-margin): pale blues for text set on the question 1 band: the line under the headline, the italic instruction and the skip margin. Only on the band.
 
 ### Secondary
 - **Real-change Red** (real-red): the red dot, the red underline under inserted wording, the "real" verdict text, the favicon. Nothing else.
@@ -202,13 +206,13 @@ A drop-out form palette: cool, pale blues for everything printed, near-black for
 
 ### Hierarchy
 - **Wordmark** (800, 2rem, width 125, line-height 1, tracking -0.02em): "deriva" in the lead header cell only, always lowercase.
-- **Display** (700, clamp 2.3rem to 4.25rem, width 85, line-height 1.02, max 19ch): the question 1 headline beside its number box.
-- **Headline** (700, clamp 1.6rem to 2.35rem, width 85, line-height 1.12, max 24ch): every later question, phrased as a question.
+- **Display** (700, clamp 2.6rem to 5.5rem, width 80, line-height 1.02, tracking -0.03em, max 15ch): the question 1 headline, sheet-white on the form-blue band. The line under it is semibold, clamp 1.35rem to 2rem, in band-deck.
+- **Headline** (700, clamp 1.9rem to 3rem, width 80, line-height 1.12, max 20ch): every later question, phrased as a question.
 - **Title** (700, 1.2rem, width 85): sub-question heads and tally heads (1.05rem there).
 - **Instruction** (400 italic, 1.1rem, form-blue-deep, max 62ch): the instruction line under a question, as on a printed form.
 - **Body** (400, 1.0625rem, line-height 1.6, max 68ch; 1rem below 40rem): running text.
 - **Label** (600, 0.7rem, width 70, uppercase, tracking 0.08em, form blue): field labels in the header, table column heads, tally-grid heads.
-- **Numeral** (700, 1.35rem, width 80, tabular): question numbers, sub-question letters and step counters (0.95rem in the small boxes), tally counts (1.6rem).
+- **Numeral** (700, 2.1rem, width 80, tabular): question numbers, sub-question letters and step counters (0.95rem in the small boxes), tally counts (2.1rem).
 - **Mono** (400, 0.92rem in command blocks, 0.9em inline): commands, file names, variable names such as `p76`.
 
 ### Named Rules
@@ -220,9 +224,11 @@ A drop-out form palette: cool, pale blues for everything printed, near-black for
 
 A single centred sheet (max 76rem) on the desk, with a fluid gutter (clamp 1rem to 3.5rem) and top margin that collapses to zero on phones. The sheet opens with a form header: a bordered row of five field cells (lead cell tinted, holding the wordmark), followed by the questions.
 
-Each question is a three-column grid: a 3.25rem number box, a flexible body, and a 13rem margin of skip instructions, separated by a fluid column gap (1rem to 2rem). Questions are separated by a 1.5px form-blue rule and padded vertically by clamp 2rem to 3rem. Text measure is capped at 62 to 68ch.
+Each question is a three-column grid: a 4.75rem number box, a flexible body, and a 13rem margin of skip instructions, separated by a fluid column gap (1rem to 2rem). Questions are separated by a 3px form-blue rule and padded vertically by clamp 2rem to 3rem. Text measure is capped at 62 to 68ch.
 
-Responsive: at 64rem the header becomes two columns (lead cell full width) and the skip margin drops below the body, aligned to the body column. At 40rem everything is one column, the number box shrinks to 2.5rem and sits above the heading, the tallies stack, the "change" column of the history table hides, the skip-route line hides, and the sheet loses its shadow. Spacing within a question runs on 0.4 / 0.75 / 1 / 1.5 / 2rem.
+Question 1 is a full-bleed form-blue band (to the sheet edges, padded by the gutter) holding the number box (inverted: sheet fill, blue numeral), the headline, the line under it, the instruction and the skip margin. Its answer (legend, button, film) follows on the sheet, aligned to the question body column.
+
+Responsive: at 64rem the header becomes two columns (lead cell full width) and the skip margin drops below the body, aligned to the body column. At 40rem everything is one column, the number box shrinks to 3.25rem and sits above the heading, the tallies stack, the "change" column of the history table hides, the skip-route line hides, and the sheet loses its shadow. Spacing within a question runs on 0.4 / 0.75 / 1 / 1.5 / 2rem.
 
 ## Elevation & Depth
 
@@ -233,7 +239,7 @@ Flat by default. The only shadow in the system is the sheet itself lifting off t
 - **Hand-check ring** (`box-shadow: 0 0 0 3px var(--sheet), 0 0 0 4.5px var(--ink)`): an outer ink ring around a mark that was checked by hand.
 
 ### Named Rules
-**The One Sheet Rule.** There is one raised surface, the sheet. Nothing on it floats: no cards, no lifted panels, no hover elevation.
+**The One Sheet Rule.** There is one raised surface, the sheet. Nothing on it floats: no cards, no lifted panels, no hover elevation. The question 1 band is printed form ink, not a raised surface: flat, no shadow.
 
 ## Shapes
 
@@ -261,7 +267,7 @@ The legend and every mark in the system.
 - **Style:** a 1.5px form-blue box of field cells divided by 1px form-line; each cell is a condensed caps label over an ink entry (0.95rem, 500). The lead cell is tinted and holds the wordmark.
 
 ### Question Block
-- **Number box:** solid form-blue square (3.25rem), sheet-white tabular numeral.
+- **Number box:** solid form-blue square (4.75rem), sheet-white tabular numeral; inverted on the question 1 band.
 - **Sub-questions and steps:** outlined form-blue squares (2.25rem) with a blue letter or counter.
 - **Skip margin:** deep-blue 0.9rem text; its link is bold with a leading arrow icon and points to a real anchor.
 
@@ -277,7 +283,7 @@ The legend and every mark in the system.
 ### Lists
 - **Facts:** small solid form-blue squares as bullets.
 - **Not done:** empty outlined form-blue checkboxes, left blank on purpose.
-- **Verdict:** a 1.25rem semibold statement under a 1.5px ink rule.
+- **Verdict:** a 1.5rem semibold statement under a 3px ink rule.
 
 ## Do's and Don'ts
 
