@@ -174,7 +174,8 @@ tr.detail td {{ border-top:0; padding:0 0 1.4rem; }}
 .entry.real .when {{ color:var(--pencil); font-weight:600; }}
 .entry.real .text {{ border-left:2px solid var(--pencil); margin-left:-1.32rem; padding-left:1.2rem; }}
 .entry .note {{ display:block; font:600 .78rem "Public Sans",sans-serif; color:var(--pencil); margin-top:.15rem; }}
-.entry.cosmetic .note {{ color:var(--graphite); }}
+.entry .note .by {{ display:block; font-weight:400; }}
+.entry.cosmetic .note {{ color:var(--soft); }}
 .entry.missing .text {{ color:var(--graphite); font-style:italic; }}
 .cutline {{ color:var(--soft); font-size:.82rem; font-style:italic; padding:.5rem 0; border-top:1px dashed var(--rule); border-bottom:1px dashed var(--rule); margin:.3rem 0; }}
 del {{ color:var(--pencil); text-decoration:line-through 2px var(--pencil); }}
@@ -184,7 +185,26 @@ ins {{ text-decoration:none; background:var(--marker); }}
 .key .blank {{ display:inline-block; width:.8rem; height:.8rem; border:1px dashed var(--soft); vertical-align:middle; }}
 .key span {{ display:flex; gap:.45rem; align-items:center; }}
 footer {{ color:var(--soft); font-size:.82rem; margin-top:2.5rem; max-width:44rem; }}
-@media (max-width:760px) {{ .lede {{ font-size:1.6rem; }} .map td.cell {{ width:2rem; }} .map th {{ font-size:.65rem; }} .shown {{ margin-left:0; }} }}
+.sum {{ display:none; }}
+/* Phones: no round grid. Each row lists where it changed; the opened wording wraps. */
+@media (max-width:760px) {{
+  .page {{ padding:1.5rem 1rem 3rem; }}
+  .lede {{ font-size:1.6rem; }}
+  .controls {{ position:static; }} .controls input[type=search] {{ width:100%; }} .shown {{ margin-left:0; }}
+  .map thead th:not(.q), .map td.cell, .map td.cut {{ display:none; }}
+  .map thead th {{ position:static; }}
+  td.q {{ white-space:normal; max-width:none; padding:.6rem 0; }}
+  td.q > span:not(.sum) {{ display:block; }}
+  .sum {{ display:flex; flex-wrap:wrap; gap:.3rem .9rem; margin-top:.35rem; font-size:.82rem; color:var(--soft); }}
+  td.q .sum span {{ display:inline-flex; align-items:center; gap:.4rem; }}
+  .sum .dot.hand {{ margin:0 .2rem; }}
+  .sheet {{ padding-left:.8rem; }}
+  .entry {{ grid-template-columns:1fr; gap:.2rem; }}
+  .entry .when {{ display:flex; flex-wrap:wrap; gap:.15rem .6rem; align-items:baseline; }}
+  .entry .note {{ margin-top:0; }} .entry .note .by {{ display:inline; }} .entry .note .by::before {{ content:" · "; }}
+  .entry.real .text {{ margin-left:-.92rem; padding-left:.8rem; }}
+  .entry .text {{ overflow-wrap:break-word; }}
+}}
 </style></head><body><div class="page">
 <div class="mast"><strong>deriva</strong><span>ENEMDU persona dictionaries, INEC</span></div>
 <p class="lede">Between {first} and {last}, <em>{real} questions changed</em> in a way a researcher should check.</p>
@@ -258,6 +278,13 @@ def _diff(before: str, after: str) -> str:
     return " ".join(out)
 
 
+def _summary(entries: list[Entry]) -> str:
+    """Where the variable changed, for phones: one mark and round per change."""
+    parts = [f'<span><i class="dot {e.mark}{" hand" if e.by_hand else ""}"></i>{e.round}</span>'
+             for e in entries if e.mark in NOTE]
+    return f'<span class="sum">{"".join(parts) or "no change"}</span>'
+
+
 def _short(text: str, width: int = 70) -> str:
     text = " ".join(text.split())
     return text if len(text) <= width else text[: width - 1].rsplit(" ", 1)[0] + "…"
@@ -296,14 +323,14 @@ def render(rounds: list[Round], history: dict[str, list[Entry]]) -> str:
             else:
                 text, kind = html.escape(e.text), e.mark
             who = BY_HAND if e.by_hand else BY_RULE
-            note = f'<span class="note">{NOTE[e.mark]}<br>{who}</span>' if e.mark in (REAL, COSMETIC) else (
+            note = f'<span class="note">{NOTE[e.mark]}<span class="by">{who}</span></span>' if e.mark in (REAL, COSMETIC) else (
                 f'<span class="note">{NOTE[e.mark]}</span>' if e.mark in NOTE else "")
             sheet.append(f'<div class="entry {kind}"><div class="when">{e.round}{note}</div><div class="text">{text}</div></div>')
             before = e.text
         n_cols = len(cells) + 1
         rows.append(
             f'<tr class="row" tabindex="0" aria-expanded="false" data-name="{html.escape(name)}" data-real="{real}" data-changed="{changed}">'
-            f'<td class="q"><b>{html.escape(name)}</b><span>{html.escape(_short(latest))}</span></td>{"".join(cells)}</tr>'
+            f'<td class="q"><b>{html.escape(name)}</b><span>{html.escape(_short(latest))}</span>{_summary(entries)}</td>{"".join(cells)}</tr>'
             f'<tr class="detail" hidden><td colspan="{n_cols}"><div class="sheet">{"".join(sheet)}</div></td></tr>'
         )
     hand_total = sum(e.by_hand for entries in history.values() for e in entries)

@@ -121,3 +121,13 @@ def test_one_vocabulary(folder):
     assert "Cosmetic change (second rule, not checked by hand)" in page
     assert "Real changes <span class=\"n\">(1)</span>" in page
     assert "All variables <span class=\"n\">(3)</span>" in page
+
+
+def test_phone_summary_lists_where_each_variable_changed(folder):
+    # On phones the round grid is hidden; each row says where it changed instead.
+    assert main([str(folder)]) == 0
+    page = (folder / "deriva_history.html").read_text(encoding="utf-8")
+    p76 = page[page.index('data-name="p76"'):]
+    p76 = p76[: p76.index("</tr>")]
+    assert '<span class="sum"><span><i class="dot real"></i>2020-12</span><span><i class="dot removed"></i>2022</span></span>' in p76
+    assert ".map td.cell, .map td.cut {{ display:none; }}".replace("{{", "{").replace("}}", "}") in page
