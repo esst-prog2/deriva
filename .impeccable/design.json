@@ -1,0 +1,458 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-15T15:13:25+00:00",
+  "title": "Design System: deriva",
+  "extensions": {
+    "colorMeta": {
+      "form-blue": {
+        "role": "primary",
+        "displayName": "Drop-out Form Blue",
+        "tonalRamp": [
+          "oklch(15% 0.053 262)",
+          "oklch(25% 0.075 262)",
+          "oklch(35% 0.097 262)",
+          "oklch(48% 0.125 262)",
+          "oklch(60% 0.129 262)",
+          "oklch(72% 0.103 262)",
+          "oklch(84% 0.077 262)",
+          "oklch(95% 0.053 262)"
+        ]
+      },
+      "form-blue-deep": {
+        "role": "primary",
+        "displayName": "Deep Form Blue",
+        "tonalRamp": [
+          "oklch(15% 0.053 263)",
+          "oklch(25% 0.075 263)",
+          "oklch(35% 0.097 263)",
+          "oklch(48% 0.125 263)",
+          "oklch(60% 0.129 263)",
+          "oklch(72% 0.103 263)",
+          "oklch(84% 0.077 263)",
+          "oklch(95% 0.053 263)"
+        ]
+      },
+      "form-line": {
+        "role": "primary",
+        "displayName": "Form Line",
+        "tonalRamp": [
+          "oklch(15% 0.027 262)",
+          "oklch(25% 0.038 262)",
+          "oklch(35% 0.048 262)",
+          "oklch(48% 0.062 262)",
+          "oklch(60% 0.065 262)",
+          "oklch(72% 0.052 262)",
+          "oklch(84% 0.039 262)",
+          "oklch(95% 0.027 262)"
+        ]
+      },
+      "form-tint": {
+        "role": "primary",
+        "displayName": "Field Tint",
+        "tonalRamp": [
+          "oklch(15% 0.011 258)",
+          "oklch(25% 0.016 258)",
+          "oklch(35% 0.021 258)",
+          "oklch(48% 0.027 258)",
+          "oklch(60% 0.028 258)",
+          "oklch(72% 0.022 258)",
+          "oklch(84% 0.017 258)",
+          "oklch(95% 0.011 258)"
+        ]
+      },
+      "real-red": {
+        "role": "secondary",
+        "displayName": "Real-change Red",
+        "tonalRamp": [
+          "oklch(15% 0.076 22)",
+          "oklch(25% 0.107 22)",
+          "oklch(35% 0.138 22)",
+          "oklch(48% 0.178 22)",
+          "oklch(60% 0.185 22)",
+          "oklch(72% 0.147 22)",
+          "oklch(84% 0.110 22)",
+          "oklch(95% 0.076 22)"
+        ]
+      },
+      "real-tint": {
+        "role": "secondary",
+        "displayName": "Real Row Tint",
+        "tonalRamp": [
+          "oklch(15% 0.008 10)",
+          "oklch(25% 0.011 10)",
+          "oklch(35% 0.014 10)",
+          "oklch(48% 0.018 10)",
+          "oklch(60% 0.018 10)",
+          "oklch(72% 0.015 10)",
+          "oklch(84% 0.011 10)",
+          "oklch(95% 0.008 10)"
+        ]
+      },
+      "real-highlight": {
+        "role": "secondary",
+        "displayName": "Inserted Wording Highlight",
+        "tonalRamp": [
+          "oklch(15% 0.015 10)",
+          "oklch(25% 0.021 10)",
+          "oklch(35% 0.028 10)",
+          "oklch(48% 0.036 10)",
+          "oklch(60% 0.037 10)",
+          "oklch(72% 0.029 10)",
+          "oklch(84% 0.022 10)",
+          "oklch(95% 0.015 10)"
+        ]
+      },
+      "cosmetic-grey": {
+        "role": "neutral",
+        "displayName": "Cosmetic Grey",
+        "tonalRamp": [
+          "oklch(15% 0.008 262)",
+          "oklch(25% 0.011 262)",
+          "oklch(35% 0.014 262)",
+          "oklch(48% 0.018 262)",
+          "oklch(60% 0.018 262)",
+          "oklch(72% 0.015 262)",
+          "oklch(84% 0.011 262)",
+          "oklch(95% 0.008 262)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Entry Ink",
+        "tonalRamp": [
+          "oklch(15% 0.006 262)",
+          "oklch(25% 0.008 262)",
+          "oklch(35% 0.010 262)",
+          "oklch(48% 0.013 262)",
+          "oklch(60% 0.014 262)",
+          "oklch(72% 0.011 262)",
+          "oklch(84% 0.008 262)",
+          "oklch(95% 0.006 262)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "tonalRamp": [
+          "oklch(15% 0.015 265)",
+          "oklch(25% 0.021 265)",
+          "oklch(35% 0.028 265)",
+          "oklch(48% 0.036 265)",
+          "oklch(60% 0.037 265)",
+          "oklch(72% 0.029 265)",
+          "oklch(84% 0.022 265)",
+          "oklch(95% 0.015 265)"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Sheet",
+        "tonalRamp": [
+          "oklch(15% 0.005 250)",
+          "oklch(25% 0.005 250)",
+          "oklch(35% 0.005 250)",
+          "oklch(48% 0.005 250)",
+          "oklch(60% 0.005 250)",
+          "oklch(72% 0.005 250)",
+          "oklch(84% 0.005 250)",
+          "oklch(95% 0.005 250)"
+        ]
+      },
+      "desk": {
+        "role": "neutral",
+        "displayName": "Desk",
+        "tonalRamp": [
+          "oklch(15% 0.006 255)",
+          "oklch(25% 0.008 255)",
+          "oklch(35% 0.010 255)",
+          "oklch(48% 0.013 255)",
+          "oklch(60% 0.014 255)",
+          "oklch(72% 0.011 255)",
+          "oklch(84% 0.008 255)",
+          "oklch(95% 0.006 255)"
+        ]
+      },
+      "selection": {
+        "role": "neutral",
+        "displayName": "Selection",
+        "tonalRamp": [
+          "oklch(15% 0.015 260)",
+          "oklch(25% 0.021 260)",
+          "oklch(35% 0.028 260)",
+          "oklch(48% 0.036 260)",
+          "oklch(60% 0.037 260)",
+          "oklch(72% 0.029 260)",
+          "oklch(84% 0.022 260)",
+          "oklch(95% 0.015 260)"
+        ]
+      },
+      "console": {
+        "role": "neutral",
+        "displayName": "Console Navy",
+        "tonalRamp": [
+          "oklch(15% 0.015 262)",
+          "oklch(25% 0.021 262)",
+          "oklch(35% 0.028 262)",
+          "oklch(48% 0.036 262)",
+          "oklch(60% 0.037 262)",
+          "oklch(72% 0.029 262)",
+          "oklch(84% 0.022 262)",
+          "oklch(95% 0.015 262)"
+        ]
+      },
+      "console-text": {
+        "role": "neutral",
+        "displayName": "Console Text",
+        "tonalRamp": [
+          "oklch(15% 0.006 258)",
+          "oklch(25% 0.008 258)",
+          "oklch(35% 0.010 258)",
+          "oklch(48% 0.013 258)",
+          "oklch(60% 0.014 258)",
+          "oklch(72% 0.011 258)",
+          "oklch(84% 0.008 258)",
+          "oklch(95% 0.006 258)"
+        ]
+      },
+      "console-prompt": {
+        "role": "neutral",
+        "displayName": "Console Prompt",
+        "tonalRamp": [
+          "oklch(15% 0.031 262)",
+          "oklch(25% 0.043 262)",
+          "oklch(35% 0.055 262)",
+          "oklch(48% 0.071 262)",
+          "oklch(60% 0.074 262)",
+          "oklch(72% 0.059 262)",
+          "oklch(84% 0.044 262)",
+          "oklch(95% 0.031 262)"
+        ]
+      },
+      "console-raised": {
+        "role": "neutral",
+        "displayName": "Console Raised",
+        "tonalRamp": [
+          "oklch(15% 0.019 262)",
+          "oklch(25% 0.027 262)",
+          "oklch(35% 0.035 262)",
+          "oklch(48% 0.045 262)",
+          "oklch(60% 0.046 262)",
+          "oklch(72% 0.037 262)",
+          "oklch(84% 0.028 262)",
+          "oklch(95% 0.019 262)"
+        ]
+      },
+      "console-edge": {
+        "role": "neutral",
+        "displayName": "Console Edge",
+        "tonalRamp": [
+          "oklch(15% 0.023 262)",
+          "oklch(25% 0.032 262)",
+          "oklch(35% 0.041 262)",
+          "oklch(48% 0.054 262)",
+          "oklch(60% 0.055 262)",
+          "oklch(72% 0.044 262)",
+          "oklch(84% 0.033 262)",
+          "oklch(95% 0.023 262)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "wordmark": {
+        "displayName": "Wordmark",
+        "purpose": "\"deriva\" in the lead header cell only."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "Question 1 headline beside its number box."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Every later question, phrased as a question."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Sub-question and tally heads."
+      },
+      "instruction": {
+        "displayName": "Instruction",
+        "purpose": "Italic deep-blue instruction line under a question."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text, max 68ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Condensed caps field labels and table heads in form blue."
+      },
+      "numeral": {
+        "displayName": "Numeral",
+        "purpose": "Question numbers, sub-letters, step counters, tally counts."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Commands, file names and variable names only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sheet-lift",
+        "value": "0 1px 2px rgba(18,22,29,.06), 0 18px 48px -20px rgba(18,22,29,.22)",
+        "purpose": "The sheet on the desk; removed below 40rem. The only elevation."
+      },
+      {
+        "name": "hand-check-ring",
+        "value": "0 0 0 3px #fdfeff, 0 0 0 4.5px #12161d",
+        "purpose": "Outer ink ring on a mark checked by hand; reads as print, not depth."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Button background change (0.2s) and the pencil fill."
+      },
+      {
+        "name": "pencil-fill",
+        "value": "clip-path inset(0 100% 0 0) to inset(0), 0.5s, stagger 0/0.25/0.5/0.9s",
+        "purpose": "Question 1 bubbles fill once like pencil marks, ending on the red dot; only without reduced motion."
+      },
+      {
+        "name": "ring-in",
+        "value": "border-color from form-line, 0.5s, delay 0.5s",
+        "purpose": "The cosmetic ring inks in."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stack",
+        "value": "64rem"
+      },
+      {
+        "name": "phone",
+        "value": "40rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one call to action: a filled form-blue bar with a trailing arrow.",
+      "html": "<a class=\"ds-btn\" href=\"#\">Open the history of p76 <svg viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M4 10h11M11 5l5 5-5 5\"/></svg></a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;gap:.6rem;padding:.8rem 1.3rem;background:#2a5bb0;color:#fff;font-family:Archivo,'Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:1.05rem;line-height:1.2;text-decoration:none;border-radius:2px;transition:background-color .2s cubic-bezier(.16,1,.3,1)}.ds-btn:hover{background:#1c4590}.ds-btn:focus-visible{outline:2px solid #2a5bb0;outline-offset:3px}.ds-btn svg{width:1.1em;height:1.1em}"
+    },
+    {
+      "name": "Skip Instruction Link",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Margin skip instruction that is a real in-page link.",
+      "html": "<p class=\"ds-skip\">If you want proof before trying it, go to <a href=\"#\"><svg viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M4 10h11M11 5l5 5-5 5\"/></svg>question 4</a>.</p>",
+      "css": ".ds-skip{font-family:Archivo,'Helvetica Neue',Arial,sans-serif;font-size:.9rem;line-height:1.45;color:#1c4590;max-width:13rem;margin:0}.ds-skip a{color:#1c4590;font-weight:600;display:inline-block;margin-top:.15rem;text-underline-offset:.2em;text-decoration-thickness:1px}.ds-skip a:hover{text-decoration-thickness:2px}.ds-skip a:focus-visible{outline:2px solid #2a5bb0;outline-offset:3px}.ds-skip svg{width:1em;height:1em;vertical-align:-.15em;margin-right:.25em}"
+    },
+    {
+      "name": "Form Header Cell",
+      "kind": "card",
+      "refersTo": "form-cell-lead",
+      "description": "Field cells across the top of the sheet: condensed caps label over an entry.",
+      "html": "<div class=\"ds-head\"><div class=\"ds-cell ds-lead\"><span class=\"ds-label\">Tool</span><span class=\"ds-word\">deriva</span></div><div class=\"ds-cell\"><span class=\"ds-label\">Module</span><span class=\"ds-entry\">Persona</span></div></div>",
+      "css": ".ds-head{display:grid;grid-template-columns:1.2fr 1fr;border:1.5px solid #2a5bb0;font-family:Archivo,'Helvetica Neue',Arial,sans-serif;color:#12161d;background:#fdfeff}.ds-cell{padding:.55rem .8rem .7rem;border-left:1px solid #a9c0e6}.ds-lead{border-left:0;background:#edf3fc}.ds-label{display:block;color:#2a5bb0;font-size:.7rem;line-height:1.2;font-weight:600;font-variation-settings:'wdth' 70;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.2rem}.ds-entry{font-size:.95rem;font-weight:500}.ds-word{font-size:2rem;line-height:1;font-weight:800;font-variation-settings:'wdth' 125;letter-spacing:-.02em}"
+    },
+    {
+      "name": "Question Number",
+      "kind": "custom",
+      "refersTo": "question-number",
+      "description": "Filled form-blue box that opens every question, with a headline beside it.",
+      "html": "<div class=\"ds-q\"><div class=\"ds-qnum\">4</div><h2 class=\"ds-qh\">Can you trust its verdicts?</h2></div>",
+      "css": ".ds-q{display:grid;grid-template-columns:3.25rem 1fr;gap:1.5rem;align-items:start;font-family:Archivo,'Helvetica Neue',Arial,sans-serif;}.ds-qnum{width:3.25rem;height:3.25rem;display:grid;place-items:center;background:#2a5bb0;color:#fff;font-weight:700;font-size:1.35rem;font-variation-settings:'wdth' 80;font-variant-numeric:tabular-nums}.ds-qh{margin:.2rem 0 0;font-size:2rem;line-height:1.12;font-weight:700;letter-spacing:-.02em;font-variation-settings:'wdth' 85;color:#12161d}"
+    },
+    {
+      "name": "Answer Bubbles",
+      "kind": "chip",
+      "refersTo": "mark-real",
+      "description": "The shared marks: real dot, cosmetic ring, hand-check ring, added/removed dash.",
+      "html": "<ul class=\"ds-bub\"><li><span class=\"ds-mark ds-dash\"></span>added <b>1</b></li><li><span class=\"ds-mark ds-cos\"></span>reworded cosmetically <b>3</b></li><li><span class=\"ds-mark ds-real\"></span>really changed <b>4</b></li><li><span class=\"ds-mark ds-real ds-hand\"></span>checked by hand</li></ul>",
+      "css": ".ds-bub{display:flex;flex-wrap:wrap;gap:.6rem 1.75rem;list-style:none;padding:0;margin:0;font-family:Archivo,'Helvetica Neue',Arial,sans-serif;color:#12161d}.ds-bub li{display:flex;align-items:center;gap:.55rem;font-weight:500}.ds-bub b{color:#2a5bb0;font-size:.8rem;font-weight:400;font-variation-settings:'wdth' 70}.ds-mark{flex:none;display:inline-block;width:1.05rem;height:1.05rem;border-radius:50%;border:1.5px solid #a9c0e6;position:relative}.ds-mark::after{content:'';position:absolute;inset:2px;border-radius:50%}.ds-real{border-color:#c8102e}.ds-real::after{background:#c8102e}.ds-cos{border:2.5px solid #7a8394}.ds-dash{border:0;border-radius:0;height:2px;background:#12161d}.ds-hand{margin:0 .3rem;box-shadow:0 0 0 3px #fdfeff,0 0 0 4.5px #12161d}@media (prefers-reduced-motion:no-preference){.ds-mark::after,.ds-dash{animation:ds-pencil .5s cubic-bezier(.16,1,.3,1) backwards}@keyframes ds-pencil{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}}"
+    },
+    {
+      "name": "Command Block",
+      "kind": "custom",
+      "refersTo": "command-block",
+      "description": "Console-navy command with a non-selectable prompt and a copy button.",
+      "html": "<div class=\"ds-cmd\"><pre><code><span class=\"ds-pr\">$ </span>deriva-history data/</code></pre><button class=\"ds-copy\" type=\"button\">Copy</button></div>",
+      "css": ".ds-cmd{position:relative;background:#0f1a2e;color:#e8eef8;border-radius:2px}.ds-cmd pre{margin:0;padding:1rem 6.5rem 1rem 1.1rem;white-space:pre-wrap;font:400 .92rem/1.6 'JetBrains Mono',ui-monospace,Menlo,monospace}.ds-pr{color:#7f9cd0;user-select:none}.ds-copy{position:absolute;top:.6rem;right:.6rem;font-family:Archivo,'Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:.8rem;line-height:1;padding:.5rem .7rem;color:#e8eef8;background:#22324f;border:1px solid #3a4d70;border-radius:2px;cursor:pointer}.ds-copy:hover{background:#2c3f63}.ds-copy:focus-visible{outline:2px solid #2a5bb0;outline-offset:3px}.ds-copy:active{background:#e8eef8;color:#0f1a2e}"
+    },
+    {
+      "name": "Wording Row with Break",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "History table rows: a real-change row and the hatched 2021 break band.",
+      "html": "<table class=\"ds-run\"><tr class=\"ds-r\"><td class=\"ds-rd\">2020-12</td><td>... por el <ins>BONO o PENSIÓN</ins>?</td><td class=\"ds-w\">real (checked by hand)</td></tr><tr class=\"ds-cut\"><td colspan=\"3\">The 2021 redesign changed the dictionary layout: a break in the series.</td></tr></table>",
+      "css": ".ds-run{width:100%;border-collapse:collapse;font-family:Archivo,'Helvetica Neue',Arial,sans-serif;font-size:.98rem;color:#12161d}.ds-run td{padding:.6rem .75rem .6rem 0;border-bottom:1px solid #a9c0e6}.ds-rd{font-family:'JetBrains Mono',monospace;font-size:.88rem;color:#435069}.ds-r td{background:#fdf2f3}.ds-w{font-size:.85rem;color:#c8102e;font-weight:600}.ds-run ins{text-decoration:none;background:#fde3e6;box-shadow:inset 0 -2px 0 #c8102e}.ds-cut td{padding:.35rem .75rem;text-align:center;background:repeating-linear-gradient(135deg,#fdfeff 0 6px,#edf3fc 6px 8px);color:#1c4590;font-style:italic;font-size:.9rem}"
+    },
+    {
+      "name": "Tally Grid",
+      "kind": "card",
+      "refersTo": null,
+      "description": "2x2 agreement grid; the real-hidden cell is outlined in ink.",
+      "html": "<table class=\"ds-tg\"><tr><td></td><th>Rule: cosmetic</th><th>Rule: real</th></tr><tr><th>Hand: cosmetic</th><td class=\"ds-ag\">9</td><td>10</td></tr><tr><th>Hand: real</th><td class=\"ds-hid\">0<small>real hidden</small></td><td class=\"ds-ag\">3</td></tr></table>",
+      "css": ".ds-tg{border-collapse:collapse;font-family:Archivo,'Helvetica Neue',Arial,sans-serif;color:#12161d;font-variant-numeric:tabular-nums;max-width:26rem;width:100%}.ds-tg th{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#2a5bb0;font-variation-settings:'wdth' 70;padding:.3rem .5rem;text-align:center}.ds-tg td{border:1.5px solid #a9c0e6;text-align:center;font-size:1.6rem;font-weight:700;height:3.6rem;width:33%}.ds-tg tr:first-child td{border:0}.ds-ag{background:#edf3fc}.ds-tg td.ds-hid{border:2.5px solid #12161d}.ds-hid small{display:block;font-size:.68rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#435069}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Questionnaire Sheet",
+    "overview": "The promo page is a printed survey questionnaire about questionnaires. A single cool white sheet sits on a pale blue desk; everything printed on it in advance (boxes, rules, question numbers, field labels, tints, arrows) is in drop-out form blue, the ink a scanner is meant to ignore, and everything that is an answer or an entry is near-black. Sections are numbered questions with a filled number box on the left, a body in the middle and a margin column of skip instructions on the right that are real in-page links.\n\nThe system is flat, ruled and square. Depth is the sheet lifting off the desk and nothing else. Colour carries meaning, not decoration: blue is the form, black is what was written on it, and red is reserved for exactly one thing, a real change in a question's wording. Archivo is the only text face, worked across its width axis: condensed caps for form labels, a wide heavy cut for the wordmark, a slightly narrowed bold for questions. JetBrains Mono appears only where the reader would type or recognise a literal: commands and variable names.\n\nThis page is a different visual world from the generated history page (`docs/history.html`), which keeps its own older look. The two surfaces share only the mark meanings: red dot = real change, grey ring = cosmetic change, an outer black ring = checked by hand, and a hatched band = the 2021 redesign break.",
+    "keyCharacteristics": [
+      "One sheet, one form ink (blue), one entry ink (near-black), one meaning-bearing accent (red).",
+      "Square corners everywhere except answer bubbles (circles) and a 2px hairline on buttons and command blocks.",
+      "Structure is drawn with rules and boxes (1.5px form-blue rules, 1px light form lines), never with cards or shadows.",
+      "Archivo's width axis does the typographic work; size and weight stay in a narrow band.",
+      "Every section reads as a numbered question with a margin of skip instructions."
+    ],
+    "rules": [
+      {
+        "name": "The One Red Rule",
+        "body": "Real-change red marks a real change in a question's wording and is used for nothing else: not for errors, emphasis, buttons, links or hover states. Its tints exist only around a red dot.",
+        "section": "colors"
+      },
+      {
+        "name": "The Drop-out Ink Rule",
+        "body": "Anything printed before the reader arrives (structure, labels, numbers, instructions, navigation) is form blue; anything that is data or an answer is ink. If an element is blue, it must be part of the form.",
+        "section": "colors"
+      },
+      {
+        "name": "The Width Axis Rule",
+        "body": "Hierarchy is expressed through Archivo's width axis first (70 for labels, 80 for numerals, 85 for questions, 100 for text, 125 for the wordmark), weight second, size last. Do not add a second sans.",
+        "section": "typography"
+      },
+      {
+        "name": "The Literal Mono Rule",
+        "body": "JetBrains Mono is only for text the reader could type or search: commands, variable names, round codes. Never for labels or decoration.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Sheet Rule",
+        "body": "There is one raised surface, the sheet. Nothing on it floats: no cards, no lifted panels, no hover elevation.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** draw every printed structure (rules, boxes, labels, numbers, arrows, instructions) in form blue and every entry in ink.",
+      "**Do** keep red for real changes only, with its row tint and highlight only around a red dot.",
+      "**Do** use the shared marks exactly: red dot = real, grey ring = cosmetic, outer ink ring = checked by hand, hatched band = 2021 redesign break.",
+      "**Do** structure new sections as numbered questions with a number box and, where it helps, a skip instruction that is a real link.",
+      "**Do** vary Archivo's width axis (70 / 80 / 85 / 100 / 125) before reaching for a new size or weight.",
+      "**Do** keep corners square, with the 2px hairline only on buttons and command blocks."
+    ],
+    "donts": [
+      "**Don't** use red for errors, emphasis, links, buttons or hover.",
+      "**Don't** add cards, lifted panels or shadows inside the sheet; the sheet is the only raised surface.",
+      "**Don't** set labels or decoration in JetBrains Mono; mono is for literals.",
+      "**Don't** introduce a second sans or a serif.",
+      "**Don't** imitate an official INEC form, logo or letterhead; the page borrows the grammar of a questionnaire, not an institution's identity.",
+      "**Don't** port this look onto the history page by assumption; it keeps its own look and shares only the marks."
+    ]
+  }
+}
