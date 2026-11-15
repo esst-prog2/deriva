@@ -48,7 +48,7 @@
     #strike { position: absolute; left: -4px; right: -4px; top: 27px; height: 3.5px; background: var(--real); transform-origin: left center; transform: scaleX(0); }
     #new { display: inline-block; color: var(--real); background: #fde3e6; box-shadow: inset 0 -3px 0 var(--real); padding: 0 6px; margin-left: -6px; clip-path: inset(0 100% 0 0); }
 
-    #gloss { left: 190px; top: 322px; font-size: 24px; font-style: italic; color: var(--ink-soft); white-space: nowrap; opacity: 0; }
+    #trans { left: 190px; top: 322px; font-size: 24px; font-style: italic; color: var(--ink-soft); white-space: nowrap; opacity: 0; }
     .instr { left: 190px; top: 378px; font-size: 30px; font-style: italic; color: var(--form-deep); font-weight: 500; white-space: nowrap; opacity: 0; }
     .instr b { font-weight: 700; }
 
@@ -124,14 +124,14 @@
       <!-- The question, as printed in the dictionary -->
       <div id="qbox" class="abs mono">p76</div>
       <div id="wording" class="abs">
-        <div class="line" id="wl1"><span class="w">¿Cuánto</span> <span class="w">recibió</span> <span class="w">en</span> <span class="w">el</span> <span class="w">mes</span> <span class="w">de</span> <span id="month"><span class="mo w" id="mo1">MAYO</span><span class="mo" id="mo2">NOVIEMBRE</span><span class="mo" id="mo3">MAYO</span><span class="mo" id="mo4">NOVIEMBRE</span></span></div>
-        <div class="line" id="wl2"><span class="w">por</span> <span class="w">el</span> <span id="old"><span class="w">BONO</span> <span class="w">DE</span> <span class="w">DESARROLLO</span> <span class="w">HUMANO?</span><span id="strike"></span></span></div>
-        <div class="line" id="wl3"><span id="new">BONO o PENSIÓN?</span></div>
+        <div class="line" id="wl1"><span class="w">How</span> <span class="w">much</span> <span class="w">did</span> <span class="w">you</span> <span class="w">receive</span> <span class="w">in</span> <span id="month"><span class="mo w" id="mo1">MAY</span><span class="mo" id="mo2">NOVEMBER</span><span class="mo" id="mo3">MAY</span><span class="mo" id="mo4">NOVEMBER</span></span></div>
+        <div class="line" id="wl2"><span class="w">from</span> <span class="w">the</span> <span id="old"><span class="w">HUMAN</span> <span class="w">DEVELOPMENT</span> <span class="w">BONUS?</span><span id="strike"></span></span></div>
+        <div class="line" id="wl3"><span id="new">BONUS or PENSION?</span></div>
       </div>
-      <div id="gloss" class="abs" data-hold="reading time for the Dec 2020 change">Human Development Bonus → bonus or pension</div>
+      <div id="trans" class="abs">Translated from the Spanish codebook</div>
       <div class="instr abs" id="in1">Same name in every round.</div>
       <div class="instr abs" id="in2">Same question?</div>
-      <div class="instr abs" id="in3">December 2020: <b>a different question.</b></div>
+      <div class="instr abs" id="in3" data-hold="reading time for the Dec 2020 change">December 2020: <b>a different question.</b></div>
       <div class="instr abs" id="in4"><b>deriva</b> compares every round's variable dictionaries (codebooks).</div>
 
       <!-- p76 across nine dictionaries -->
@@ -212,7 +212,7 @@
       [[0, 8, 0.5, 0.55], [8, 2, 1.15, 0.5], [2, 6, 1.75, 0.4], [6, 1, 2.25, 0.4], [1, 7, 2.75, 0.35], [7, 0, 3.2, 0.45]].forEach(([a, b, t, d]) =>
         tl0.fromTo("#cur", { x: slotX(a) }, { x: slotX(b), duration: d, ease: "power2.inOut", immediateRender: false }, U(t)));
       tl0.fromTo(["#op1", "#op2"], { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power2.in", immediateRender: false }, U(3.8));
-      tl0.fromTo(["#qbox", "#wording", "#hv-p76", "#rv1"], { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, U(3.95));
+      tl0.fromTo(["#qbox", "#wording", "#trans", "#hv-p76", "#rv1"], { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, U(3.95));
 
       // the question inks in, like an entry being written
       tl.fromTo(q("#wording .w"), { color: "#8d98ab" }, { color: "#12161d", duration: 0.16, stagger: 0.07, ease: "power2.out" }, 0.05);
@@ -232,7 +232,6 @@
       tl.fromTo(q("#old .w"), { color: "#12161d" }, { color: "#c8102e", duration: 0.3, ...R }, 8.5);
       tl.fromTo("#new", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power2.out", ...R }, 8.85);
       tl.fromTo("#mk4", { clipPath: "inset(-10px -10px -10px -10px)", scale: 0.4 }, { scale: 1, duration: 0.5, ease: "back.out(1.6)", ...R }, 9.3);
-      inn("#gloss", 9.45, 0.22);
       swap("#in2", "#in3", 9.8);
 
       // 12.4 – 15.4  deriva is written into the Tool field
@@ -240,7 +239,7 @@
       swap("#in3", "#in4", 12.75);
 
       // 15.4 – 21.2  the row of rounds becomes the subject
-      out(["#qbox", "#wording", "#gloss", "#in4"], 15.4, 0.22);
+      out(["#qbox", "#wording", "#trans", "#in4"], 15.4, 0.22);
       tl.fromTo("#row", { y: 0 }, { y: -250, duration: 0.7, ease: "power2.inOut", ...R }, 15.5);
       inn("#proof-title", 15.95, 0.22);
       tl.fromTo("#brk", { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.4, ease: "power2.out", ...R }, 16.35);
