@@ -92,3 +92,11 @@ def test_p10a_on_the_real_files_shows_my_label():
     history = build_history(read_rounds(DATA), read_hand_labels(DATA.parent / "eval"))
     entry = {e.round: e for e in history["p10a"]}["2020-12"]
     assert (entry.mark, entry.by_hand) == (COSMETIC, True)
+
+
+def test_page_opens_already_searched_from_the_link(folder):
+    # The promo page links to history.html?q=p76: the page must read ?q= and search for it.
+    assert main([str(folder)]) == 0
+    page = (folder / "deriva_history.html").read_text(encoding="utf-8")
+    assert 'new URLSearchParams(location.search).get("q")' in page
+    assert "q.value=asked; search();" in page

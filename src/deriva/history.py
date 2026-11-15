@@ -216,10 +216,13 @@ for(const r of document.querySelectorAll("tr.row")){{
   r.addEventListener("click",()=>toggle(r));
   r.addEventListener("keydown",e=>{{ if(e.key==="Enter"||e.key===" "){{ e.preventDefault(); toggle(r); }} }});
 }}
-q.addEventListener("input",()=>{{ filter(); const v=[...document.querySelectorAll("tr.row")].filter(r=>!r.hidden);
-  if(v.length===1){{ v[0].nextElementSibling.hidden=false; }} }});
+function search(){{ filter(); const v=[...document.querySelectorAll("tr.row")].filter(r=>!r.hidden);
+  if(v.length===1){{ v[0].nextElementSibling.hidden=false; v[0].setAttribute("aria-expanded","true"); }} }}
+q.addEventListener("input",search);
 for(const i of document.querySelectorAll("input[name=f]")) i.addEventListener("change",filter);
-filter();
+// A link such as deriva_history.html?q=p76 opens the page already searched for p76.
+const asked=new URLSearchParams(location.search).get("q");
+if(asked){{ q.value=asked; search(); }} else filter();
 </script>
 </body></html>
 """
