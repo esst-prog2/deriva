@@ -48,8 +48,9 @@ not just against itself:
   flags cosmetic edits like `13er` → `13vo` as real.
 - A second rule, tested on a pair of rounds it had never seen (Sept vs Dec 2020), agreed on
   40 of 45, again hiding none of the 7 real changes.
-- On the history page, every mark says who decided it: my hand label where I made one, the
-  second rule (unchecked) everywhere else.
+- On the history page, every red dot and grey ring says who decided it: my hand label where I
+  made one, the second rule (unchecked) everywhere else. Added, removed and same marks come
+  straight from the dictionaries.
 
 deriva shows you what moved. Whether two rounds are still comparable for your analysis is
 your decision.
