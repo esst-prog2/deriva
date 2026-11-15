@@ -15,3 +15,8 @@ dist/
 .coverage
 htmlcov/
 /deriva_history.html
+
+# HyperFrames working files
+/promo-video/.hyperframes/
+/promo-video/node_modules/
+/promo-video/renders/

@@ -1,0 +1,253 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Archivo";
+      src: url("assets/fonts/Archivo-var.ttf") format("truetype");
+      font-weight: 100 900;
+      font-stretch: 62% 125%;
+    }
+    #root {
+      position: absolute; inset: 0; background: #e6ecf4; overflow: hidden;
+      --desk: #e6ecf4; --sheet: #fdfeff; --form: #2a5bb0; --form-deep: #1c4590; --form-line: #a9c0e6;
+      --form-tint: #edf3fc; --ink: #12161d; --ink-soft: #435069; --real: #c8102e; --cosmetic: #7a8394;
+      font-family: "Archivo", sans-serif; color: var(--ink);
+    }
+    #root .mono { font-family: "JetBrains Mono", monospace; }
+    #sheet {
+      position: absolute; left: 32px; top: 24px; width: 1216px; height: 672px; background: var(--sheet);
+      box-shadow: 0 1px 2px rgba(18, 22, 29, .06), 0 18px 48px -20px rgba(18, 22, 29, .22);
+    }
+    #sheet .abs { position: absolute; }
+    .label {
+      display: block; color: var(--form); font-size: 19px; line-height: 1.1; font-weight: 600;
+      font-variation-settings: "wdth" 70; text-transform: uppercase; letter-spacing: .08em;
+    }
+
+    /* Form header */
+    #head { left: 40px; top: 28px; width: 1136px; height: 84px; border: 1.5px solid var(--form); display: flex; }
+    #head .cell { position: relative; padding: 11px 16px; border-left: 1px solid var(--form-line); }
+    #head .cell:first-child { border-left: 0; background: var(--form-tint); }
+    #head .val { position: absolute; left: 16px; top: 38px; font-size: 25px; font-weight: 500; white-space: nowrap; }
+    #head-tool { width: 250px; } #head-survey { width: 310px; } #head-var { width: 210px; } #head-round { flex: 1; }
+    #tool-word { top: 32px !important; font-size: 38px !important; line-height: 1; font-weight: 800 !important; font-variation-settings: "wdth" 125; letter-spacing: -.02em; clip-path: inset(0 100% 0 0); }
+    .rv { opacity: 0; }
+    #rv1 { opacity: 1; }
+
+    /* Question */
+    #qbox { left: 40px; top: 160px; width: 120px; height: 76px; background: var(--form); color: #fff; display: grid; place-items: center; font-size: 32px; font-weight: 600; }
+    #wording { left: 190px; top: 156px; width: 960px; font-size: 40px; line-height: 52px; font-weight: 600; font-variation-settings: "wdth" 85; letter-spacing: -.01em; }
+    #wording .line { position: absolute; left: 0; white-space: nowrap; }
+    #wl1 { top: 0; } #wl2 { top: 52px; } #wl3 { top: 104px; }
+    .w { color: #8d98ab; }
+    #month { position: relative; display: inline-block; width: 0; }
+    #month span { position: absolute; left: 0; top: -40px; white-space: nowrap; }
+    .mo { opacity: 0; } #mo1 { opacity: 1; }
+    #old { position: relative; display: inline-block; }
+    #strike { position: absolute; left: -4px; right: -4px; top: 27px; height: 3.5px; background: var(--real); transform-origin: left center; transform: scaleX(0); }
+    #new { display: inline-block; color: var(--real); background: #fde3e6; box-shadow: inset 0 -3px 0 var(--real); padding: 0 6px; margin-left: -6px; clip-path: inset(0 100% 0 0); }
+
+    .instr { left: 190px; top: 340px; font-size: 30px; font-style: italic; color: var(--form-deep); font-weight: 500; white-space: nowrap; opacity: 0; }
+    .instr b { font-weight: 700; }
+
+    /* Row of nine rounds */
+    #row { left: 40px; top: 470px; width: 1136px; height: 140px; }
+    #row-label { position: absolute; left: 0; top: 0; }
+    #row-rule { position: absolute; left: 0; top: 28px; width: 1136px; height: 1.5px; background: var(--form); }
+    #cur { position: absolute; left: 0; top: 36px; width: 120px; height: 100px; background: var(--form-tint); border-bottom: 3px solid var(--form); }
+    .slot { position: absolute; top: 36px; width: 120px; height: 100px; }
+    .bub { position: absolute; left: 41px; top: 14px; width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--form-line); background: var(--sheet); }
+    .mk { position: absolute; left: 41px; top: 14px; width: 38px; height: 38px; border-radius: 50%; clip-path: inset(-10px 140% -10px -10px); }
+    .mk.cos { border: 4px solid var(--cosmetic); background: var(--sheet); }
+    .mk.real { border: 2px solid var(--real); background: radial-gradient(circle, var(--real) 0 13px, var(--sheet) 13.5px); }
+    .mk.hand { box-shadow: 0 0 0 4px var(--sheet), 0 0 0 6.5px var(--ink); }
+    .rl { position: absolute; left: 0; width: 120px; top: 64px; text-align: center; font-size: 19px; color: #66728a; }
+    #brk { position: absolute; left: 480px; top: 36px; width: 56px; height: 100px; clip-path: inset(0 0 100% 0);
+      background: repeating-linear-gradient(135deg, var(--sheet) 0 6px, #c9d8f0 6px 9px); border-left: 1.5px solid var(--form-line); border-right: 1.5px solid var(--form-line); }
+
+    #proof-title { left: 40px; top: 146px; font-size: 46px; font-weight: 700; font-variation-settings: "wdth" 85; letter-spacing: -.02em; opacity: 0; }
+    #brk-note { left: 40px; top: 430px; font-size: 22px; color: var(--ink-soft); opacity: 0; }
+    #brk-note .sw { display: inline-block; width: 28px; height: 20px; vertical-align: -3px; margin-right: 8px; background: repeating-linear-gradient(135deg, var(--sheet) 0 5px, #c9d8f0 5px 8px); border: 1.5px solid var(--form-line); }
+    #legend { left: 40px; top: 500px; display: flex; gap: 46px; font-size: 24px; font-weight: 500; }
+    #legend .li { display: flex; align-items: center; gap: 14px; opacity: 0; }
+    #legend .m { position: relative; width: 28px; height: 28px; border-radius: 50%; flex: none; }
+    #legend .m.dash { border-radius: 0; height: 3px; background: var(--ink); }
+    #legend .m.cos { border: 4px solid var(--cosmetic); }
+    #legend .m.real { border: 2px solid var(--real); background: radial-gradient(circle, var(--real) 0 9px, var(--sheet) 9.5px); }
+    #legend .m.hand { border: 2px solid var(--form-line); box-shadow: 0 0 0 3px var(--sheet), 0 0 0 5.5px var(--ink); margin: 0 4px; }
+
+    /* Hand check */
+    #trust { left: 40px; top: 96px; width: 1136px; height: 460px; opacity: 0; }
+    #trust .t-h { position: absolute; left: 0; top: 30px; width: 540px; font-size: 46px; line-height: 1.12; font-weight: 700; font-variation-settings: "wdth" 85; letter-spacing: -.02em; }
+    #t-zero { position: absolute; left: 0; top: 200px; font-size: 38px; font-weight: 700; font-variation-settings: "wdth" 85; opacity: 0; }
+    #t-safe { position: absolute; left: 0; top: 262px; width: 520px; font-size: 28px; line-height: 1.3; font-style: italic; color: var(--form-deep); opacity: 0; }
+    #grid { position: absolute; left: 620px; top: 30px; }
+    #grid table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    #grid th { font-size: 19px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--form); font-variation-settings: "wdth" 70; padding: 6px 10px; text-align: center; }
+    #grid th.rh { text-align: left; padding-left: 0; width: 180px; }
+    #grid td { border: 1.5px solid var(--form-line); text-align: center; width: 160px; height: 110px; font-size: 54px; font-weight: 700; font-variation-settings: "wdth" 80; }
+    #grid td.agree { background: var(--form-tint); }
+    #grid td.zero { border: 3px solid var(--ink); }
+    #grid td small { display: block; font-size: 19px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft); font-variation-settings: "wdth" 70; margin-top: -4px; }
+    #grid .dim { transition: none; }
+
+    /* End */
+    #claim1, #claim2 { left: 40px; font-size: 64px; font-weight: 700; font-variation-settings: "wdth" 85; letter-spacing: -.025em; white-space: nowrap; }
+    #claim1 { top: 150px; } #claim2 { top: 226px; color: var(--form); }
+    .cw { opacity: 0; display: inline-block; }
+    #endrule { left: 40px; top: 388px; width: 1136px; height: 7px; border-top: 1.5px solid var(--form); border-bottom: 1.5px solid var(--form); transform-origin: left center; transform: scaleX(0); }
+    #endmark { left: 40px; top: 420px; font-size: 92px; line-height: 1; font-weight: 800; font-variation-settings: "wdth" 125; letter-spacing: -.03em; clip-path: inset(0 100% 0 0); }
+    #endsub { left: 44px; top: 530px; font-size: 24px; color: var(--ink-soft); opacity: 0; }
+    #endurl { right: 40px; top: 430px; text-align: right; opacity: 0; }
+    #endurl .u { display: block; margin-top: 10px; font-size: 32px; font-weight: 600; color: var(--form-deep); border-bottom: 2px solid var(--form-deep); padding-bottom: 4px; }
+  </style>
+
+  <div id="root" data-composition-id="film" data-width="1280" data-height="720">
+    <div id="sheet">
+      <!-- Form header -->
+      <div id="head" class="abs">
+        <div class="cell" id="head-tool"><span class="label">Tool</span><span class="val" id="tool-word">deriva</span></div>
+        <div class="cell" id="head-survey"><span class="label">Survey</span><span class="val">ENEMDU, Ecuador</span></div>
+        <div class="cell" id="head-var"><span class="label">Variable</span><span class="val mono">p76</span></div>
+        <div class="cell" id="head-round"><span class="label">Round (dictionary)</span>
+          <span class="val mono rv" id="rv1">2019-06</span><span class="val mono rv" id="rv2">2019-12</span>
+          <span class="val mono rv" id="rv3">2020-09</span><span class="val mono rv" id="rv4">2020-12</span></div>
+      </div>
+
+      <!-- The question, as printed in the dictionary -->
+      <div id="qbox" class="abs mono">p76</div>
+      <div id="wording" class="abs">
+        <div class="line" id="wl1"><span class="w">¿Cuánto</span> <span class="w">recibió</span> <span class="w">en</span> <span class="w">el</span> <span class="w">mes</span> <span class="w">de</span> <span id="month"><span class="mo w" id="mo1">MAYO</span><span class="mo" id="mo2">NOVIEMBRE</span><span class="mo" id="mo3">MAYO</span><span class="mo" id="mo4">NOVIEMBRE</span></span></div>
+        <div class="line" id="wl2"><span class="w">por</span> <span class="w">el</span> <span id="old"><span class="w">BONO</span> <span class="w">DE</span> <span class="w">DESARROLLO</span> <span class="w">HUMANO?</span><span id="strike"></span></span></div>
+        <div class="line" id="wl3"><span id="new">BONO o PENSIÓN?</span></div>
+      </div>
+      <div class="instr abs" id="in1">Same name in every round.</div>
+      <div class="instr abs" id="in2">Same question?</div>
+      <div class="instr abs" id="in3">December 2020: <b>a different question.</b></div>
+      <div class="instr abs" id="in4"><b>deriva</b> compares the dictionaries of every round.</div>
+
+      <!-- p76 across nine dictionaries -->
+      <div id="row" class="abs">
+        <span class="label" id="row-label">p76 in nine dictionaries</span>
+        <div id="row-rule"></div>
+        <div id="cur"></div>
+        <div id="brk"></div>
+        <div class="slot" style="left:0"><div class="bub"></div><span class="rl mono" id="rl1">2019-06</span></div>
+        <div class="slot" style="left:120px"><div class="bub"></div><div class="mk cos" id="mk2"></div><span class="rl mono" id="rl2">2019-12</span></div>
+        <div class="slot" style="left:240px"><div class="bub"></div><div class="mk cos hand" id="mk3"></div><span class="rl mono" id="rl3">2020-09</span></div>
+        <div class="slot" style="left:360px"><div class="bub"></div><div class="mk real hand" id="mk4"></div><span class="rl mono" id="rl4">2020-12</span></div>
+        <div class="slot" style="left:536px"><div class="bub"></div><span class="rl mono" id="rl5">2021</span></div>
+        <div class="slot" style="left:656px"><div class="bub"></div><span class="rl mono" id="rl6">2022</span></div>
+        <div class="slot" style="left:776px"><div class="bub"></div><span class="rl mono" id="rl7">2023</span></div>
+        <div class="slot" style="left:896px"><div class="bub"></div><div class="mk cos hand" id="mk8"></div><span class="rl mono" id="rl8">2024</span></div>
+        <div class="slot" style="left:1016px"><div class="bub"></div><span class="rl mono" id="rl9">2025</span></div>
+      </div>
+
+      <div id="proof-title" class="abs">Nine rounds. Every change marked.</div>
+      <div id="brk-note" class="abs"><span class="sw"></span>the 2021 redesign: a break in the series, not compared</div>
+      <div id="legend" class="abs">
+        <div class="li" id="lg1"><span class="m dash"></span>added / removed</div>
+        <div class="li" id="lg2"><span class="m cos"></span>cosmetic change</div>
+        <div class="li" id="lg3"><span class="m real"></span>real change</div>
+        <div class="li" id="lg4"><span class="m hand"></span>checked by hand</div>
+      </div>
+
+      <!-- Checked by hand: 2021 vs 2025 -->
+      <div id="trust" class="abs">
+        <span class="label">2021 vs 2025, default rule</span>
+        <div class="t-h">22 changes, labelled by hand before running the rule</div>
+        <div id="t-zero">Real changes hidden: 0</div>
+        <div id="t-safe">Its mistakes go the safe way.</div>
+        <div id="grid"><table>
+          <tr><td style="border:0;height:auto"></td><th>Rule: cosmetic</th><th>Rule: real</th></tr>
+          <tr><th class="rh">Hand: cosmetic</th><td class="agree gc" id="g1">9</td><td class="gc" id="g2">10</td></tr>
+          <tr><th class="rh">Hand: real</th><td class="zero" id="g3">0<small>real hidden</small></td><td class="agree gc" id="g4">3</td></tr>
+        </table></div>
+      </div>
+
+      <!-- End -->
+      <div id="claim1" class="abs"><span class="cw">deriva</span> <span class="cw">shows</span> <span class="cw">what</span> <span class="cw">moved.</span></div>
+      <div id="claim2" class="abs"><span class="cw">You</span> <span class="cw">decide.</span></div>
+      <div id="endrule" class="abs"></div>
+      <div id="endmark" class="abs">deriva</div>
+      <div id="endsub" class="abs">ENEMDU questionnaire changes, 2019 to 2025</div>
+      <div id="endurl" class="abs"><span class="label">Promo page and live demo</span><span class="u mono">esst-prog2.github.io/deriva</span></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const R = { immediateRender: false };
+      const q = (s) => document.querySelectorAll("#root " + s);
+
+      // Blur swaps: a field value or an instruction line is rewritten in place
+      const out = (el, t, d = 0.18) => tl.fromTo(el, { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in", ...R }, t);
+      const inn = (el, t, d = 0.2) => tl.fromTo(el, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power3.out", ...R }, t);
+      const swap = (a, b, t) => { out(a, t); inn(b, t + 0.14); };
+      // A bubble is filled in like a pencil mark, left to right
+      const fill = (el, t, d = 0.35) => tl.fromTo(el, { clipPath: "inset(-10px 140% -10px -10px)" }, { clipPath: "inset(-10px -10px -10px -10px)", duration: d, ease: "expo.out", ...R }, t);
+      const ink = (el, t) => tl.fromTo(el, { color: "#66728a" }, { color: "#12161d", duration: 0.25, ease: "power2.out", ...R }, t);
+      const slotX = (i) => (i < 4 ? i * 120 : 536 + (i - 4) * 120);
+      const moveCur = (i, t, d = 0.4) => tl.fromTo("#cur", { x: slotX(i - 1) }, { x: slotX(i), duration: d, ease: "power2.inOut", ...R }, t);
+
+      // 0.0 – 3.0  the question inks in, like an entry being written
+      tl.fromTo(q("#wording .w"), { color: "#8d98ab" }, { color: "#12161d", duration: 0.16, stagger: 0.07, ease: "power2.out" }, 0.05);
+      tl.set("#rl1", { color: "#12161d" }, 0.0);
+      inn("#in1", 1.3, 0.22);
+
+      // 3.0 – 7.6  the rounds tick by; the month changes, cosmetically
+      moveCur(1, 2.85); swap("#rv1", "#rv2", 2.85); swap("#mo1", "#mo2", 2.9);
+      ink("#rl2", 3.0); fill("#mk2", 3.1);
+      moveCur(2, 4.45); swap("#rv2", "#rv3", 4.45); swap("#mo2", "#mo3", 4.5);
+      ink("#rl3", 4.6); fill("#mk3", 4.7);
+      swap("#in1", "#in2", 5.6);
+
+      // 7.6 – 12.4  December 2020: the programme's name changes
+      moveCur(3, 7.5); swap("#rv3", "#rv4", 7.5); swap("#mo3", "#mo4", 7.55); ink("#rl4", 7.65);
+      tl.fromTo("#strike", { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: "power2.inOut", ...R }, 8.4);
+      tl.fromTo(q("#old .w"), { color: "#12161d" }, { color: "#c8102e", duration: 0.3, ...R }, 8.5);
+      tl.fromTo("#new", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power2.out", ...R }, 8.85);
+      tl.fromTo("#mk4", { clipPath: "inset(-10px -10px -10px -10px)", scale: 0.4 }, { scale: 1, duration: 0.5, ease: "back.out(1.6)", ...R }, 9.3);
+      swap("#in2", "#in3", 9.8);
+
+      // 12.4 – 15.4  deriva is written into the Tool field
+      tl.fromTo("#tool-word", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power2.out", ...R }, 12.45);
+      swap("#in3", "#in4", 12.75);
+
+      // 15.4 – 21.2  the row of rounds becomes the subject
+      out(["#qbox", "#wording", "#in4"], 15.4, 0.22);
+      tl.fromTo("#row", { y: 0 }, { y: -250, duration: 0.7, ease: "power2.inOut", ...R }, 15.5);
+      inn("#proof-title", 15.95, 0.22);
+      tl.fromTo("#brk", { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.4, ease: "power2.out", ...R }, 16.35);
+      [5, 6, 7, 8, 9].forEach((n, k) => {
+        const t = 16.6 + k * 0.32;
+        moveCur(n - 1, t - 0.12, 0.28);
+        ink("#rl" + n, t);
+      });
+      fill("#mk8", 17.3);
+      tl.fromTo("#cur", { opacity: 1 }, { opacity: 0, duration: 0.3, ...R }, 18.2);
+      inn("#brk-note", 18.2, 0.22);
+      ["#lg1", "#lg2", "#lg3", "#lg4"].forEach((s, k) => inn(s, 18.5 + k * 0.18, 0.2));
+
+      // 21.2 – 25.2  the rule against hand labels
+      out(["#row", "#proof-title", "#brk-note", "#legend", "#head"], 21.2, 0.22);
+      inn("#trust", 21.45, 0.25);
+      tl.fromTo(q(".gc"), { opacity: 1 }, { opacity: 0.22, duration: 0.3, ease: "power2.out", ...R }, 22.4);
+      tl.fromTo("#g3", { scale: 1 }, { scale: 1.12, duration: 0.45, ease: "expo.out", ...R }, 22.45);
+      inn("#t-zero", 22.55, 0.22);
+      inn("#t-safe", 22.9, 0.22);
+      tl.fromTo("#g2", { opacity: 0.22 }, { opacity: 1, duration: 0.3, ease: "power2.out", ...R }, 22.95);
+
+      // 25.2 – 30.0  claim and end card
+      out("#trust", 25.2, 0.22);
+      tl.fromTo(q("#claim1 .cw"), { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, stagger: 0.08, ease: "power3.out", ...R }, 25.45);
+      tl.fromTo(q("#claim2 .cw"), { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, stagger: 0.1, ease: "power3.out", ...R }, 26.3);
+      tl.fromTo("#endrule", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power2.inOut", ...R }, 26.9);
+      tl.fromTo("#endmark", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power2.out", ...R }, 27.3);
+      inn("#endsub", 27.6, 0.22);
+      inn("#endurl", 27.95, 0.25);
+
+      window.__timelines["film"] = tl;
+    })();
+  </script>
+</template>
