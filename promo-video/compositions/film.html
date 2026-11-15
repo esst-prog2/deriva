@@ -31,7 +31,9 @@
     #head-tool { width: 250px; } #head-survey { width: 310px; } #head-var { width: 210px; } #head-round { flex: 1; }
     #tool-word { top: 32px !important; font-size: 38px !important; line-height: 1; font-weight: 800 !important; font-variation-settings: "wdth" 125; letter-spacing: -.02em; clip-path: inset(0 100% 0 0); }
     .rv { opacity: 0; }
-    #rv1 { opacity: 1; }
+    #rv1, #hv-p76, #qbox, #wording { opacity: 0; }
+    #op1 { left: 40px; top: 156px; font-size: 54px; font-weight: 700; font-variation-settings: "wdth" 85; letter-spacing: -.025em; white-space: nowrap; }
+    #op2 { left: 40px; top: 236px; width: 1060px; font-size: 34px; line-height: 1.3; font-style: italic; font-weight: 500; color: var(--form-deep); opacity: 0; }
 
     /* Question */
     #qbox { left: 40px; top: 160px; width: 120px; height: 76px; background: var(--form); color: #fff; display: grid; place-items: center; font-size: 32px; font-weight: 600; }
@@ -61,7 +63,7 @@
     .mk.cos { border: 4px solid var(--cosmetic); background: var(--sheet); }
     .mk.real { border: 2px solid var(--real); background: radial-gradient(circle, var(--real) 0 13px, var(--sheet) 13.5px); }
     .mk.hand { box-shadow: 0 0 0 4px var(--sheet), 0 0 0 6.5px var(--ink); }
-    .rl { position: absolute; left: 0; width: 120px; top: 64px; text-align: center; font-size: 19px; color: #66728a; }
+    .rl { position: absolute; left: 0; width: 120px; top: 64px; text-align: center; font-size: 19px; color: #5f6b82; }
     .tag { position: absolute; left: 0; width: 120px; top: 106px; text-align: center; font-size: 19px; font-style: italic; color: var(--ink-soft); white-space: nowrap; opacity: 0; }
     #brk { position: absolute; left: 480px; top: 36px; width: 56px; height: 100px; clip-path: inset(0 0 100% 0);
       background: repeating-linear-gradient(135deg, var(--sheet) 0 6px, #c9d8f0 6px 9px); border-left: 1.5px solid var(--form-line); border-right: 1.5px solid var(--form-line); }
@@ -108,11 +110,15 @@
       <div id="head" class="abs">
         <div class="cell" id="head-tool"><span class="label">Tool</span><span class="val" id="tool-word">deriva</span></div>
         <div class="cell" id="head-survey"><span class="label">Survey</span><span class="val">ENEMDU, Ecuador</span></div>
-        <div class="cell" id="head-var"><span class="label">Variable</span><span class="val mono">p76</span></div>
+        <div class="cell" id="head-var"><span class="label">Variable</span><span class="val mono" id="hv-p76">p76</span></div>
         <div class="cell" id="head-round"><span class="label">Round</span>
           <span class="val mono rv" id="rv1">2019-06</span><span class="val mono rv" id="rv2">2019-12</span>
           <span class="val mono rv" id="rv3">2020-09</span><span class="val mono rv" id="rv4">2020-12</span></div>
       </div>
+
+      <!-- Opener: the problem, before the example -->
+      <div id="op1" class="abs">Comparing a survey across years?</div>
+      <div id="op2" class="abs">You open every round's codebook, back and forth, to check the question is still the same.</div>
 
       <!-- The question, as printed in the dictionary -->
       <div id="qbox" class="abs mono">p76</div>
@@ -177,7 +183,12 @@
 
   <script>
     (function () {
-      const tl = gsap.timeline({ paused: true });
+      const tl0 = gsap.timeline({ paused: true });
+      // The film was first timed without the opener; T() maps those times onto the final 30 s
+      // (opener 0-4 s, then each beat shifted, the hand-check and end card shortened).
+      const BP = [[0, 4.0], [2.85, 6.6], [7.5, 10.6], [12.45, 15.55], [12.75, 15.7], [15.4, 18.1], [21.2, 23.1], [21.45, 23.25], [22.4, 23.55], [25.2, 26.1], [26.9, 27.35], [27.95, 27.85], [30, 30]];
+      const T = (t) => { for (let i = 0; i < BP.length - 1; i++) { const [a, x] = BP[i], [b, y] = BP[i + 1]; if (t >= a && t <= b) return x + (t - a) * (y - x) / (b - a); } return t; };
+      const tl = { fromTo: (e, f, g, t) => tl0.fromTo(e, f, g, T(t)), set: (e, v, t) => tl0.set(e, v, T(t)) };
       const R = { immediateRender: false };
       const q = (s) => document.querySelectorAll("#root " + s);
 
@@ -187,11 +198,18 @@
       const swap = (a, b, t) => { out(a, t); inn(b, t + 0.14); };
       // A bubble is filled in like a pencil mark, left to right
       const fill = (el, t, d = 0.35) => tl.fromTo(el, { clipPath: "inset(-10px 140% -10px -10px)" }, { clipPath: "inset(-10px -10px -10px -10px)", duration: d, ease: "expo.out", ...R }, t);
-      const ink = (el, t) => tl.fromTo(el, { color: "#66728a" }, { color: "#12161d", duration: 0.25, ease: "power2.out", ...R }, t);
+      const ink = (el, t) => tl.fromTo(el, { color: "#5f6b82" }, { color: "#12161d", duration: 0.25, ease: "power2.out", ...R }, t);
       const slotX = (i) => (i < 4 ? i * 120 : 536 + (i - 4) * 120);
       const moveCur = (i, t, d = 0.4) => tl.fromTo("#cur", { x: slotX(i - 1) }, { x: slotX(i), duration: d, ease: "power2.inOut", ...R }, t);
 
-      // 0.0 – 3.0  the question inks in, like an entry being written
+      // Opener (final times): the problem; the reading head runs back and forth over the rounds
+      tl0.fromTo("#op2", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 0.3);
+      [[0, 8, 0.5, 0.55], [8, 2, 1.15, 0.5], [2, 6, 1.75, 0.4], [6, 1, 2.25, 0.4], [1, 7, 2.75, 0.35], [7, 0, 3.2, 0.45]].forEach(([a, b, t, d]) =>
+        tl0.fromTo("#cur", { x: slotX(a) }, { x: slotX(b), duration: d, ease: "power2.inOut", immediateRender: false }, t));
+      tl0.fromTo(["#op1", "#op2"], { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power2.in", immediateRender: false }, 3.8);
+      tl0.fromTo(["#qbox", "#wording", "#hv-p76", "#rv1"], { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 3.95);
+
+      // the question inks in, like an entry being written
       tl.fromTo(q("#wording .w"), { color: "#8d98ab" }, { color: "#12161d", duration: 0.16, stagger: 0.07, ease: "power2.out" }, 0.05);
       tl.set("#rl1", { color: "#12161d" }, 0.0);
       inn("#in1", 1.3, 0.22);
@@ -247,7 +265,7 @@
       inn("#endsub", 27.6, 0.22);
       inn("#endurl", 27.95, 0.25);
 
-      window.__timelines["film"] = tl;
+      window.__timelines["film"] = tl0;
     })();
   </script>
 </template>
