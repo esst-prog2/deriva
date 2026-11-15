@@ -46,11 +46,12 @@
     #strike { position: absolute; left: -4px; right: -4px; top: 27px; height: 3.5px; background: var(--real); transform-origin: left center; transform: scaleX(0); }
     #new { display: inline-block; color: var(--real); background: #fde3e6; box-shadow: inset 0 -3px 0 var(--real); padding: 0 6px; margin-left: -6px; clip-path: inset(0 100% 0 0); }
 
-    .instr { left: 190px; top: 340px; font-size: 30px; font-style: italic; color: var(--form-deep); font-weight: 500; white-space: nowrap; opacity: 0; }
+    #gloss { left: 190px; top: 322px; font-size: 24px; font-style: italic; color: var(--ink-soft); white-space: nowrap; opacity: 0; }
+    .instr { left: 190px; top: 378px; font-size: 30px; font-style: italic; color: var(--form-deep); font-weight: 500; white-space: nowrap; opacity: 0; }
     .instr b { font-weight: 700; }
 
     /* Row of nine rounds */
-    #row { left: 40px; top: 470px; width: 1136px; height: 140px; }
+    #row { left: 40px; top: 470px; width: 1136px; height: 170px; }
     #row-label { position: absolute; left: 0; top: 0; }
     #row-rule { position: absolute; left: 0; top: 28px; width: 1136px; height: 1.5px; background: var(--form); }
     #cur { position: absolute; left: 0; top: 36px; width: 120px; height: 100px; background: var(--form-tint); border-bottom: 3px solid var(--form); }
@@ -61,6 +62,7 @@
     .mk.real { border: 2px solid var(--real); background: radial-gradient(circle, var(--real) 0 13px, var(--sheet) 13.5px); }
     .mk.hand { box-shadow: 0 0 0 4px var(--sheet), 0 0 0 6.5px var(--ink); }
     .rl { position: absolute; left: 0; width: 120px; top: 64px; text-align: center; font-size: 19px; color: #66728a; }
+    .tag { position: absolute; left: 0; width: 120px; top: 106px; text-align: center; font-size: 19px; font-style: italic; color: var(--ink-soft); white-space: nowrap; opacity: 0; }
     #brk { position: absolute; left: 480px; top: 36px; width: 56px; height: 100px; clip-path: inset(0 0 100% 0);
       background: repeating-linear-gradient(135deg, var(--sheet) 0 6px, #c9d8f0 6px 9px); border-left: 1.5px solid var(--form-line); border-right: 1.5px solid var(--form-line); }
 
@@ -78,8 +80,7 @@
     /* Hand check */
     #trust { left: 40px; top: 96px; width: 1136px; height: 460px; opacity: 0; }
     #trust .t-h { position: absolute; left: 0; top: 30px; width: 540px; font-size: 46px; line-height: 1.12; font-weight: 700; font-variation-settings: "wdth" 85; letter-spacing: -.02em; }
-    #t-zero { position: absolute; left: 0; top: 200px; font-size: 38px; font-weight: 700; font-variation-settings: "wdth" 85; opacity: 0; }
-    #t-safe { position: absolute; left: 0; top: 262px; width: 520px; font-size: 28px; line-height: 1.3; font-style: italic; color: var(--form-deep); opacity: 0; }
+    #t-zero { position: absolute; left: 0; top: 120px; width: 540px; line-height: 1.15; font-size: 38px; font-weight: 700; font-variation-settings: "wdth" 85; opacity: 0; }
     #grid { position: absolute; left: 620px; top: 30px; }
     #grid table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
     #grid th { font-size: 19px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--form); font-variation-settings: "wdth" 70; padding: 6px 10px; text-align: center; }
@@ -108,7 +109,7 @@
         <div class="cell" id="head-tool"><span class="label">Tool</span><span class="val" id="tool-word">deriva</span></div>
         <div class="cell" id="head-survey"><span class="label">Survey</span><span class="val">ENEMDU, Ecuador</span></div>
         <div class="cell" id="head-var"><span class="label">Variable</span><span class="val mono">p76</span></div>
-        <div class="cell" id="head-round"><span class="label">Round (dictionary)</span>
+        <div class="cell" id="head-round"><span class="label">Round</span>
           <span class="val mono rv" id="rv1">2019-06</span><span class="val mono rv" id="rv2">2019-12</span>
           <span class="val mono rv" id="rv3">2020-09</span><span class="val mono rv" id="rv4">2020-12</span></div>
       </div>
@@ -120,19 +121,20 @@
         <div class="line" id="wl2"><span class="w">por</span> <span class="w">el</span> <span id="old"><span class="w">BONO</span> <span class="w">DE</span> <span class="w">DESARROLLO</span> <span class="w">HUMANO?</span><span id="strike"></span></span></div>
         <div class="line" id="wl3"><span id="new">BONO o PENSIÓN?</span></div>
       </div>
+      <div id="gloss" class="abs">Human Development Bonus → bonus or pension</div>
       <div class="instr abs" id="in1">Same name in every round.</div>
       <div class="instr abs" id="in2">Same question?</div>
       <div class="instr abs" id="in3">December 2020: <b>a different question.</b></div>
-      <div class="instr abs" id="in4"><b>deriva</b> compares the dictionaries of every round.</div>
+      <div class="instr abs" id="in4"><b>deriva</b> compares every round's variable dictionaries (codebooks).</div>
 
       <!-- p76 across nine dictionaries -->
       <div id="row" class="abs">
-        <span class="label" id="row-label">p76 in nine dictionaries</span>
+        <span class="label" id="row-label">p76 in nine variable dictionaries (codebooks)</span>
         <div id="row-rule"></div>
         <div id="cur"></div>
         <div id="brk"></div>
         <div class="slot" style="left:0"><div class="bub"></div><span class="rl mono" id="rl1">2019-06</span></div>
-        <div class="slot" style="left:120px"><div class="bub"></div><div class="mk cos" id="mk2"></div><span class="rl mono" id="rl2">2019-12</span></div>
+        <div class="slot" style="left:120px"><div class="bub"></div><div class="mk cos" id="mk2"></div><span class="rl mono" id="rl2">2019-12</span><span class="tag" id="tag2">wording only</span></div>
         <div class="slot" style="left:240px"><div class="bub"></div><div class="mk cos hand" id="mk3"></div><span class="rl mono" id="rl3">2020-09</span></div>
         <div class="slot" style="left:360px"><div class="bub"></div><div class="mk real hand" id="mk4"></div><span class="rl mono" id="rl4">2020-12</span></div>
         <div class="slot" style="left:536px"><div class="bub"></div><span class="rl mono" id="rl5">2021</span></div>
@@ -146,7 +148,7 @@
       <div id="brk-note" class="abs"><span class="sw"></span>the 2021 redesign: a break in the series, not compared</div>
       <div id="legend" class="abs">
         <div class="li" id="lg1"><span class="m dash"></span>added / removed</div>
-        <div class="li" id="lg2"><span class="m cos"></span>cosmetic change</div>
+        <div class="li" id="lg2"><span class="m cos"></span>cosmetic (wording only)</div>
         <div class="li" id="lg3"><span class="m real"></span>real change</div>
         <div class="li" id="lg4"><span class="m hand"></span>checked by hand</div>
       </div>
@@ -154,10 +156,9 @@
       <!-- Checked by hand: 2021 vs 2025 -->
       <div id="trust" class="abs">
         <span class="label">2021 vs 2025, default rule</span>
-        <div class="t-h">22 changes, labelled by hand before running the rule</div>
-        <div id="t-zero">Real changes hidden: 0</div>
-        <div id="t-safe">Its mistakes go the safe way.</div>
-        <div id="grid"><table>
+        <div class="t-h">22 changes checked by hand.</div>
+        <div id="t-zero">deriva never called a real change cosmetic.</div>
+          <div id="grid"><table>
           <tr><td style="border:0;height:auto"></td><th>Rule: cosmetic</th><th>Rule: real</th></tr>
           <tr><th class="rh">Hand: cosmetic</th><td class="agree gc" id="g1">9</td><td class="gc" id="g2">10</td></tr>
           <tr><th class="rh">Hand: real</th><td class="zero" id="g3">0<small>real hidden</small></td><td class="agree gc" id="g4">3</td></tr>
@@ -197,7 +198,7 @@
 
       // 3.0 – 7.6  the rounds tick by; the month changes, cosmetically
       moveCur(1, 2.85); swap("#rv1", "#rv2", 2.85); swap("#mo1", "#mo2", 2.9);
-      ink("#rl2", 3.0); fill("#mk2", 3.1);
+      ink("#rl2", 3.0); fill("#mk2", 3.1); inn("#tag2", 3.3, 0.2);
       moveCur(2, 4.45); swap("#rv2", "#rv3", 4.45); swap("#mo2", "#mo3", 4.5);
       ink("#rl3", 4.6); fill("#mk3", 4.7);
       swap("#in1", "#in2", 5.6);
@@ -208,6 +209,7 @@
       tl.fromTo(q("#old .w"), { color: "#12161d" }, { color: "#c8102e", duration: 0.3, ...R }, 8.5);
       tl.fromTo("#new", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power2.out", ...R }, 8.85);
       tl.fromTo("#mk4", { clipPath: "inset(-10px -10px -10px -10px)", scale: 0.4 }, { scale: 1, duration: 0.5, ease: "back.out(1.6)", ...R }, 9.3);
+      inn("#gloss", 9.45, 0.22);
       swap("#in2", "#in3", 9.8);
 
       // 12.4 – 15.4  deriva is written into the Tool field
@@ -215,7 +217,7 @@
       swap("#in3", "#in4", 12.75);
 
       // 15.4 – 21.2  the row of rounds becomes the subject
-      out(["#qbox", "#wording", "#in4"], 15.4, 0.22);
+      out(["#qbox", "#wording", "#gloss", "#in4"], 15.4, 0.22);
       tl.fromTo("#row", { y: 0 }, { y: -250, duration: 0.7, ease: "power2.inOut", ...R }, 15.5);
       inn("#proof-title", 15.95, 0.22);
       tl.fromTo("#brk", { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.4, ease: "power2.out", ...R }, 16.35);
@@ -235,8 +237,6 @@
       tl.fromTo(q(".gc"), { opacity: 1 }, { opacity: 0.22, duration: 0.3, ease: "power2.out", ...R }, 22.4);
       tl.fromTo("#g3", { scale: 1 }, { scale: 1.12, duration: 0.45, ease: "expo.out", ...R }, 22.45);
       inn("#t-zero", 22.55, 0.22);
-      inn("#t-safe", 22.9, 0.22);
-      tl.fromTo("#g2", { opacity: 0.22 }, { opacity: 1, duration: 0.3, ease: "power2.out", ...R }, 22.95);
 
       // 25.2 – 30.0  claim and end card
       out("#trust", 25.2, 0.22);

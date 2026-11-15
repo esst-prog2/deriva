@@ -20,3 +20,4 @@ htmlcov/
 /promo-video/.hyperframes/
 /promo-video/node_modules/
 /promo-video/renders/
+/promo-video/.waveform-cache/

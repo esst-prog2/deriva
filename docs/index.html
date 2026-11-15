@@ -119,6 +119,11 @@ p { max-width: 68ch; margin: 0 0 1rem; }
 .btn svg { width: 1.1em; height: 1.1em; }
 .go .alt a { font-weight: 600; }
 
+/* Q1: the 30-second film */
+.film { margin: 2.25rem 0 0; max-width: 46rem; }
+.film video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: var(--desk); border: 1.5px solid var(--form-line); }
+.film figcaption { margin-top: .5rem; font-size: .88rem; color: var(--ink-soft); max-width: 62ch; }
+
 /* Q2: p76 written out round by round */
 .run { width: 100%; border-collapse: collapse; margin: 1.5rem 0 1rem; font-size: .98rem; }
 .run caption { caption-side: top; text-align: left; color: var(--form); font-size: .78rem; font-weight: 600; font-variation-settings: "wdth" 75; padding-bottom: .6rem; }
@@ -243,6 +248,13 @@ p { max-width: 68ch; margin: 0 0 1rem; }
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg></a>
         <p class="alt">If you would rather run it yourself, go to <a href="#q6"><svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>question 6</a>.</p>
       </div>
+      <figure class="film">
+        <video controls muted playsinline preload="none" poster="promo-poster.jpg" width="1280" height="720" aria-describedby="film-cap">
+          <source src="promo.mp4" type="video/mp4">
+          <a href="promo.mp4">Download the 30-second video (MP4)</a>
+        </video>
+        <figcaption id="film-cap">deriva in 30 seconds, no voice: the question <code>p76</code> keeps its name while its wording changes in December 2020 (“Human Development Bonus” becomes “bonus or pension”), and deriva marks the change across nine rounds. The only sound is soft pencil ticks; it starts muted.</figcaption>
+      </figure>
     </div>
     <aside class="skip">If you already know the problem, go to <a href="#q3"><svg class="ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>question 3</a>.</aside>
   </section>
