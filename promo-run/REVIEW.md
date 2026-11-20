@@ -43,3 +43,9 @@
   (8.6 s) and the end card (2.2 s). Total still 30.0 s.
 - Kept warnings: the opening's second line (16 words in about 4 s) is under the reading floor
   of 5.3 s; the closing URL is on screen 1.96 s against a 2.0 s floor.
+
+## Revision 3 (2026-11-20), the version on the page
+- Opening 4.5 → 5.5 s (two more flips), end card 2.2 → 2.5 s, table 7.3 → 6.0 s
+  (table caption 0-2.7 s, rama1 2.7-6.0 s). Total 30.0 s.
+- The opening-line and end-card warnings are gone; the only line_unread left is the
+  deriva-history output (1.4 s), which the caption repeats.

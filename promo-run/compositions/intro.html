@@ -16,13 +16,13 @@
     tr.p76 td { background: #fdfeff; }
   </style>
   <div id="root" data-composition-id="intro" data-width="1920" data-height="1080">
-    <div id="intro-cap" class="cap clip" data-start="0" data-duration="4.5">
+    <div id="intro-cap" class="cap clip" data-start="0" data-duration="5.5">
       <div class="w" id="intro-cap-w">Comparing a survey across years?</div>
       <div class="s" id="intro-cap-s">You open every round’s codebook, back and forth, to check the question is still the same.</div>
     </div>
 
     <!-- Real excerpts of four ENEMDU persona dictionaries, rows p74b-p78, as each file lays them out. -->
-    <div id="intro-stack" class="clip" data-start="0" data-duration="4.5" data-layout-allow-overlap data-layout-allow-overflow data-layout-allow-occlusion>
+    <div id="intro-stack" class="clip" data-start="0" data-duration="5.5" data-layout-allow-overlap data-layout-allow-overflow data-layout-allow-occlusion>
       <div class="dw" data-layout-allow-occlusion data-layout-allow-overlap id="intro-w1" style="left: 192px; top: 400px">
         <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">enemdu_personas_2019_06.xlsx</span></div>
         <table data-layout-ignore><colgroup><col style="width: 170px"><col style="width: 430px"><col style="width: 500px"></colgroup>
@@ -77,7 +77,7 @@
       gsap.set(wins, { zIndex: function (i) { return i + 1; } });
 
       // Back and forth: one round comes to the front, its p76 row is found, then the next.
-      var order = [3, 1, 0, 2, 3, 0, 1], t = 0.55, z = 10;
+      var order = [3, 1, 0, 2, 3, 0, 1, 2, 3], t = 0.55, z = 10;
       order.forEach(function (w, k) {
         var at = t + k * 0.52;
         tl.set(wins[w], { zIndex: z++ }, at);
@@ -87,7 +87,7 @@
         tl.to(rows[w], { backgroundColor: "#fdfeff", duration: 0.15 }, at + 0.48);
       });
 
-      tl.to(["#intro-cap-w", "#intro-cap-s"], { opacity: 0, duration: 0.2, ease: "power1.in" }, 4.3);
+      tl.to(["#intro-cap-w", "#intro-cap-s"], { opacity: 0, duration: 0.2, ease: "power1.in" }, 5.3);
 
       window.__timelines = window.__timelines || {};
       window.__timelines["intro"] = tl;
