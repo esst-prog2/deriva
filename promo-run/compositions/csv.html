@@ -23,21 +23,17 @@
     .gloss .g b { color: #c8102e; }
   </style>
   <div id="root" data-composition-id="csv" data-width="1920" data-height="1080">
-    <div id="csv-cap1" class="cap clip" data-start="0" data-duration="3.4">
+    <div id="csv-cap1" class="cap clip" data-start="0" data-duration="3.0">
       <div class="w" id="csv-cap1-w">It writes a table: one row per change, both wordings.</div>
     </div>
-    <div id="csv-cap2" class="cap clip" data-start="3.4" data-duration="3.0">
+    <div id="csv-cap2" class="cap clip" data-start="3.0" data-duration="4.3">
       <div class="w" id="csv-cap2-w">Real: the industry classification changed version.</div>
     </div>
-    <div id="csv-cap3" class="cap clip" data-start="6.4" data-duration="4.0">
-      <div class="w" id="csv-cap3-w">A spelling change, still flagged real: deriva errs on the safe side.</div>
-    </div>
 
-    <div id="csv-win" class="win clip" data-start="0" data-duration="10.4">
+    <div id="csv-win" class="win clip" data-start="0" data-duration="7.3">
       <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">deriva_2021_vs_2025.csv</span></div>
       <div class="sheet" id="csv-sheet">
         <div class="hl" id="csv-hl1" style="top: 488px"></div>
-        <div class="hl" id="csv-hl2" style="top: 48px"></div>
         <table style="position: relative" data-layout-allow-overflow data-layout-allow-overlap>
           <colgroup><col style="width: 150px"><col style="width: 110px"><col style="width: 630px"><col style="width: 630px"><col style="width: 140px"></colgroup>
           <tr><th>variable</th><th>change</th><th>description_2021</th><th>description_2025</th><th>reason</th></tr>
@@ -55,13 +51,9 @@
           <tr><td class="v">prov</td><td class="c">real</td><td>Provincias</td><td>Provincia</td><td>descriptions still differ after normalising accents, case, punctuation and whitespace</td></tr>
           <tr><td class="v">mes</td><td class="c">real</td><td>Mes</td><td>Mes de levantamiento</td><td>descriptions still differ after normalising accents, case, punctuation and whitespace</td></tr>
         </table>
-        <div class="gloss" data-layout-allow-occlusion id="csv-g1" style="top: 540px">
+        <div class="gloss" data-layout-allow-occlusion data-hold id="csv-g1" style="top: 540px">
           <div class="k">IN ENGLISH · rama1</div>
           <div class="g">Industry, classification <b>CIIU4</b> → industry, classification <b>CIIU 4.1</b> (employed, aged 15+)</div>
-        </div>
-        <div class="gloss" data-layout-allow-occlusion data-hold id="csv-g2" style="top: 100px">
-          <div class="k">IN ENGLISH · p44j</div>
-          <div class="g">Receives a 13th-month salary (“<b>13er</b>”) → receives a 13th-month salary (“<b>13vo</b>”)</div>
         </div>
       </div>
     </div>
@@ -73,18 +65,13 @@
       function out(sel, t) { tl.to(sel, { opacity: 0, duration: 0.2, ease: "power1.in" }, t); }
 
       tl.fromTo("#csv-sheet", { opacity: 0 }, { opacity: 1, duration: 0.27, ease: "none" }, 0);
-      wipe("#csv-cap1-w", 0.05); out("#csv-cap1-w", 3.2);
+      wipe("#csv-cap1-w", 0.05); out("#csv-cap1-w", 2.8);
 
       // rama1: real, a different classification
-      tl.fromTo("#csv-hl1", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 3.4);
-      wipe("#csv-cap2-w", 3.4); out("#csv-cap2-w", 6.2);
-      tl.fromTo("#csv-g1", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 3.6);
-      tl.to(["#csv-g1", "#csv-hl1"], { opacity: 0, duration: 0.2 }, 6.2);
+      tl.fromTo("#csv-hl1", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 3.0);
+      wipe("#csv-cap2-w", 3.0);
+      tl.fromTo("#csv-g1", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 3.2);
 
-      // p44j: flagged real, only a spelling
-      tl.fromTo("#csv-hl2", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 6.4);
-      wipe("#csv-cap3-w", 6.4);
-      tl.fromTo("#csv-g2", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 6.6);
 
       window.__timelines = window.__timelines || {};
       window.__timelines["csv"] = tl;

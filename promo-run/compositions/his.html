@@ -24,29 +24,32 @@
     .view { position: absolute; left: 0; top: 44px; width: 1536px; height: 672px; overflow: hidden; }
     .shot { position: absolute; left: 0; top: 0; width: 2227px; height: 2175px; }
     .box { position: absolute; left: 30px; top: 413px; width: 1280px; height: 108px; border: 5px solid #c8102e; border-radius: 8px; }
+    .box.blue { left: 603px; top: 150px; width: 276px; height: 80px; border-color: #2a5bb0; }
+    .mk { border-radius: 4px; padding: 0 4px; margin: 0 -4px; }
   </style>
   <div id="root" data-composition-id="his" data-width="1920" data-height="1080">
-    <div id="his-cap1" class="cap clip" data-start="0" data-duration="3.0">
-      <div class="w" id="his-cap1-w">Next: one page with every round, June 2019 to 2025.</div>
+    <div id="his-cap1" class="cap clip" data-start="0" data-duration="3.6">
+      <div class="w" id="his-cap1-w">All rounds, 2019 to 2025: 11 real changes in 10 questions.</div>
     </div>
-    <div id="his-cap2" class="cap clip" data-start="3.0" data-duration="4.4">
-      <div class="w" id="his-cap2-w">p76 kept its name, but in Dec 2020 “Human Development Bonus” became “bonus or pension”.</div>
+    <div id="his-cap2" class="cap clip" data-start="3.6" data-duration="3.8">
+      <div class="w" id="his-cap2-w">Same name, p76. Dec 2020: “Human Development Bonus” became “bonus or pension”.</div>
     </div>
 
-    <div id="his-term" class="win term clip" data-start="0" data-duration="2.3">
+    <div id="his-term" class="win term clip" data-start="0" data-duration="2.6">
       <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">deriva — zsh</span></div>
       <div class="body">
         <div><span class="pr">~/deriva $ </span><span id="his-typed">uv run deriva-history data/</span><span id="his-caret" class="caret"></span></div>
-        <div id="his-out">9 rounds, 190 variables, 11 real changes
+        <div id="his-out">9 rounds, 190 variables, <span id="his-n11" class="mk">11 real changes</span>
 wrote ~/deriva/deriva_history.html</div>
       </div>
     </div>
 
-    <div id="his-brow" class="win brow clip" data-layout-allow-occlusion data-start="2.0" data-duration="5.4">
+    <div id="his-brow" class="win brow clip" data-layout-allow-occlusion data-start="2.4" data-duration="5.0">
       <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">deriva_history.html?q=p76</span></div>
       <div class="view">
         <img id="his-shot" class="shot" src="assets/screens/history-p76.png" alt="The deriva history page searched for p76" />
         <div id="his-box" class="box"></div>
+        <div id="his-box10" class="box blue"></div>
       </div>
     </div>
   </div>
@@ -63,17 +66,20 @@ wrote ~/deriva/deriva_history.html</div>
       tl.to(drv, { t: 1.2, duration: 1.2, ease: "none", onUpdate: function () { node.data = full.slice(0, countAt(drv.t)); } }, 0);
       tl.set("#his-caret", { opacity: 0 }, 1.15);
       tl.set("#his-out", { opacity: 0 }, 0);
-      tl.set("#his-out", { opacity: 1 }, 1.4);
+      tl.set("#his-out", { opacity: 1 }, 1.2);
+      tl.fromTo("#his-n11", { backgroundColor: "rgba(42,91,176,0)" }, { backgroundColor: "rgba(42,91,176,1)", duration: 0.25 }, 1.4);
 
       function wipe(sel, t) { tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.33, ease: "power3.out" }, t); }
       function out(sel, t) { tl.to(sel, { opacity: 0, duration: 0.2, ease: "power1.in" }, t); }
-      wipe("#his-cap1-w", 0.05); out("#his-cap1-w", 2.8);
-      wipe("#his-cap2-w", 3.0);
+      wipe("#his-cap1-w", 0.05); out("#his-cap1-w", 3.4);
+      wipe("#his-cap2-w", 3.6);
 
       // Browser: crossfade in, hold on the top of the page, then pan down to p76's rounds.
-      tl.fromTo("#his-brow", { opacity: 0 }, { opacity: 1, duration: 0.27, ease: "none" }, 2.0);
-      tl.fromTo("#his-shot", { x: -346, y: 0 }, { x: -346, y: -750, duration: 0.8, ease: "power2.inOut" }, 3.0);
-      tl.fromTo("#his-box", { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" }, 3.9);
+      tl.fromTo("#his-brow", { opacity: 0 }, { opacity: 1, duration: 0.27, ease: "none" }, 2.4);
+      tl.fromTo("#his-box10", { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" }, 2.6);
+      tl.to("#his-box10", { opacity: 0, duration: 0.2 }, 3.5);
+      tl.fromTo("#his-shot", { x: -346, y: 0 }, { x: -346, y: -750, duration: 0.8, ease: "power2.inOut" }, 3.6);
+      tl.fromTo("#his-box", { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" }, 4.5);
 
       window.__timelines = window.__timelines || {};
       window.__timelines["his"] = tl;

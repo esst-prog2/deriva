@@ -1,0 +1,96 @@
+<template>
+  <style>
+    @font-face { font-family: "Archivo"; src: url("assets/fonts/Archivo-var.ttf") format("truetype"); font-weight: 100 900; font-stretch: 62% 125%; }
+    #root { position: absolute; inset: 0; background: #e6ecf4; font-family: "Archivo", sans-serif; }
+    .cap { position: absolute; left: 192px; top: 96px; width: 1536px; }
+    .cap .w { font-weight: 700; font-size: 64px; line-height: 1.1; letter-spacing: -0.02em; color: #12161d; }
+    .cap .s { margin-top: 14px; width: 1400px; font-weight: 500; font-size: 40px; line-height: 1.25; color: #12161d; }
+    .dw { position: absolute; width: 1100px; border-radius: 10px; overflow: hidden; background: #fdfeff; box-shadow: 0 14px 36px rgba(18, 22, 29, 0.2); }
+    .bar { height: 44px; display: flex; align-items: center; gap: 8px; padding: 0 16px; background: #dfe6f0; border-bottom: 1px solid #a9c0e6; }
+    .dot { width: 13px; height: 13px; border-radius: 50%; background: #b7c3d6; }
+    .title { margin-left: 14px; font-size: 26px; color: #435069; white-space: nowrap; }
+    table { border-collapse: collapse; table-layout: fixed; width: 1100px; font-size: 26px; color: #12161d; }
+    th, td { height: 44px; padding: 0 12px; border-right: 1px solid #a9c0e6; border-bottom: 1px solid #a9c0e6; white-space: nowrap; overflow: hidden; text-align: left; }
+    th { background: #edf3fc; font-weight: 600; font-size: 22px; color: #435069; }
+    td.v { font-family: "JetBrains Mono", monospace; font-size: 25px; }
+    tr.p76 td { background: #fdfeff; }
+  </style>
+  <div id="root" data-composition-id="intro" data-width="1920" data-height="1080">
+    <div id="intro-cap" class="cap clip" data-start="0" data-duration="4.5">
+      <div class="w" id="intro-cap-w">Comparing a survey across years?</div>
+      <div class="s" id="intro-cap-s">You open every round’s codebook, back and forth, to check the question is still the same.</div>
+    </div>
+
+    <!-- Real excerpts of four ENEMDU persona dictionaries, rows p74b-p78, as each file lays them out. -->
+    <div id="intro-stack" class="clip" data-start="0" data-duration="4.5" data-layout-allow-overlap data-layout-allow-overflow data-layout-allow-occlusion>
+      <div class="dw" data-layout-allow-occlusion data-layout-allow-overlap id="intro-w1" style="left: 192px; top: 400px">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">enemdu_personas_2019_06.xlsx</span></div>
+        <table data-layout-ignore><colgroup><col style="width: 170px"><col style="width: 430px"><col style="width: 500px"></colgroup>
+          <tr><th>CODIGO DE LA VARIABLE</th><th>NOMBRE DE LA VARIABLE</th><th>PREGUNTA</th></tr>
+          <tr><td class="v">p74b</td><td>74B. Ingreso del exterior - Monto</td><td>¿Recibió en el mes de MAYO dinero o especies…</td></tr>
+          <tr><td class="v">p75</td><td>75. Recibió el BONO DE DESARROLLO HUMANO</td><td>¿Recibe el BONO DE DESARROLLO HUMANO?</td></tr>
+          <tr class="p76" id="intro-r1"><td class="v">p76</td><td>76.  Monto que recibió por el BONO DE DESARROLLO HUMANO</td><td>¿Cuánto recibió en el mes de MAYO por el BONO DE DESARROLLO HUMANO?</td></tr>
+          <tr><td class="v">p77</td><td>77. Recibe el BONO DE DISCAPACIDAD</td><td>¿Recibe el BONO POR EL CUIDADO BRINDADO…</td></tr>
+        </table>
+      </div>
+      <div class="dw" data-layout-allow-occlusion data-layout-allow-overlap id="intro-w2" style="left: 342px; top: 460px">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">enemdu_personas_2020_12.xlsx</span></div>
+        <table data-layout-ignore><colgroup><col style="width: 170px"><col style="width: 430px"><col style="width: 500px"></colgroup>
+          <tr><th>CODIGO DE LA VARIABLE</th><th>NOMBRE DE LA VARIABLE</th><th>PREGUNTA</th></tr>
+          <tr><td class="v">p74b</td><td>Ingreso del exterior - Monto</td><td>¿Recibió en el mes de NOVIEMBRE dinero o especies…</td></tr>
+          <tr><td class="v">p75</td><td>Recibió el BONO DE DESARROLLO HUMANO</td><td>¿Recibe el BONO DE DESARROLLO HUMANO?</td></tr>
+          <tr class="p76" id="intro-r2"><td class="v">p76</td><td>Monto que recibió por el BONO o PENSIÓN</td><td>¿Cuánto recibió en el mes de NOVIEMBRE por el BONO o PENSIÓN?</td></tr>
+          <tr><td class="v">p77</td><td>Recibe el BONO DE DISCAPACIDAD</td><td>¿Recibe el BONO POR EL CUIDADO BRINDADO…</td></tr>
+        </table>
+      </div>
+      <div class="dw" data-layout-allow-occlusion data-layout-allow-overlap id="intro-w3" style="left: 492px; top: 520px">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">Diccionario de Datos_persona_anual_2021.xlsx</span></div>
+        <table data-layout-ignore><colgroup><col style="width: 260px"><col style="width: 840px"></colgroup>
+          <tr><th>Nombre del campo</th><th>Descripción del campo</th></tr>
+          <tr><td class="v">p74b</td><td>Ingreso del exterior - Monto</td></tr>
+          <tr><td class="v">p75</td><td>Recibió el Bono de Desarrollo Humano</td></tr>
+          <tr class="p76" id="intro-r3"><td class="v">p76</td><td>Monto que recibió por el Bono de Desarrollo Humano</td></tr>
+          <tr><td class="v">p77</td><td>Recibió el Bono por discapacidad (Joaquin Gallegos Lara  - BJGL)</td></tr>
+        </table>
+      </div>
+      <div class="dw" data-layout-allow-occlusion data-layout-allow-overlap id="intro-w4" style="left: 642px; top: 580px">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">Diccionario de Datos_persona_anual_2025.xlsx</span></div>
+        <table data-layout-ignore><colgroup><col style="width: 260px"><col style="width: 840px"></colgroup>
+          <tr><th>Nombre del campo</th><th>Descripción del campo</th></tr>
+          <tr><td class="v">p74b</td><td>Ingreso del exterior - Monto</td></tr>
+          <tr><td class="v">p75</td><td>Recibió el BONO DE DESARROLLO HUMANO</td></tr>
+          <tr class="p76" id="intro-r4"><td class="v">p76</td><td>Monto que recibió por el BONO DE DESARROLLO HUMANO</td></tr>
+          <tr><td class="v">p77</td><td>Recibe el BONO DE DISCAPACIDAD</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+      var wins = ["#intro-w1", "#intro-w2", "#intro-w3", "#intro-w4"];
+      var rows = ["#intro-r1 td", "#intro-r2 td", "#intro-r3 td", "#intro-r4 td"];
+
+      tl.set("#intro-cap-w", { clipPath: "inset(0 0% 0 0)" }, 0);
+      tl.fromTo("#intro-cap-s", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.4, ease: "power3.out" }, 0.45);
+      tl.fromTo(wins, { y: 30 }, { y: 0, duration: 0.35, ease: "power2.out", stagger: 0.05 }, 0);
+      gsap.set(wins, { zIndex: function (i) { return i + 1; } });
+
+      // Back and forth: one round comes to the front, its p76 row is found, then the next.
+      var order = [3, 1, 0, 2, 3, 0, 1], t = 0.55, z = 10;
+      order.forEach(function (w, k) {
+        var at = t + k * 0.52;
+        tl.set(wins[w], { zIndex: z++ }, at);
+        tl.fromTo(wins[w], { y: 0 }, { y: -14, duration: 0.14, ease: "power2.out" }, at);
+        tl.to(wins[w], { y: 0, duration: 0.2, ease: "power2.in" }, at + 0.16);
+        tl.fromTo(rows[w], { backgroundColor: "#fdfeff" }, { backgroundColor: "#cfe0fb", duration: 0.12 }, at + 0.1);
+        tl.to(rows[w], { backgroundColor: "#fdfeff", duration: 0.15 }, at + 0.48);
+      });
+
+      tl.to(["#intro-cap-w", "#intro-cap-s"], { opacity: 0, duration: 0.2, ease: "power1.in" }, 4.3);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["intro"] = tl;
+    })();
+  </script>
+</template>

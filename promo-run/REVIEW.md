@@ -30,3 +30,16 @@
 ## Weakest shot and what I'd change with more time
 - 20-22 s, the second terminal: short and a little empty. A real screen recording of typing
   `p76` into the search box would be stronger than the cut to an already-searched page.
+
+## Revision 2 (2026-11-20)
+- New 4.5 s opening: "Comparing a survey across years?" and the user's line under it, over real
+  excerpts (rows p74b-p77) of four persona dictionaries (2019-06, 2020-12, 2021, 2025) in their own
+  layouts, brought to the front in turn with the p76 row lit each time.
+- "151 questions" → "151 variables".
+- deriva-history's "11 real changes" and the page's "10 questions changed" are both marked, under
+  the caption "All rounds, 2019 to 2025: 11 real changes in 10 questions." (estrato changed twice,
+  Sept 2020 and Dec 2020; the CLI counts changes, the page counts variables with one).
+- Time made up by cutting the p44j example from the table (rama1 kept), tightening the run
+  (8.6 s) and the end card (2.2 s). Total still 30.0 s.
+- Kept warnings: the opening's second line (16 words in about 4 s) is under the reading floor
+  of 5.3 s; the closing URL is on screen 1.96 s against a 2.0 s floor.
