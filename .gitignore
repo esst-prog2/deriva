@@ -26,3 +26,8 @@ htmlcov/
 # impeccable live-mode runtime state (the config is kept)
 /.impeccable/live/*
 !/.impeccable/live/config.json
+/promo-run/.hyperframes/
+/promo-run/node_modules/
+/promo-run/renders/
+/promo-run/.waveform-cache/
+/promo-run/.thumbnails/

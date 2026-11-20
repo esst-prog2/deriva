@@ -1,0 +1,30 @@
+<template>
+  <style>
+    @font-face { font-family: "Archivo"; src: url("assets/fonts/Archivo-var.ttf") format("truetype"); font-weight: 100 900; font-stretch: 62% 125%; }
+    #root { position: absolute; inset: 0; background: #e6ecf4; font-family: "Archivo", sans-serif; }
+    .card { position: absolute; left: 192px; top: 300px; width: 1536px; }
+    .mark { font-size: 220px; font-weight: 800; font-stretch: 125%; letter-spacing: -0.03em; line-height: 1; color: #12161d; }
+    .rule { margin-top: 34px; width: 1536px; height: 6px; background: #2a5bb0; transform-origin: left center; }
+    .line { margin-top: 34px; font-size: 56px; font-weight: 700; letter-spacing: -0.015em; color: #12161d; }
+    .url { margin-top: 20px; font-family: "JetBrains Mono", monospace; font-size: 38px; color: #2a5bb0; }
+  </style>
+  <div id="root" data-composition-id="end" data-width="1920" data-height="1080">
+    <div id="end-card" class="card clip" data-start="0" data-duration="2.6">
+      <div class="mark" id="end-mark">deriva</div>
+      <div class="rule" id="end-rule"></div>
+      <div class="line" id="end-line">See what changed before you compare rounds.</div>
+      <div class="url" id="end-url">github.com/esst-prog2/deriva</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+      tl.fromTo("#end-mark", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.4, ease: "power3.out" }, 0);
+      tl.fromTo("#end-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out" }, 0.1);
+      tl.fromTo("#end-line", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.33, ease: "power3.out" }, 0.25);
+      tl.fromTo("#end-url", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "none" }, 0.45);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["end"] = tl;
+    })();
+  </script>
+</template>

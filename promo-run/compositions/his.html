@@ -1,0 +1,82 @@
+<template>
+  <style>
+    @font-face { font-family: "Archivo"; src: url("assets/fonts/Archivo-var.ttf") format("truetype"); font-weight: 100 900; font-stretch: 62% 125%; }
+    #root { position: absolute; inset: 0; background: #e6ecf4; font-family: "Archivo", sans-serif; }
+    .cap { position: absolute; left: 192px; top: 104px; width: 1536px; }
+    .cap .w { font-weight: 700; font-size: 56px; line-height: 1.12; letter-spacing: -0.015em; color: #12161d; }
+    .win { position: absolute; left: 192px; top: 268px; width: 1536px; height: 716px; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 18px 48px rgba(18, 22, 29, 0.18); }
+    .term { background: #0f1a2e; }
+    .brow { background: #fdfeff; }
+    .bar { height: 44px; display: flex; align-items: center; gap: 9px; padding: 0 18px; }
+    .term .bar { background: #22324f; }
+    .brow .bar { background: #dfe6f0; border-bottom: 1px solid #a9c0e6; }
+    .dot { width: 14px; height: 14px; border-radius: 50%; background: #3a4d70; }
+    .brow .dot { background: #b7c3d6; }
+    .title { margin-left: 18px; font-size: 28px; color: #a9bad6; }
+    .url { margin-left: 22px; width: 760px; height: 34px; border-radius: 17px; background: #fdfeff; border: 1px solid #a9c0e6;
+      font-size: 28px; line-height: 32px; padding: 0 16px; color: #435069; }
+    .body { padding: 26px 36px; font-family: "JetBrains Mono", monospace; font-size: 30px; line-height: 44px; color: #e8eef8; white-space: normal; }
+    .body > div { white-space: pre-wrap; }
+    #run-out { white-space: normal; } #run-out > .ln { white-space: pre; }
+    .pr { color: #7f9cd0; }
+    .caret { display: inline-block; width: 0.55ch; height: 1.05em; background: #e8eef8; vertical-align: text-bottom; }
+    .view { position: absolute; left: 0; top: 44px; width: 1536px; height: 672px; overflow: hidden; }
+    .shot { position: absolute; left: 0; top: 0; width: 2227px; height: 2175px; }
+    .box { position: absolute; left: 30px; top: 413px; width: 1280px; height: 108px; border: 5px solid #c8102e; border-radius: 8px; }
+  </style>
+  <div id="root" data-composition-id="his" data-width="1920" data-height="1080">
+    <div id="his-cap1" class="cap clip" data-start="0" data-duration="3.0">
+      <div class="w" id="his-cap1-w">Next: one page with every round, June 2019 to 2025.</div>
+    </div>
+    <div id="his-cap2" class="cap clip" data-start="3.0" data-duration="4.4">
+      <div class="w" id="his-cap2-w">p76 kept its name, but in Dec 2020 “Human Development Bonus” became “bonus or pension”.</div>
+    </div>
+
+    <div id="his-term" class="win term clip" data-start="0" data-duration="2.3">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">deriva — zsh</span></div>
+      <div class="body">
+        <div><span class="pr">~/deriva $ </span><span id="his-typed">uv run deriva-history data/</span><span id="his-caret" class="caret"></span></div>
+        <div id="his-out">9 rounds, 190 variables, 11 real changes
+wrote ~/deriva/deriva_history.html</div>
+      </div>
+    </div>
+
+    <div id="his-brow" class="win brow clip" data-layout-allow-occlusion data-start="2.0" data-duration="5.4">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">deriva_history.html?q=p76</span></div>
+      <div class="view">
+        <img id="his-shot" class="shot" src="assets/screens/history-p76.png" alt="The deriva history page searched for p76" />
+        <div id="his-box" class="box"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var typed = document.getElementById("his-typed");
+      var full = typed.textContent, node = typed.firstChild;
+      var T0 = 0.2, T1 = 1.0;
+      function countAt(t) { if (t < T0) return 0; return Math.min(full.length, Math.floor((t - T0) / (T1 - T0) * full.length)); }
+      node.data = "";
+
+      var tl = gsap.timeline({ paused: true });
+      var drv = { t: 0 };
+      tl.to(drv, { t: 1.2, duration: 1.2, ease: "none", onUpdate: function () { node.data = full.slice(0, countAt(drv.t)); } }, 0);
+      tl.set("#his-caret", { opacity: 0 }, 1.15);
+      tl.set("#his-out", { opacity: 0 }, 0);
+      tl.set("#his-out", { opacity: 1 }, 1.4);
+
+      function wipe(sel, t) { tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.33, ease: "power3.out" }, t); }
+      function out(sel, t) { tl.to(sel, { opacity: 0, duration: 0.2, ease: "power1.in" }, t); }
+      wipe("#his-cap1-w", 0.05); out("#his-cap1-w", 2.8);
+      wipe("#his-cap2-w", 3.0);
+
+      // Browser: crossfade in, hold on the top of the page, then pan down to p76's rounds.
+      tl.fromTo("#his-brow", { opacity: 0 }, { opacity: 1, duration: 0.27, ease: "none" }, 2.0);
+      tl.fromTo("#his-shot", { x: -346, y: 0 }, { x: -346, y: -750, duration: 0.8, ease: "power2.inOut" }, 3.0);
+      tl.fromTo("#his-box", { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" }, 3.9);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["his"] = tl;
+    })();
+  </script>
+</template>
