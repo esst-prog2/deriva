@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..800;1,100,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..800;1,100,400&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
 <style>
   :root {
     --desk: #e6ecf4;
@@ -82,7 +82,7 @@
   }
   .wording.changed { border-left-color: var(--real); background: var(--real-tint); }
   .wording.changed .round { color: var(--real); }
-  .gloss { font-size: 0.72em; color: var(--ink-soft); font-style: italic; display: block; margin-top: 0.2em; }
+  .xlabel { font-size: 0.55em; color: var(--ink-soft); font-style: italic; margin: 0.2em 0 0; }
 
   /* Slide 2: terminal + screenshot */
   .demo { display: grid; grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.5fr); gap: 0.9em; align-items: start; }
@@ -105,6 +105,41 @@
   .demo > div { min-width: 0; }
   .shot { box-sizing: border-box; max-width: 100%; border: 1px solid var(--form-line); border-radius: 6px; display: block; width: 100%; height: auto; margin: 0; }
   .cap { font-size: 0.6em; line-height: 1.4; color: var(--ink-soft); margin-top: 0.5em; }
+
+  /* Slide 2: English recreation of the deriva-history p76 panel (styles copied from history.py) */
+  .hp { --paper:#fcfdfe; --hink:#1c2b4a; --hsoft:#5a6782; --hrule:#d5dfec; --hgrid:#eef3f9;
+        --pencil:#c8102e; --graphite:#9aa3b2; --marker:#fff1a8;
+        background: var(--paper); color: var(--hink); border: 1px solid var(--form-line); border-radius: 6px;
+        padding: 10px 14px 8px; font-family: Archivo, "Helvetica Neue", Arial, sans-serif; font-size: 13px; line-height: 1.4; }
+  .reveal .hp table.hp-map { width: 100%; border-collapse: collapse; margin: 0; font-size: 1em; }
+  .reveal .hp-map th { font-weight: 600; font-size: 10.5px; color: var(--hsoft); text-align: center; padding: 2px 0 4px; border: 0; box-shadow: 0 1px 0 var(--hrule); vertical-align: top; line-height: 1.2; white-space: nowrap; text-transform: none; letter-spacing: 0; }
+  .reveal .hp-map th.hq { text-align: left; }
+  .reveal .hp-map th.redesign { font-weight: 400; font-style: italic; }
+  .reveal .hp-map th small { display: block; font-weight: 400; font-size: 9px; color: var(--hink); min-height: 22px; white-space: normal; line-height: 1.2; }
+  .reveal .hp-map td { border: 0; border-top: 1px solid var(--hgrid); padding: 0; }
+  .reveal .hp-map td.cell { width: 42px; height: 34px; text-align: center; vertical-align: middle; }
+  .reveal .hp-map td.cut { width: 40px; background: repeating-linear-gradient(135deg, transparent 0 5px, var(--hgrid) 5px 7px); }
+  .reveal .hp-map td.hq { padding: 4px 8px 4px 0; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left; vertical-align: middle; }
+  .hp-map td.hq b { font-weight: 700; margin-right: 6px; }
+  .hp-map td.hq span { color: var(--hsoft); font-size: 11.5px; }
+  .hd { display: inline-block; width: 11px; height: 11px; border-radius: 50%; vertical-align: middle; }
+  .hd.hreal { background: var(--pencil); }
+  .hd.hcos { border: 2px solid var(--graphite); box-sizing: border-box; }
+  .hd.hand { box-shadow: 0 0 0 3px var(--paper), 0 0 0 4.5px var(--hink); }
+  .hd.same { width: 4px; height: 4px; background: var(--hrule); }
+  .hp-sheet { border-left: 3px solid var(--hink); margin: 8px 0 0 3px; padding: 2px 0 2px 14px; }
+  .hp-entry { display: grid; grid-template-columns: 118px 1fr; gap: 12px; padding: 5px 0; }
+  .hp-entry .when { color: var(--hsoft); font-size: 11.5px; padding-top: 2px; }
+  .hp-entry .text { font: 400 14.5px/1.5 "Source Serif 4", Georgia, serif; }
+  .hp-entry .note { display: block; font-weight: 600; font-size: 10.5px; color: var(--pencil); margin-top: 2px; line-height: 1.3; }
+  .hp-entry .note .by { display: block; font-weight: 400; }
+  .hp-entry.hcos .note { color: var(--hsoft); }
+  .hp-entry.hreal .when { color: var(--pencil); font-weight: 600; }
+  .hp-entry.hreal .text { border-left: 2px solid var(--pencil); margin-left: -16px; padding-left: 14px; }
+  .hp del { color: var(--hsoft); text-decoration: line-through 1.5px var(--hsoft); }
+  .hp .hp-entry.hreal del { color: var(--pencil); text-decoration-color: var(--pencil); }
+  .hp ins { text-decoration: none; background: var(--marker); }
+  .hp-cutline { color: var(--hsoft); font-size: 10.5px; font-style: italic; padding: 5px 0; border-top: 1px dashed var(--hrule); border-bottom: 1px dashed var(--hrule); margin: 4px 0 2px; }
 
   /* Slide 3: 2x2 tables */
   .evals { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4em; margin-top: 0.6em; }
@@ -156,19 +191,19 @@
   <p class="soft">For researchers who pool ENEMDU rounds: <code>p76</code> keeps its name, but the question changes.</p>
   <div class="wording">
     <span class="round">2020-09</span>
-    ¿Cuánto recibió en el mes de MAYO por el <strong>BONO DE DESARROLLO HUMANO</strong>?
-    <span class="gloss">“Human Development Bonus”</span>
+    How much did you receive in MAY from the <strong>HUMAN DEVELOPMENT BONUS</strong>?
   </div>
   <div class="wording changed">
     <span class="round">2020-12</span>
-    ¿Cuánto recibió en el mes de NOVIEMBRE por el <strong class="real">BONO o PENSIÓN</strong>?
-    <span class="gloss">“bonus or pension”</span>
+    How much did you receive in NOVEMBER from the <strong class="real">BONUS OR PENSION</strong>?
   </div>
+  <p class="xlabel">Translated from the Spanish codebook</p>
   <aside class="notes">
     ENEMDU is Ecuador's national employment survey, published by INEC as public data.
     Researchers pool several rounds to run a trend. The variable name stays the same across rounds,
     so nothing in the microdata tells you that p76 asked about the Human Development Bonus in
-    September 2020 and about "a bonus or a pension" in December 2020. That is a different question.
+    September 2020 and about "a bonus or a pension" in December 2020. The wording on the slide is my English
+    translation of the Spanish codebook. That is a different question.
     Today the only way to find this is to open every round's codebook and go back and forth.
     deriva does that step. (The month also changes, May to November, but that is just the reference month.)
   </aside>
@@ -196,15 +231,53 @@ wrote deriva_2021_vs_2025.csv</pre>
       <p class="cap">Real output. The CSV has both wordings side by side, real changes first.</p>
     </div>
     <div>
-      <img class="shot" src="history-p76.jpg" alt="The deriva-history page searched for p76: one row with a mark per round, a red dot at 2020-12, and the wording of each round with the changed words struck and highlighted.">
-      <p class="cap"><code>deriva-history data/</code>: 9 rounds, June 2019 to 2025. <span class="dot"></span>real change at 2020-12; 2021 shown as a redesign break.</p>
+      <div class="hp" role="img" aria-label="The deriva-history panel for p76, in English: one row with a mark per round, a red dot at 2020-12, and the wording of each round with the changed words struck and highlighted.">
+        <table class="hp-map">
+          <thead><tr>
+            <th class="hq">Question</th>
+            <th>2019-06<small></small></th>
+            <th>2019-12<small>some by hand</small></th>
+            <th>2020-09<small>some by hand</small></th>
+            <th>2020-12<small>some by hand</small></th>
+            <th class="redesign">redesign<small>not compared</small></th>
+            <th>2021<small></small></th>
+            <th>2022<small></small></th>
+            <th>2023<small></small></th>
+            <th>2024<small>some by hand</small></th>
+            <th>2025<small></small></th>
+          </tr></thead>
+          <tbody><tr>
+            <td class="hq"><b>p76</b><span>Amount received from the HUMAN DEVELOPMENT BONUS</span></td>
+            <td class="cell"><i class="hd same"></i></td>
+            <td class="cell"><i class="hd hcos"></i></td>
+            <td class="cell"><i class="hd hcos hand"></i></td>
+            <td class="cell"><i class="hd hreal hand"></i></td>
+            <td class="cut"></td>
+            <td class="cell"></td>
+            <td class="cell"><i class="hd same"></i></td>
+            <td class="cell"><i class="hd same"></i></td>
+            <td class="cell"><i class="hd hcos hand"></i></td>
+            <td class="cell"><i class="hd same"></i></td>
+          </tr></tbody>
+        </table>
+        <div class="hp-sheet">
+          <div class="hp-entry"><div class="when">2019-06</div><div class="text">How much did you receive in MAY from the HUMAN DEVELOPMENT BONUS?</div></div>
+          <div class="hp-entry hcos"><div class="when">2019-12<span class="note">Cosmetic change<span class="by">second rule, not checked by hand</span></span></div><div class="text">How much did you receive in <del>MAY</del> <ins>NOVEMBER</ins> from the HUMAN DEVELOPMENT BONUS?</div></div>
+          <div class="hp-entry hcos"><div class="when">2020-09<span class="note">Cosmetic change<span class="by">checked by hand</span></span></div><div class="text">How much did you receive in <del>NOVEMBER</del> <ins>MAY</ins> from the HUMAN DEVELOPMENT BONUS?</div></div>
+          <div class="hp-entry hreal"><div class="when">2020-12<span class="note">Real change<span class="by">checked by hand</span></span></div><div class="text">How much did you receive in <del>MAY</del> <ins>NOVEMBER</ins> from the <del>HUMAN DEVELOPMENT BONUS?</del> <ins>BONUS OR PENSION?</ins></div></div>
+          <div class="hp-cutline">Redesign break: the dictionary layout changed in 2021, so 2021 is not compared with the round before</div>
+        </div>
+      </div>
+      <p class="xlabel">Translated from the Spanish codebook; marks are from the real history page.</p>
+      <p class="cap" style="margin-top:0.2em"><code>deriva-history data/</code>: 9 rounds, June 2019 to 2025. <span class="dot"></span>real change at 2020-12; 2021 shown as a redesign break.</p>
     </div>
   </div>
   <aside class="notes">
     Left: the real output of deriva on the 2021 and 2025 persona dictionaries. 151 and 139 variables,
     12 removed, none added, 22 descriptions changed, which the rule splits 9 cosmetic and 13 real.
     It also writes a CSV with one row per change and both wordings, so the researcher can overrule the rule.
-    Right: deriva-history reads all nine dictionaries and builds one page. Here it is searched for p76.
+    Right: deriva-history reads all nine dictionaries and builds one page. This is its p76 panel, with the
+    wordings translated into English; the marks, strikes and highlights are the ones on the real page.
     The red dot is December 2020, the change from the first slide. The 2021 methodological redesign
     is shown as a break, not as a change. The tool shows what moved; the researcher decides what it means.
     This page is live on the project site.
@@ -270,14 +343,14 @@ wrote deriva_2021_vs_2025.csv</pre>
   <span class="q">5 · What's next</span>
   <h2>Next</h2>
   <ol class="next">
-    <li>A fourth blind pair, from the vivienda/hogar dictionaries
+    <li>A fourth blind pair, from the housing and household dictionaries
       <span class="sub">If the second rule hides no real change there, it becomes the default.</span></li>
     <li>Other surveys, and a crosswalk between rounds
       <span class="sub">Which variable in one round is which in the next.</span></li>
   </ol>
   <aside class="notes">
     First, more held-out evidence. The persona pairs are used up: the one unlabelled consecutive pair repeats
-    20 of its 21 changes. The vivienda/hogar dictionaries are already downloaded, so the next step is to label
+    20 of its 21 changes. The housing and household (vivienda/hogar) dictionaries are already downloaded, so the next step is to label
     one pair blind and measure the second rule once. If it still hides no real change, it becomes the default.
     Second, other surveys, and a crosswalk that says which variable in one round corresponds to which in the next.
     Also open: a colleague test of the project page, one analyst and one person who only looks a question up,
