@@ -204,3 +204,4 @@
 2026-11-26 — After the same feedback, the slide 2 speaker notes say the rule flags 13 as real and the hand check found 3 of them really changed; the rule errs on the safe side. — decided by: user
 2026-11-26 — After the teacher's feedback, the video's table captions read "It writes a table: the rule's flag and both wordings, for you to check." and "Real, checked by hand: the industry classification changed version."; the video stays 30 s; promo-run/SPEC.md is updated to match the current video. — decided by: user
 2026-11-26 — To give the longer table caption its reading time within 30 s, the table scene is 6.5 s (was 6.0) and the history scene 6.9 s (was 7.4). — decided by: Claude
+2026-11-26 — Slide 2's terminal caption reads "Real output. 'real' = flagged by the rule; 3 of the 13 confirmed by hand. File names as INEC publishes them." — decided by: user
