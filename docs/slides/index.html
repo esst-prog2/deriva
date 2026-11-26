@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>deriva slides</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reset.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..800;1,100,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --desk: #e6ecf4;
+    --sheet: #fdfeff;
+    --form: #2a5bb0;
+    --form-deep: #1c4590;
+    --form-line: #a9c0e6;
+    --form-tint: #edf3fc;
+    --ink: #12161d;
+    --ink-soft: #435069;
+    --real: #c8102e;
+    --real-tint: #fdf2f3;
+    --cosmetic: #7a8394;
+    --console: #0f1a2e;
+    --console-text: #e8eef8;
+    --console-prompt: #7f9cd0;
+  }
+  html, body { background: var(--sheet); }
+  .reveal-viewport { background: var(--sheet); }
+  .reveal {
+    font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+    font-size: 30px;
+    color: var(--ink);
+  }
+  .reveal .slides { text-align: left; }
+  .reveal h1, .reveal h2 {
+    font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+    font-variation-settings: "wdth" 80;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0 0 0.5em;
+    line-height: 1.08;
+  }
+  .reveal h1 { font-size: 2.6em; }
+  .reveal h2 { font-size: 1.9em; }
+  .reveal p { margin: 0 0 0.6em; line-height: 1.4; }
+  .reveal strong { font-weight: 700; }
+
+  /* The numbered form band from the promo page */
+  .q {
+    display: inline-block;
+    font-size: 0.55em;
+    font-weight: 600;
+    font-variation-settings: "wdth" 70;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--form);
+    border-top: 3px solid var(--form);
+    padding-top: 0.35em;
+    margin-bottom: 0.9em;
+  }
+  .soft { color: var(--ink-soft); }
+  .real { color: var(--real); }
+  .dot {
+    display: inline-block; width: 0.62em; height: 0.62em; border-radius: 50%;
+    background: var(--real); vertical-align: 0.05em; margin-right: 0.25em;
+  }
+
+  /* Slide 1: the wording */
+  .wording {
+    border-left: 6px solid var(--form);
+    background: var(--form-tint);
+    padding: 0.7em 1em;
+    margin: 0.6em 0 0.4em;
+    font-size: 1.12em;
+  }
+  .wording .round {
+    font-size: 0.6em; font-weight: 600; letter-spacing: 0.08em;
+    color: var(--ink-soft); display: block; margin-bottom: 0.15em;
+  }
+  .wording.changed { border-left-color: var(--real); background: var(--real-tint); }
+  .wording.changed .round { color: var(--real); }
+  .gloss { font-size: 0.72em; color: var(--ink-soft); font-style: italic; display: block; margin-top: 0.2em; }
+
+  /* Slide 2: terminal + screenshot */
+  .demo { display: grid; grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.5fr); gap: 0.9em; align-items: start; }
+  pre.term {
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: none;
+    background: var(--console);
+    color: var(--console-text);
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.56em;
+    line-height: 1.55;
+    padding: 1em 1.1em;
+    border-radius: 6px;
+    white-space: pre;
+    overflow: hidden;
+  }
+  pre.term .p { color: var(--console-prompt); }
+  .demo > div { min-width: 0; }
+  .shot { box-sizing: border-box; max-width: 100%; border: 1px solid var(--form-line); border-radius: 6px; display: block; width: 100%; height: auto; margin: 0; }
+  .cap { font-size: 0.6em; line-height: 1.4; color: var(--ink-soft); margin-top: 0.5em; }
+
+  /* Slide 3: 2x2 tables */
+  .evals { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4em; margin-top: 0.6em; }
+  .evals h3 {
+    font-family: inherit; font-size: 0.75em; font-weight: 600; text-transform: none;
+    color: var(--ink-soft); margin: 0 0 0.5em; line-height: 1.3; letter-spacing: 0;
+  }
+  .reveal table.cm { border-collapse: collapse; font-size: 0.85em; margin: 0; }
+  .reveal table.cm th, .reveal table.cm td {
+    border: 1px solid var(--form-line); padding: 0.35em 0.7em; text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .reveal table.cm th { font-weight: 600; color: var(--ink-soft); background: var(--form-tint); }
+  .reveal table.cm td.zero { color: var(--real); font-weight: 700; background: var(--real-tint); }
+  .big { font-size: 1.9em; font-weight: 700; font-variation-settings: "wdth" 80; font-variant-numeric: tabular-nums; line-height: 1.1; margin-top: 0.4em; }
+  .big small { display: block; font-size: 0.36em; margin-top: 0.3em; font-weight: 400; color: var(--ink-soft); }
+
+  /* Slide 4: the number */
+  .numbers { display: flex; gap: 1.6em; align-items: flex-end; margin: 0.4em 0 0.8em; }
+  .numbers .n { font-size: 3.2em; font-weight: 700; font-variation-settings: "wdth" 80; font-variant-numeric: tabular-nums; line-height: 1; }
+  .numbers .was { color: var(--cosmetic); text-decoration: line-through; text-decoration-thickness: 4px; }
+  .numbers .label { font-size: 0.6em; color: var(--ink-soft); display: block; margin-top: 0.3em; font-weight: 400; }
+  .lesson { border-left: 6px solid var(--form); padding-left: 0.8em; font-size: 1.15em; max-width: 28em; }
+
+  /* Slide 5 */
+  ol.next { margin: 0.2em 0 0 1.1em; padding: 0; }
+  ol.next li { margin-bottom: 1em; line-height: 1.35; font-size: 1.25em; }
+  ol.next li::marker { color: var(--form); font-weight: 700; }
+  ol.next .sub { display: block; font-size: 0.7em; color: var(--ink-soft); }
+
+  /* Closing */
+  .wordmark { font-size: 3.2em; font-weight: 800; font-variation-settings: "wdth" 125; letter-spacing: -0.02em; margin-bottom: 0.4em; }
+  .links a { color: var(--form-deep); text-decoration: underline; text-underline-offset: 0.15em; }
+  .links p { font-size: 1em; }
+
+  .reveal .progress { color: var(--form); }
+  .reveal .controls { color: var(--form); }
+  .reveal .slide-number { background: transparent; color: var(--ink-soft); font-family: Archivo, sans-serif; }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- 1 For whom, and why -->
+<section>
+  <span class="q">1 · For whom, and why</span>
+  <h1>Is it still the same question?</h1>
+  <p class="soft">For researchers who pool ENEMDU rounds: <code>p76</code> keeps its name, but the question changes.</p>
+  <div class="wording">
+    <span class="round">2020-09</span>
+    ¿Cuánto recibió en el mes de MAYO por el <strong>BONO DE DESARROLLO HUMANO</strong>?
+    <span class="gloss">“Human Development Bonus”</span>
+  </div>
+  <div class="wording changed">
+    <span class="round">2020-12</span>
+    ¿Cuánto recibió en el mes de NOVIEMBRE por el <strong class="real">BONO o PENSIÓN</strong>?
+    <span class="gloss">“bonus or pension”</span>
+  </div>
+  <aside class="notes">
+    ENEMDU is Ecuador's national employment survey, published by INEC as public data.
+    Researchers pool several rounds to run a trend. The variable name stays the same across rounds,
+    so nothing in the microdata tells you that p76 asked about the Human Development Bonus in
+    September 2020 and about "a bonus or a pension" in December 2020. That is a different question.
+    Today the only way to find this is to open every round's codebook and go back and forth.
+    deriva does that step. (The month also changes, May to November, but that is just the reference month.)
+  </aside>
+</section>
+
+<!-- 2 The demo -->
+<section>
+  <span class="q">2 · The demo, from a real run</span>
+  <h2>One command, then one page per question</h2>
+  <div class="demo">
+    <div>
+<pre class="term"><span class="p">$</span> uv run deriva \
+  ..._persona_anual_2021.xlsx \
+  ..._persona_anual_2025.xlsx
+2021: 151 variables
+2025: 139 variables
+
+  added         0
+  removed      12
+  cosmetic      9
+  real         13
+  unchanged   117
+
+wrote deriva_2021_vs_2025.csv</pre>
+      <p class="cap">Real output. The CSV has both wordings side by side, real changes first.</p>
+    </div>
+    <div>
+      <img class="shot" src="history-p76.jpg" alt="The deriva-history page searched for p76: one row with a mark per round, a red dot at 2020-12, and the wording of each round with the changed words struck and highlighted.">
+      <p class="cap"><code>deriva-history data/</code>: 9 rounds, June 2019 to 2025. <span class="dot"></span>real change at 2020-12; 2021 shown as a redesign break.</p>
+    </div>
+  </div>
+  <aside class="notes">
+    Left: the real output of deriva on the 2021 and 2025 persona dictionaries. 151 and 139 variables,
+    12 removed, none added, 22 descriptions changed, which the rule splits 9 cosmetic and 13 real.
+    It also writes a CSV with one row per change and both wordings, so the researcher can overrule the rule.
+    Right: deriva-history reads all nine dictionaries and builds one page. Here it is searched for p76.
+    The red dot is December 2020, the change from the first slide. The 2021 methodological redesign
+    is shown as a break, not as a change. The tool shows what moved; the researcher decides what it means.
+    This page is live on the project site.
+  </aside>
+</section>
+
+<!-- 3 Why it works -->
+<section>
+  <span class="q">3 · Why it works</span>
+  <h2>I labelled by hand before seeing any verdict</h2>
+  <div class="evals">
+    <div>
+      <h3>First rule vs my blind labels<br>2021 vs 2025, 22 changes</h3>
+      <table class="cm">
+        <tr><th></th><th>rule: cosmetic</th><th>rule: real</th></tr>
+        <tr><th>me: cosmetic</th><td>9</td><td>10</td></tr>
+        <tr><th>me: real</th><td class="zero">0</td><td>3</td></tr>
+      </table>
+      <div class="big">12 of 22 <small>agree · no real change hidden</small></div>
+    </div>
+    <div>
+      <h3>Second rule on a pair it never saw<br>2020-09 vs 2020-12, 45 changes</h3>
+      <table class="cm">
+        <tr><th></th><th>rule: cosmetic</th><th>rule: real</th></tr>
+        <tr><th>me: cosmetic</th><td>33</td><td>5</td></tr>
+        <tr><th>me: real</th><td class="zero">0</td><td>7</td></tr>
+      </table>
+      <div class="big">40 of 45 <small>agree · 0 of my 7 real changes hidden (first rule: 20 of 45)</small></div>
+    </div>
+  </div>
+  <aside class="notes">
+    The check that shows I was in control: the ground truth is mine, made before the program could influence it.
+    deriva generates a labels template with both descriptions and no verdict, and a test checks that no verdict leaks into it.
+    I labelled every row by hand. Claude pointed out which words differed but never said cosmetic or real.
+    Only then I ran deriva-eval. The red zeros are the cell that matters: a real change the rule would hide.
+    It is zero on both pairs. The rule errs the safe way: it flags cosmetic edits as real.
+    The second rule was measured once on a pair neither of us had looked at; the pass criterion for that
+    measurement (hide no real change) was proposed by Claude and fixed before the labels were made.
+    Numbers from eval/result.txt and eval/result_2020_09_vs_2020_12_v1/v2.txt in the repository.
+  </aside>
+</section>
+
+<!-- 4 What I learned -->
+<section>
+  <span class="q">4 · What I learned</span>
+  <h2>The first README number was never checked</h2>
+  <div class="numbers">
+    <div><span class="n was">9 / 13</span><span class="label">cosmetic / real, AI-written README</span></div>
+    <div><span class="n">19 / 3</span><span class="label">cosmetic / real, my blind labels</span></div>
+  </div>
+  <p class="lesson">A number that matches the program's output is not evidence. Check it against something the program didn't produce.</p>
+  <aside class="notes">
+    On 25 September my planning log records that the demo numbers in the README were AI-generated and unverified.
+    They said 9 cosmetic and 13 real. When I ran the rule, it gave exactly 9 and 13, so the number looked confirmed.
+    But that was only the rule agreeing with itself. My blind labels said 19 cosmetic and 3 real
+    (p54a, p77 and rama1). After that, hand labels came before any change to the rule,
+    and the README now shows the measured agreement instead.
+  </aside>
+</section>
+
+<!-- 5 What's next -->
+<section>
+  <span class="q">5 · What's next</span>
+  <h2>Next</h2>
+  <ol class="next">
+    <li>A fourth blind pair, from the vivienda/hogar dictionaries
+      <span class="sub">If the second rule hides no real change there, it becomes the default.</span></li>
+    <li>Other surveys, and a crosswalk between rounds
+      <span class="sub">Which variable in one round is which in the next.</span></li>
+  </ol>
+  <aside class="notes">
+    First, more held-out evidence. The persona pairs are used up: the one unlabelled consecutive pair repeats
+    20 of its 21 changes. The vivienda/hogar dictionaries are already downloaded, so the next step is to label
+    one pair blind and measure the second rule once. If it still hides no real change, it becomes the default.
+    Second, other surveys, and a crosswalk that says which variable in one round corresponds to which in the next.
+    Also open: a colleague test of the project page, one analyst and one person who only looks a question up,
+    each trying it unaided.
+  </aside>
+</section>
+
+<!-- Closing -->
+<section>
+  <div class="wordmark">deriva</div>
+  <div class="links">
+    <p><a href="https://esst-prog2.github.io/deriva/">esst-prog2.github.io/deriva</a></p>
+    <p><a href="https://github.com/esst-prog2/deriva">github.com/esst-prog2/deriva</a></p>
+  </div>
+  <aside class="notes">
+    The project page has the live history page, the install steps and the limits. The code and the eval files are in the repository.
+  </aside>
+</section>
+
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/notes/notes.min.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280,
+    height: 720,
+    margin: 0.06,
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'none',
+    center: true,
+    plugins: [RevealNotes]
+  });
+</script>
+</body>
+</html>
