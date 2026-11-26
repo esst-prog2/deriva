@@ -126,55 +126,49 @@
   .reveal .s1-note { margin-top: 18px; }
 
   /* ---------- 2 ---------- */
-  .demo { display: grid; grid-template-columns: 392px 1fr; gap: 28px; align-items: start; }
+  .demo { display: grid; grid-template-columns: 500px 1fr; gap: 32px; align-items: start; }
   .term {
     background: var(--console); color: var(--console-text); border-radius: 2px;
-    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; font-size: 19px; line-height: 1.55;
-    padding: 20px 18px; white-space: pre;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; font-size: 21px; line-height: 1.5;
+    padding: 18px 18px; white-space: pre;
   }
   .term .p { color: var(--console-prompt); user-select: none; }
   .term .ln { display: block; }
+  .term .cmd { font-size: 14.5px; line-height: 1.6; color: #c4d0e4; }
   .term .gap { display: block; height: 0.6em; }
   .reveal .slides section .fragment.turn-red { opacity: 1; visibility: inherit; display: inline-block; padding: 0 0.3em; margin: 0 -0.3em; border-radius: 2px; transition: background-color .5s var(--out), color .5s var(--out); }
   .reveal .slides section .fragment.turn-red.visible { background: var(--real); color: #fff; font-weight: 600; }
   .reveal .demo .instruction { font-size: 18px; margin-top: 12px; }
 
-  /* English recreation of the deriva-history p76 panel; marks and styles from history.py */
-  .hp { --paper:#fcfdfe; --hink:#1c2b4a; --hsoft:#5a6782; --hrule:#d5dfec; --hgrid:#eef3f9;
-        --pencil:#c8102e; --graphite:#9aa3b2; --marker:#fff1a8;
-        background: var(--paper); color: var(--hink); border: 1px solid var(--form-line);
-        padding: 12px 16px 10px; font-size: 14px; line-height: 1.4; }
-  .reveal .hp table.hp-map { width: 100%; border-collapse: collapse; margin: 0; font-size: 1em; }
-  .reveal .hp-map th { font-weight: 600; font-size: 10.5px; color: var(--hsoft); text-align: center; padding: 2px 0 5px; border: 0; box-shadow: 0 1px 0 var(--hrule); vertical-align: top; line-height: 1.2; white-space: nowrap; text-transform: none; letter-spacing: 0; }
-  .reveal .hp-map th.hq { text-align: left; }
-  .reveal .hp-map th.redesign { font-weight: 400; font-style: italic; }
-  .reveal .hp-map th small { display: block; font-weight: 400; font-size: 10px; color: var(--hink); min-height: 24px; white-space: normal; line-height: 1.2; }
-  .reveal .hp-map td { border: 0; border-top: 1px solid var(--hgrid); padding: 0; }
-  .reveal .hp-map td.cell { width: 45px; height: 40px; text-align: center; vertical-align: middle; }
-  .reveal .hp-map td.cut { width: 45px; background: repeating-linear-gradient(135deg, transparent 0 5px, var(--hgrid) 5px 7px); }
-  .reveal .hp-map td.hq { padding: 4px 8px 4px 0; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left; vertical-align: middle; }
-  .hp-map td.hq b { font-weight: 700; margin-right: 6px; font-size: 16px; }
-  .hp-map td.hq span { color: var(--hsoft); font-size: 13px; }
-  .hd { display: inline-block; width: 14px; height: 14px; border-radius: 50%; vertical-align: middle; }
-  .hd.hreal { background: var(--pencil); }
-  .hd.hcos { border: 2.5px solid var(--graphite); box-sizing: border-box; }
-  .hd.hand { box-shadow: 0 0 0 3.5px var(--paper), 0 0 0 5px var(--hink); }
-  .hd.same { width: 5px; height: 5px; background: var(--hrule); }
-  .reveal .slides section .hd.fragment.fill { transition: clip-path .8s var(--out); }
-  .reveal .slides section .hd.fragment.fill.visible { clip-path: circle(100% at 50% 50%); }
-  .hp-sheet { border-left: 3px solid var(--hink); margin: 10px 0 0 3px; padding: 2px 0 2px 14px; }
-  .hp-entry { display: grid; grid-template-columns: 112px 1fr; gap: 12px; padding: 5px 0; }
-  .hp-entry .when { color: var(--hsoft); font-size: 13px; padding-top: 3px; }
-  .hp-entry .text { font: 400 17px/1.45 "Source Serif 4", Georgia, serif; }
-  .hp-entry .note { display: block; font-weight: 600; font-size: 12px; color: var(--pencil); margin-top: 2px; line-height: 1.3; }
-  .hp-entry .note .by { display: block; font-weight: 400; }
-  .hp-entry.hcos .note { color: var(--hsoft); }
-  .hp-entry.hreal .when { color: var(--pencil); font-weight: 600; }
-  .hp-entry.hreal .text { border-left: 2px solid var(--pencil); margin-left: -16px; padding-left: 14px; }
-  .hp del { color: var(--hsoft); text-decoration: line-through 1.5px var(--hsoft); }
-  .hp .hp-entry.hreal del { color: var(--pencil); text-decoration-color: var(--pencil); }
-  .hp ins { text-decoration: none; background: var(--marker); }
-  .hp-cutline { color: var(--hsoft); font-size: 12px; font-style: italic; padding: 5px 0; border-top: 1px dashed var(--hrule); border-bottom: 1px dashed var(--hrule); margin: 4px 0 2px; }
+  /* p76 from the history page, enlarged: the marks row and the 2020-12 change.
+     Marks keep the history page's meanings: red dot = real, grey ring = cosmetic,
+     outer ink ring = checked by hand, hatch = 2021 redesign break. */
+  .reveal .hx-title { font-size: 24px; font-weight: 700; font-variation-settings: "wdth" 85; margin-bottom: 10px; }
+  .hx-marks { display: grid; grid-template-columns: repeat(4, 1fr) 1.25fr repeat(5, 1fr); border-top: 1.5px solid var(--form); border-bottom: 1px solid var(--form-line); }
+  .hx-col { display: grid; justify-items: center; align-content: start; padding: 10px 0 14px; }
+  .hx-col .y { font-size: 18px; font-weight: 700; font-variation-settings: "wdth" 80; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .hx-col .m { font-size: 15px; color: var(--ink-soft); font-variant-numeric: tabular-nums; margin-bottom: 14px; line-height: 1.1; text-align: center; }
+  .hx-col.cut { background: repeating-linear-gradient(135deg, transparent 0 7px, var(--form-tint) 7px 10px); }
+  .hx-col.cut .y { font-style: italic; font-weight: 400; color: var(--ink-soft); }
+  .hx-col.cut .m { font-size: 12px; font-style: italic; }
+  .hx-col.now { background: var(--real-tint); }
+  .hx-col.now .y, .hx-col.now .m { color: var(--real); }
+  .hx { display: block; width: 30px; height: 30px; border-radius: 50%; margin-top: 4px; }
+  .hx.real { background: var(--real); }
+  .hx.cos { border: 3.5px solid var(--cosmetic); box-sizing: border-box; }
+  .hx.hand { box-shadow: 0 0 0 4px var(--sheet), 0 0 0 6px var(--ink); }
+  .hx-col.now .hx.hand { box-shadow: 0 0 0 4px var(--real-tint), 0 0 0 6px var(--ink); }
+  .hx.same { width: 7px; height: 7px; background: var(--form-line); margin-top: 13px; }
+  .hx.none { background: none; }
+  .reveal .slides section .hx.fragment.fill { transition: clip-path .8s var(--out); }
+  .reveal .slides section .hx.fragment.fill.visible { clip-path: circle(100% at 50% 50%); }
+  .hx-change { margin-top: 22px; padding: 16px 18px 18px; background: var(--real-tint); border-top: 1px solid var(--form-line); border-bottom: 1px solid var(--form-line); }
+  .reveal .hx-when { font-size: 19px; font-weight: 600; color: var(--real); margin-bottom: 8px; }
+  .reveal .hx-text { font: 400 31px/1.32 "Source Serif 4", Georgia, serif; color: var(--ink); }
+  .hx-text del { color: var(--ink-soft); text-decoration: line-through 2px var(--ink-soft); }
+  .hx-text del.r { color: var(--real); text-decoration-color: var(--real); }
+  .hx-text ins { text-decoration: none; background: #fff1a8; padding: 0 0.08em; }
+  .reveal .demo .hx-change + .instruction { margin-top: 14px; }
 
   /* ---------- 3 ---------- */
   .tallies { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
@@ -279,48 +273,28 @@
   <div class="head"><div class="num">2</div><h2>One command, then one page per question</h2></div>
   <div class="demo">
     <div>
-      <div class="term"><span class="ln"><span class="p">$ </span>uv run deriva \</span><span class="ln">  ..._persona_anual_2021.xlsx \</span><span class="ln">  ..._persona_anual_2025.xlsx</span><span class="ln">2021: 151 variables</span><span class="ln">2025: 139 variables</span><span class="gap"></span><span class="ln fragment" data-fragment-index="0">  added         0</span><span class="ln fragment" data-fragment-index="1">  removed      12</span><span class="ln fragment" data-fragment-index="2">  cosmetic      9</span><span class="ln fragment" data-fragment-index="3">  <span class="fragment turn-red" data-fragment-index="5">real         13</span></span><span class="ln fragment" data-fragment-index="4">  unchanged   117</span><span class="gap"></span><span class="ln">wrote deriva_2021_vs_2025.csv</span></div>
-      <p class="instruction">Real output. The CSV puts both wordings side by side, real changes first.</p>
+      <div class="term"><span class="ln cmd"><span class="p">$ </span>uv run deriva \</span><span class="ln cmd">  "Diccionario de Datos_persona_anual_2021.xlsx" \</span><span class="ln cmd">  "Diccionario de Datos_persona_anual_2025.xlsx"</span><span class="gap"></span><span class="ln">2021: 151 variables</span><span class="ln">2025: 139 variables</span><span class="gap"></span><span class="ln fragment" data-fragment-index="0">  added         0</span><span class="ln fragment" data-fragment-index="1">  removed      12</span><span class="ln fragment" data-fragment-index="2">  cosmetic      9</span><span class="ln fragment" data-fragment-index="3">  <span class="fragment turn-red" data-fragment-index="5">real         13</span></span><span class="ln fragment" data-fragment-index="4">  unchanged   117</span><span class="gap"></span><span class="ln">wrote deriva_2021_vs_2025.csv</span></div>
+      <p class="instruction">Real output. File names as INEC publishes them.</p>
     </div>
     <div>
-      <div class="hp" role="img" aria-label="The deriva-history panel for p76, in English: one row with a mark per round, a red dot at 2020-12, and the wording of each round with the changed words struck and highlighted.">
-        <table class="hp-map">
-          <thead><tr>
-            <th class="hq">Question</th>
-            <th>2019-06<small></small></th>
-            <th>2019-12<small>some by hand</small></th>
-            <th>2020-09<small>some by hand</small></th>
-            <th>2020-12<small>some by hand</small></th>
-            <th class="redesign">redesign<small>not compared</small></th>
-            <th>2021<small></small></th>
-            <th>2022<small></small></th>
-            <th>2023<small></small></th>
-            <th>2024<small>some by hand</small></th>
-            <th>2025<small></small></th>
-          </tr></thead>
-          <tbody><tr>
-            <td class="hq"><b>p76</b><span>Amount received from the HUMAN DEVELOPMENT BONUS</span></td>
-            <td class="cell"><i class="hd same"></i></td>
-            <td class="cell"><i class="hd hcos"></i></td>
-            <td class="cell"><i class="hd hcos hand"></i></td>
-            <td class="cell"><i class="hd hreal hand fragment fill" data-fragment-index="6"></i></td>
-            <td class="cut"></td>
-            <td class="cell"></td>
-            <td class="cell"><i class="hd same"></i></td>
-            <td class="cell"><i class="hd same"></i></td>
-            <td class="cell"><i class="hd hcos hand"></i></td>
-            <td class="cell"><i class="hd same"></i></td>
-          </tr></tbody>
-        </table>
-        <div class="hp-sheet">
-          <div class="hp-entry"><div class="when">2019-06</div><div class="text">How much did you receive in MAY from the HUMAN DEVELOPMENT BONUS?</div></div>
-          <div class="hp-entry hcos"><div class="when">2019-12<span class="note">Cosmetic change<span class="by">second rule, not checked by hand</span></span></div><div class="text">How much did you receive in <del>MAY</del> <ins>NOVEMBER</ins> from the HUMAN DEVELOPMENT BONUS?</div></div>
-          <div class="hp-entry hcos"><div class="when">2020-09<span class="note">Cosmetic change<span class="by">checked by hand</span></span></div><div class="text">How much did you receive in <del>NOVEMBER</del> <ins>MAY</ins> from the HUMAN DEVELOPMENT BONUS?</div></div>
-          <div class="hp-entry hreal"><div class="when">2020-12<span class="note">Real change<span class="by">checked by hand</span></span></div><div class="text">How much did you receive in <del>MAY</del> <ins>NOVEMBER</ins> from the <del>HUMAN DEVELOPMENT BONUS?</del> <ins>BONUS OR PENSION?</ins></div></div>
-          <div class="hp-cutline">Redesign break: the dictionary layout changed in 2021, so 2021 is not compared with the round before</div>
-        </div>
+      <p class="hx-title"><span class="mono">p76</span> in the history page, round by round</p>
+      <div class="hx-marks" role="img" aria-label="Marks for p76 in each round: same in 2019-06, cosmetic in 2019-12, cosmetic checked by hand in 2020-09, real change checked by hand in 2020-12, the 2021 redesign break, no mark in 2021, same in 2022 and 2023, cosmetic checked by hand in 2024, same in 2025.">
+        <div class="hx-col"><span class="y">2019</span><span class="m">06</span><i class="hx same"></i></div>
+        <div class="hx-col"><span class="y">2019</span><span class="m">12</span><i class="hx cos"></i></div>
+        <div class="hx-col"><span class="y">2020</span><span class="m">09</span><i class="hx cos hand"></i></div>
+        <div class="hx-col now"><span class="y">2020</span><span class="m">12</span><i class="hx real hand fragment fill" data-fragment-index="6"></i></div>
+        <div class="hx-col cut"><span class="y">redesign</span><span class="m">not compared</span><i class="hx none"></i></div>
+        <div class="hx-col"><span class="y">2021</span><span class="m">&nbsp;</span><i class="hx none"></i></div>
+        <div class="hx-col"><span class="y">2022</span><span class="m">&nbsp;</span><i class="hx same"></i></div>
+        <div class="hx-col"><span class="y">2023</span><span class="m">&nbsp;</span><i class="hx same"></i></div>
+        <div class="hx-col"><span class="y">2024</span><span class="m">&nbsp;</span><i class="hx cos hand"></i></div>
+        <div class="hx-col"><span class="y">2025</span><span class="m">&nbsp;</span><i class="hx same"></i></div>
       </div>
-      <p class="instruction">Translated from the Spanish codebook; marks are from the real history page. <span class="mono" style="font-style:normal">deriva-history data/</span>: 9 rounds, June 2019 to 2025.</p>
+      <div class="hx-change">
+        <p class="hx-when">2020-12 · Real change, checked by hand</p>
+        <p class="hx-text">How much did you receive in <del>MAY</del> <ins>NOVEMBER</ins> from the <del class="r">HUMAN DEVELOPMENT BONUS?</del> <ins>BONUS OR PENSION?</ins></p>
+      </div>
+      <p class="instruction">Translated from the Spanish codebook; marks are from the real history page.</p>
     </div>
   </div>
   <aside class="notes">
@@ -328,8 +302,10 @@
     [clicks] None added, 12 removed, 9 cosmetic, 13 real, 117 unchanged: 22 descriptions changed.
     [click] The 13 real ones are what a researcher has to read. It also writes a CSV with one row per change
     and both wordings, so the researcher can overrule the rule.
-    Right: deriva-history reads all nine dictionaries and builds one page. This is its p76 panel, with the
-    wordings translated into English; the marks, strikes and highlights are the ones on the real page.
+    The file names are the real ones, as INEC publishes them.
+    Right: deriva-history reads all nine dictionaries and builds one page. This is p76 from that page, enlarged:
+    its mark in each round, and the December 2020 wording translated into English; the marks, strikes and
+    highlights are the ones on the real page.
     [click] The red dot is December 2020, the change from the first slide. The 2021 methodological redesign
     is shown as a break, not as a change. The tool shows what moved; the researcher decides what it means.
     This page is live on the project site.
