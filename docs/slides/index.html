@@ -8,8 +8,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..800;1,100,400&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..800;1,62..125,400&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
 <style>
+  /* The Questionnaire Sheet, as a deck: each slide is one sheet on the desk.
+     Form blue = printed structure, ink = entries, red = a real change and nothing else. */
   :root {
     --desk: #e6ecf4;
     --sheet: #fdfeff;
@@ -17,121 +19,154 @@
     --form-deep: #1c4590;
     --form-line: #a9c0e6;
     --form-tint: #edf3fc;
+    --band-deck: #e3ebfa;
     --ink: #12161d;
     --ink-soft: #435069;
     --real: #c8102e;
     --real-tint: #fdf2f3;
+    --real-highlight: #fde3e6;
     --cosmetic: #7a8394;
     --console: #0f1a2e;
     --console-text: #e8eef8;
     --console-prompt: #7f9cd0;
+    --out: cubic-bezier(0.16, 1, 0.3, 1);
   }
-  html, body { background: var(--sheet); }
-  .reveal-viewport { background: var(--sheet); }
+  html, body, .reveal-viewport { background: var(--desk); }
+  ::selection { background: #cfe0fb; color: var(--ink); }
+
   .reveal {
     font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
-    font-size: 30px;
+    font-size: 24px;
     color: var(--ink);
   }
   .reveal .slides { text-align: left; }
+  .reveal .slides > section {
+    box-sizing: border-box;
+    height: 720px;
+    padding: 52px 72px 48px;
+    background: var(--sheet);
+    box-shadow: 0 1px 2px rgba(18,22,29,.06), 0 18px 48px -20px rgba(18,22,29,.22);
+  }
+  .reveal p { margin: 0; line-height: 1.4; }
   .reveal h1, .reveal h2 {
     font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
-    font-variation-settings: "wdth" 80;
     font-weight: 700;
+    font-variation-settings: "wdth" 80;
     letter-spacing: -0.025em;
-    color: var(--ink);
-    margin: 0 0 0.5em;
-    line-height: 1.08;
-  }
-  .reveal h1 { font-size: 2.6em; }
-  .reveal h2 { font-size: 1.9em; }
-  .reveal p { margin: 0 0 0.6em; line-height: 1.4; }
-  .reveal strong { font-weight: 700; }
-
-  /* The numbered form band from the promo page */
-  .q {
-    display: inline-block;
-    font-size: 0.55em;
-    font-weight: 600;
-    font-variation-settings: "wdth" 70;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--form);
-    border-top: 3px solid var(--form);
-    padding-top: 0.35em;
-    margin-bottom: 0.9em;
-  }
-  .soft { color: var(--ink-soft); }
-  .real { color: var(--real); }
-  .dot {
-    display: inline-block; width: 0.62em; height: 0.62em; border-radius: 50%;
-    background: var(--real); vertical-align: 0.05em; margin-right: 0.25em;
-  }
-
-  /* Slide 1: the wording */
-  .wording {
-    border-left: 6px solid var(--form);
-    background: var(--form-tint);
-    padding: 0.7em 1em;
-    margin: 0.6em 0 0.4em;
-    font-size: 1.12em;
-  }
-  .wording .round {
-    font-size: 0.6em; font-weight: 600; letter-spacing: 0.08em;
-    color: var(--ink-soft); display: block; margin-bottom: 0.15em;
-  }
-  .wording.changed { border-left-color: var(--real); background: var(--real-tint); }
-  .wording.changed .round { color: var(--real); }
-  .xlabel { font-size: 0.55em; color: var(--ink-soft); font-style: italic; margin: 0.2em 0 0; }
-
-  /* Slide 2: terminal + screenshot */
-  .demo { display: grid; grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.5fr); gap: 0.9em; align-items: start; }
-  pre.term {
+    text-transform: none;
     margin: 0;
-    width: 100%;
-    box-sizing: border-box;
-    box-shadow: none;
-    background: var(--console);
-    color: var(--console-text);
-    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
-    font-size: 0.56em;
-    line-height: 1.55;
-    padding: 1em 1.1em;
-    border-radius: 6px;
-    white-space: pre;
-    overflow: hidden;
+    color: var(--ink);
   }
-  pre.term .p { color: var(--console-prompt); }
-  .demo > div { min-width: 0; }
-  .shot { box-sizing: border-box; max-width: 100%; border: 1px solid var(--form-line); border-radius: 6px; display: block; width: 100%; height: auto; margin: 0; }
-  .cap { font-size: 0.6em; line-height: 1.4; color: var(--ink-soft); margin-top: 0.5em; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; }
 
-  /* Slide 2: English recreation of the deriva-history p76 panel (styles copied from history.py) */
+  /* Question head: number box + headline over a form-blue rule */
+  .head {
+    display: grid; grid-template-columns: 76px 1fr; gap: 28px; align-items: center;
+    padding-bottom: 22px; border-bottom: 3px solid var(--form); margin-bottom: 30px;
+  }
+  .num {
+    width: 76px; height: 76px; display: grid; place-items: center;
+    background: var(--form); color: var(--sheet);
+    font-size: 46px; font-weight: 700; font-variation-settings: "wdth" 80; font-variant-numeric: tabular-nums;
+  }
+  .reveal h2 { font-size: 50px; line-height: 1.06; }
+  .instruction { font-style: italic; color: var(--form-deep); font-size: 20px; }
+
+  /* Fragments: from an already-placed layout, exponential ease-out */
+  .reveal .slides section .fragment { transition: opacity .6s var(--out), transform .6s var(--out), clip-path .7s var(--out); }
+  .reveal .slides section .fragment.rise { transform: translateY(14px); }
+  .reveal .slides section .fragment.rise.visible { transform: none; }
+
+  /* Strike drawn live: the words stay, a line is drawn through them */
+  .reveal .slides section .fragment.strike { opacity: 1; visibility: inherit; position: relative; }
+  .strike::after {
+    content: ""; position: absolute; left: -0.04em; right: -0.04em; top: 52%;
+    height: 0.09em; background: currentColor; transform: scaleX(0); transform-origin: left center;
+    transition: transform .7s var(--out);
+  }
+  .strike.visible::after { transform: scaleX(1); }
+
+  /* Wipe in, left to right, like a pencil stroke */
+  .reveal .slides section .fragment.wipe { opacity: 1; visibility: inherit; clip-path: inset(0 100% 0 0); }
+  .reveal .slides section .fragment.wipe.visible { clip-path: inset(0 0 0 0); }
+
+  /* A mark filled in: the bubble is pencilled from its centre */
+  .reveal .slides section .fragment.fill { opacity: 1; visibility: inherit; clip-path: circle(0% at 50% 50%); }
+  .reveal .slides section .fragment.fill.visible { clip-path: circle(75% at 50% 50%); }
+
+  .bubble { display: inline-block; width: 36px; height: 36px; border-radius: 50%; vertical-align: middle; }
+  .bubble.real { background: var(--real); }
+  .bubble.cos { border: 4px solid var(--cosmetic); box-sizing: border-box; }
+  .bubble.hand { box-shadow: 0 0 0 5px var(--sheet), 0 0 0 7.5px var(--ink); }
+
+  /* ---------- 1 ---------- */
+  .band {
+    margin: -52px -72px 0; padding: 42px 72px 32px;
+    background: var(--form); color: var(--sheet);
+    display: grid; grid-template-columns: 96px 1fr; gap: 32px; align-items: start;
+  }
+  .band .num { width: 96px; height: 96px; font-size: 58px; background: var(--sheet); color: var(--form); }
+  .reveal .band h1 { color: var(--sheet); font-size: 84px; line-height: 1.0; letter-spacing: -0.03em; }
+  .reveal .band .deck { color: var(--band-deck); font-size: 27px; font-weight: 600; margin-top: 12px; max-width: 34em; }
+  .wordings { margin-top: 28px; border-top: 1.5px solid var(--form); }
+  .wrow {
+    display: grid; grid-template-columns: 128px 1fr 64px; gap: 20px; align-items: center;
+    padding: 18px 0 18px 14px; border-bottom: 1px solid var(--form-line);
+    transition: background-color .6s var(--out);
+  }
+  .wrow .round { font-family: "JetBrains Mono", monospace; font-size: 22px; color: var(--ink-soft); }
+  .wrow .text { font-size: 38px; line-height: 1.25; font-weight: 500; font-variation-settings: "wdth" 85; }
+  .wrow .mark { text-align: center; }
+  .wrow:has(.ins.visible) { background: var(--real-tint); }
+  .wrow:has(.ins.visible) .round { color: var(--real); font-weight: 600; }
+  .strike.real-strike { color: var(--ink); }
+  .strike.real-strike::after { background: var(--real); }
+  .strike.real-strike.visible { color: var(--ink-soft); }
+  .ins { display: inline-block; white-space: nowrap; background: var(--real-highlight); box-shadow: inset 0 -3px 0 var(--real); padding: 0 0.12em; color: var(--real); font-weight: 700; }
+  .reveal .s1-note { margin-top: 18px; }
+
+  /* ---------- 2 ---------- */
+  .demo { display: grid; grid-template-columns: 392px 1fr; gap: 28px; align-items: start; }
+  .term {
+    background: var(--console); color: var(--console-text); border-radius: 2px;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; font-size: 19px; line-height: 1.55;
+    padding: 20px 18px; white-space: pre;
+  }
+  .term .p { color: var(--console-prompt); user-select: none; }
+  .term .ln { display: block; }
+  .term .gap { display: block; height: 0.6em; }
+  .reveal .slides section .fragment.turn-red { opacity: 1; visibility: inherit; display: inline-block; padding: 0 0.3em; margin: 0 -0.3em; border-radius: 2px; transition: background-color .5s var(--out), color .5s var(--out); }
+  .reveal .slides section .fragment.turn-red.visible { background: var(--real); color: #fff; font-weight: 600; }
+  .reveal .demo .instruction { font-size: 18px; margin-top: 12px; }
+
+  /* English recreation of the deriva-history p76 panel; marks and styles from history.py */
   .hp { --paper:#fcfdfe; --hink:#1c2b4a; --hsoft:#5a6782; --hrule:#d5dfec; --hgrid:#eef3f9;
         --pencil:#c8102e; --graphite:#9aa3b2; --marker:#fff1a8;
-        background: var(--paper); color: var(--hink); border: 1px solid var(--form-line); border-radius: 6px;
-        padding: 10px 14px 8px; font-family: Archivo, "Helvetica Neue", Arial, sans-serif; font-size: 13px; line-height: 1.4; }
+        background: var(--paper); color: var(--hink); border: 1px solid var(--form-line);
+        padding: 12px 16px 10px; font-size: 14px; line-height: 1.4; }
   .reveal .hp table.hp-map { width: 100%; border-collapse: collapse; margin: 0; font-size: 1em; }
-  .reveal .hp-map th { font-weight: 600; font-size: 10.5px; color: var(--hsoft); text-align: center; padding: 2px 0 4px; border: 0; box-shadow: 0 1px 0 var(--hrule); vertical-align: top; line-height: 1.2; white-space: nowrap; text-transform: none; letter-spacing: 0; }
+  .reveal .hp-map th { font-weight: 600; font-size: 10.5px; color: var(--hsoft); text-align: center; padding: 2px 0 5px; border: 0; box-shadow: 0 1px 0 var(--hrule); vertical-align: top; line-height: 1.2; white-space: nowrap; text-transform: none; letter-spacing: 0; }
   .reveal .hp-map th.hq { text-align: left; }
   .reveal .hp-map th.redesign { font-weight: 400; font-style: italic; }
-  .reveal .hp-map th small { display: block; font-weight: 400; font-size: 9px; color: var(--hink); min-height: 22px; white-space: normal; line-height: 1.2; }
+  .reveal .hp-map th small { display: block; font-weight: 400; font-size: 10px; color: var(--hink); min-height: 24px; white-space: normal; line-height: 1.2; }
   .reveal .hp-map td { border: 0; border-top: 1px solid var(--hgrid); padding: 0; }
-  .reveal .hp-map td.cell { width: 42px; height: 34px; text-align: center; vertical-align: middle; }
-  .reveal .hp-map td.cut { width: 40px; background: repeating-linear-gradient(135deg, transparent 0 5px, var(--hgrid) 5px 7px); }
-  .reveal .hp-map td.hq { padding: 4px 8px 4px 0; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left; vertical-align: middle; }
-  .hp-map td.hq b { font-weight: 700; margin-right: 6px; }
-  .hp-map td.hq span { color: var(--hsoft); font-size: 11.5px; }
-  .hd { display: inline-block; width: 11px; height: 11px; border-radius: 50%; vertical-align: middle; }
+  .reveal .hp-map td.cell { width: 45px; height: 40px; text-align: center; vertical-align: middle; }
+  .reveal .hp-map td.cut { width: 45px; background: repeating-linear-gradient(135deg, transparent 0 5px, var(--hgrid) 5px 7px); }
+  .reveal .hp-map td.hq { padding: 4px 8px 4px 0; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left; vertical-align: middle; }
+  .hp-map td.hq b { font-weight: 700; margin-right: 6px; font-size: 16px; }
+  .hp-map td.hq span { color: var(--hsoft); font-size: 13px; }
+  .hd { display: inline-block; width: 14px; height: 14px; border-radius: 50%; vertical-align: middle; }
   .hd.hreal { background: var(--pencil); }
-  .hd.hcos { border: 2px solid var(--graphite); box-sizing: border-box; }
-  .hd.hand { box-shadow: 0 0 0 3px var(--paper), 0 0 0 4.5px var(--hink); }
-  .hd.same { width: 4px; height: 4px; background: var(--hrule); }
-  .hp-sheet { border-left: 3px solid var(--hink); margin: 8px 0 0 3px; padding: 2px 0 2px 14px; }
-  .hp-entry { display: grid; grid-template-columns: 118px 1fr; gap: 12px; padding: 5px 0; }
-  .hp-entry .when { color: var(--hsoft); font-size: 11.5px; padding-top: 2px; }
-  .hp-entry .text { font: 400 14.5px/1.5 "Source Serif 4", Georgia, serif; }
-  .hp-entry .note { display: block; font-weight: 600; font-size: 10.5px; color: var(--pencil); margin-top: 2px; line-height: 1.3; }
+  .hd.hcos { border: 2.5px solid var(--graphite); box-sizing: border-box; }
+  .hd.hand { box-shadow: 0 0 0 3.5px var(--paper), 0 0 0 5px var(--hink); }
+  .hd.same { width: 5px; height: 5px; background: var(--hrule); }
+  .reveal .slides section .hd.fragment.fill { transition: clip-path .8s var(--out); }
+  .reveal .slides section .hd.fragment.fill.visible { clip-path: circle(100% at 50% 50%); }
+  .hp-sheet { border-left: 3px solid var(--hink); margin: 10px 0 0 3px; padding: 2px 0 2px 14px; }
+  .hp-entry { display: grid; grid-template-columns: 112px 1fr; gap: 12px; padding: 5px 0; }
+  .hp-entry .when { color: var(--hsoft); font-size: 13px; padding-top: 3px; }
+  .hp-entry .text { font: 400 17px/1.45 "Source Serif 4", Georgia, serif; }
+  .hp-entry .note { display: block; font-weight: 600; font-size: 12px; color: var(--pencil); margin-top: 2px; line-height: 1.3; }
   .hp-entry .note .by { display: block; font-weight: 400; }
   .hp-entry.hcos .note { color: var(--hsoft); }
   .hp-entry.hreal .when { color: var(--pencil); font-weight: 600; }
@@ -139,45 +174,65 @@
   .hp del { color: var(--hsoft); text-decoration: line-through 1.5px var(--hsoft); }
   .hp .hp-entry.hreal del { color: var(--pencil); text-decoration-color: var(--pencil); }
   .hp ins { text-decoration: none; background: var(--marker); }
-  .hp-cutline { color: var(--hsoft); font-size: 10.5px; font-style: italic; padding: 5px 0; border-top: 1px dashed var(--hrule); border-bottom: 1px dashed var(--hrule); margin: 4px 0 2px; }
+  .hp-cutline { color: var(--hsoft); font-size: 12px; font-style: italic; padding: 5px 0; border-top: 1px dashed var(--hrule); border-bottom: 1px dashed var(--hrule); margin: 4px 0 2px; }
 
-  /* Slide 3: 2x2 tables */
-  .evals { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4em; margin-top: 0.6em; }
-  .evals h3 {
-    font-family: inherit; font-size: 0.75em; font-weight: 600; text-transform: none;
-    color: var(--ink-soft); margin: 0 0 0.5em; line-height: 1.3; letter-spacing: 0;
+  /* ---------- 3 ---------- */
+  .tallies { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+  .reveal .tally-head { font-size: 26px; font-weight: 700; font-variation-settings: "wdth" 85; margin-bottom: 4px; }
+  .reveal .tally-head + .instruction { font-size: 20px; margin-bottom: 16px; }
+  .grid {
+    display: grid; grid-template-columns: 104px 1.35fr 1fr; grid-template-rows: 40px 62px 250px;
+    border: 1.5px solid var(--form);
   }
-  .reveal table.cm { border-collapse: collapse; font-size: 0.85em; margin: 0; }
-  .reveal table.cm th, .reveal table.cm td {
-    border: 1px solid var(--form-line); padding: 0.35em 0.7em; text-align: center;
-    font-variant-numeric: tabular-nums;
-  }
-  .reveal table.cm th { font-weight: 600; color: var(--ink-soft); background: var(--form-tint); }
-  .reveal table.cm td.zero { color: var(--real); font-weight: 700; background: var(--real-tint); }
-  .big { font-size: 1.9em; font-weight: 700; font-variation-settings: "wdth" 80; font-variant-numeric: tabular-nums; line-height: 1.1; margin-top: 0.4em; }
-  .big small { display: block; font-size: 0.36em; margin-top: 0.3em; font-weight: 400; color: var(--ink-soft); }
+  .grid > div { border-right: 1px solid var(--form-line); border-bottom: 1px solid var(--form-line); display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+  .grid > div:nth-child(3n) { border-right: 0; }
+  .grid > div:nth-child(n+7) { border-bottom: 0; }
+  .grid .lab { font-size: 14px; font-weight: 600; font-variation-settings: "wdth" 70; letter-spacing: 0.08em; text-transform: uppercase; color: var(--form); text-align: center; line-height: 1.15; }
+  .grid .n { font-size: 40px; font-weight: 700; font-variation-settings: "wdth" 80; }
+  .grid .agree { background: var(--form-tint); }
+  .grid .hidden { outline: 3px solid var(--ink); outline-offset: -3px; align-content: center; gap: 4px; }
+  .grid .hidden .zero { font-size: 210px; font-weight: 700; font-variation-settings: "wdth" 80; line-height: 0.85; letter-spacing: -0.03em; }
+  .grid .hidden .lab { color: var(--ink); font-size: 15px; }
+  .reveal .agreement { margin-top: 18px; font-size: 22px; color: var(--ink-soft); }
+  .agreement b { color: var(--ink); font-variant-numeric: tabular-nums; }
 
-  /* Slide 4: the number */
-  .numbers { display: flex; gap: 1.6em; align-items: flex-end; margin: 0.4em 0 0.8em; }
-  .numbers .n { font-size: 3.2em; font-weight: 700; font-variation-settings: "wdth" 80; font-variant-numeric: tabular-nums; line-height: 1; }
-  .numbers .was { color: var(--cosmetic); text-decoration: line-through; text-decoration-thickness: 4px; }
-  .numbers .label { font-size: 0.6em; color: var(--ink-soft); display: block; margin-top: 0.3em; font-weight: 400; }
-  .lesson { border-left: 6px solid var(--form); padding-left: 0.8em; font-size: 1.15em; max-width: 28em; }
+  /* ---------- 4 ---------- */
+  .splits { display: grid; grid-template-columns: auto auto; justify-content: start; gap: 96px; margin-top: 4px; }
+  .reveal .split .who { font-size: 16px; font-weight: 600; font-variation-settings: "wdth" 70; letter-spacing: 0.08em; text-transform: uppercase; color: var(--form); margin-bottom: 6px; }
+  .split .big { font-size: 190px; font-weight: 700; font-variation-settings: "wdth" 80; line-height: 0.95; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .split .big .sl { color: var(--form-line); font-weight: 400; }
+  .reveal .split .unit { font-size: 22px; color: var(--ink-soft); margin-top: 10px; }
+  .split.ai .big { color: var(--ink); }
+  .split.ai .strike { transition: color .7s var(--out); }
+  .split.ai .strike.visible { color: var(--cosmetic); }
+  .strike.ink::after { height: 12px; background: var(--ink); top: 50%; }
+  .reveal .verdict { margin-top: 48px; border-top: 3px solid var(--ink); padding-top: 18px; font-size: 32px; font-weight: 600; line-height: 1.3; max-width: 27em; }
 
-  /* Slide 5 */
-  ol.next { margin: 0.2em 0 0 1.1em; padding: 0; }
-  ol.next li { margin-bottom: 1em; line-height: 1.35; font-size: 1.25em; }
-  ol.next li::marker { color: var(--form); font-weight: 700; }
-  ol.next .sub { display: block; font-size: 0.7em; color: var(--ink-soft); }
+  /* ---------- 5 ---------- */
+  .route { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; margin-top: 30px; }
+  .stop:not(:last-child)::after { content: ""; position: absolute; left: 164px; right: -14px; top: 79px; height: 1.5px; background: var(--form); }
+  .stop { position: relative; }
+  .stop svg { display: block; width: 160px; height: 160px; background: var(--sheet); }
+  .reveal .stop .t { font-size: 34px; font-weight: 700; font-variation-settings: "wdth" 85; line-height: 1.15; margin-top: 22px; }
+  .reveal .stop .s { font-size: 23px; color: var(--ink-soft); margin-top: 12px; line-height: 1.35; max-width: 15em; }
+  .stop svg.arrow { position: absolute; top: 72px; right: -30px; width: 16px; height: 15px; background: none; }
 
-  /* Closing */
-  .wordmark { font-size: 3.2em; font-weight: 800; font-variation-settings: "wdth" 125; letter-spacing: -0.02em; margin-bottom: 0.4em; }
-  .links a { color: var(--form-deep); text-decoration: underline; text-underline-offset: 0.15em; }
-  .links p { font-size: 1em; }
+  /* ---------- close ---------- */
+  .close { display: grid; align-content: center; height: 100%; }
+  .wordmark { font-size: 200px; font-weight: 800; font-variation-settings: "wdth" 125; letter-spacing: -0.02em; line-height: 0.9; }
+  .links { margin-top: 40px; border-top: 3px solid var(--form); padding-top: 26px; display: grid; gap: 18px; justify-items: start; }
+  .links a { display: block; line-height: 1.2; color: var(--form-deep); font-size: 36px; font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.18em; }
+  .legend { margin-top: 36px; display: flex; gap: 40px; font-size: 20px; color: var(--ink-soft); align-items: center; }
+  .legend span { display: inline-flex; gap: 12px; align-items: center; }
+  .legend .bubble { width: 22px; height: 22px; }
+  .legend .bubble.cos { border-width: 3px; }
 
-  .reveal .progress { color: var(--form); }
+  .reveal .progress { color: var(--form); height: 4px; }
   .reveal .controls { color: var(--form); }
-  .reveal .slide-number { background: transparent; color: var(--ink-soft); font-family: Archivo, sans-serif; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal .slides section .fragment, .strike::after, .wrow, .reveal .slides section .fragment.turn-red { transition: none !important; }
+  }
 </style>
 </head>
 <body>
@@ -186,49 +241,46 @@
 
 <!-- 1 For whom, and why -->
 <section>
-  <span class="q">1 · For whom, and why</span>
-  <h1>Is it still the same question?</h1>
-  <p class="soft">For researchers who pool ENEMDU rounds: <code>p76</code> keeps its name, but the question changes.</p>
-  <div class="wording">
-    <span class="round">2020-09</span>
-    How much did you receive in MAY from the <strong>HUMAN DEVELOPMENT BONUS</strong>?
+  <div class="band">
+    <div class="num">1</div>
+    <div>
+      <h1>Is it still the same question?</h1>
+      <p class="deck">For researchers who pool ENEMDU rounds: <span class="mono">p76</span> keeps its name, but the question changes.</p>
+    </div>
   </div>
-  <div class="wording changed">
-    <span class="round">2020-12</span>
-    How much did you receive in NOVEMBER from the <strong class="real">BONUS OR PENSION</strong>?
+  <div class="wordings">
+    <div class="wrow">
+      <span class="round">2020-09</span>
+      <span class="text">How much did you receive in MAY from the HUMAN DEVELOPMENT BONUS?</span>
+      <span class="mark"></span>
+    </div>
+    <div class="wrow">
+      <span class="round">2020-12</span>
+      <span class="text">How much did you receive in NOVEMBER from the <span class="fragment strike real-strike" data-fragment-index="0">HUMAN DEVELOPMENT BONUS?</span> <span class="fragment wipe ins" data-fragment-index="1">BONUS OR PENSION?</span></span>
+      <span class="mark"><i class="bubble real fragment fill" data-fragment-index="1" aria-label="real change"></i></span>
+    </div>
   </div>
-  <p class="xlabel">Translated from the Spanish codebook</p>
+  <p class="instruction s1-note">Translated from the Spanish codebook</p>
   <aside class="notes">
     ENEMDU is Ecuador's national employment survey, published by INEC as public data.
     Researchers pool several rounds to run a trend. The variable name stays the same across rounds,
     so nothing in the microdata tells you that p76 asked about the Human Development Bonus in
-    September 2020 and about "a bonus or a pension" in December 2020. The wording on the slide is my English
-    translation of the Spanish codebook. That is a different question.
-    Today the only way to find this is to open every round's codebook and go back and forth.
-    deriva does that step. (The month also changes, May to November, but that is just the reference month.)
+    September 2020 and about "a bonus or a pension" in December 2020.
+    [click] The old wording is struck. [click] The new one is written in, and the mark fills red: a real change.
+    That is a different question. Today the only way to find this is to open every round's codebook
+    and go back and forth. deriva does that step.
+    The wording on the slide is my English translation of the Spanish codebook.
+    (The month also changes, May to November, but that is just the reference month.)
   </aside>
 </section>
 
 <!-- 2 The demo -->
 <section>
-  <span class="q">2 · The demo, from a real run</span>
-  <h2>One command, then one page per question</h2>
+  <div class="head"><div class="num">2</div><h2>One command, then one page per question</h2></div>
   <div class="demo">
     <div>
-<pre class="term"><span class="p">$</span> uv run deriva \
-  ..._persona_anual_2021.xlsx \
-  ..._persona_anual_2025.xlsx
-2021: 151 variables
-2025: 139 variables
-
-  added         0
-  removed      12
-  cosmetic      9
-  real         13
-  unchanged   117
-
-wrote deriva_2021_vs_2025.csv</pre>
-      <p class="cap">Real output. The CSV has both wordings side by side, real changes first.</p>
+      <div class="term"><span class="ln"><span class="p">$ </span>uv run deriva \</span><span class="ln">  ..._persona_anual_2021.xlsx \</span><span class="ln">  ..._persona_anual_2025.xlsx</span><span class="ln">2021: 151 variables</span><span class="ln">2025: 139 variables</span><span class="gap"></span><span class="ln fragment" data-fragment-index="0">  added         0</span><span class="ln fragment" data-fragment-index="1">  removed      12</span><span class="ln fragment" data-fragment-index="2">  cosmetic      9</span><span class="ln fragment" data-fragment-index="3">  <span class="fragment turn-red" data-fragment-index="5">real         13</span></span><span class="ln fragment" data-fragment-index="4">  unchanged   117</span><span class="gap"></span><span class="ln">wrote deriva_2021_vs_2025.csv</span></div>
+      <p class="instruction">Real output. The CSV puts both wordings side by side, real changes first.</p>
     </div>
     <div>
       <div class="hp" role="img" aria-label="The deriva-history panel for p76, in English: one row with a mark per round, a red dot at 2020-12, and the wording of each round with the changed words struck and highlighted.">
@@ -251,7 +303,7 @@ wrote deriva_2021_vs_2025.csv</pre>
             <td class="cell"><i class="hd same"></i></td>
             <td class="cell"><i class="hd hcos"></i></td>
             <td class="cell"><i class="hd hcos hand"></i></td>
-            <td class="cell"><i class="hd hreal hand"></i></td>
+            <td class="cell"><i class="hd hreal hand fragment fill" data-fragment-index="6"></i></td>
             <td class="cut"></td>
             <td class="cell"></td>
             <td class="cell"><i class="hd same"></i></td>
@@ -268,17 +320,17 @@ wrote deriva_2021_vs_2025.csv</pre>
           <div class="hp-cutline">Redesign break: the dictionary layout changed in 2021, so 2021 is not compared with the round before</div>
         </div>
       </div>
-      <p class="xlabel">Translated from the Spanish codebook; marks are from the real history page.</p>
-      <p class="cap" style="margin-top:0.2em"><code>deriva-history data/</code>: 9 rounds, June 2019 to 2025. <span class="dot"></span>real change at 2020-12; 2021 shown as a redesign break.</p>
+      <p class="instruction">Translated from the Spanish codebook; marks are from the real history page. <span class="mono" style="font-style:normal">deriva-history data/</span>: 9 rounds, June 2019 to 2025.</p>
     </div>
   </div>
   <aside class="notes">
-    Left: the real output of deriva on the 2021 and 2025 persona dictionaries. 151 and 139 variables,
-    12 removed, none added, 22 descriptions changed, which the rule splits 9 cosmetic and 13 real.
-    It also writes a CSV with one row per change and both wordings, so the researcher can overrule the rule.
+    Left: the real output of deriva on the 2021 and 2025 persona dictionaries: 151 and 139 variables.
+    [clicks] None added, 12 removed, 9 cosmetic, 13 real, 117 unchanged: 22 descriptions changed.
+    [click] The 13 real ones are what a researcher has to read. It also writes a CSV with one row per change
+    and both wordings, so the researcher can overrule the rule.
     Right: deriva-history reads all nine dictionaries and builds one page. This is its p76 panel, with the
     wordings translated into English; the marks, strikes and highlights are the ones on the real page.
-    The red dot is December 2020, the change from the first slide. The 2021 methodological redesign
+    [click] The red dot is December 2020, the change from the first slide. The 2021 methodological redesign
     is shown as a break, not as a change. The tool shows what moved; the researcher decides what it means.
     This page is live on the project site.
   </aside>
@@ -286,33 +338,34 @@ wrote deriva_2021_vs_2025.csv</pre>
 
 <!-- 3 Why it works -->
 <section>
-  <span class="q">3 · Why it works</span>
-  <h2>I labelled by hand before seeing any verdict</h2>
-  <div class="evals">
+  <div class="head"><div class="num">3</div><h2>I labelled by hand before seeing any verdict</h2></div>
+  <div class="tallies">
     <div>
-      <h3>First rule vs my blind labels<br>2021 vs 2025, 22 changes</h3>
-      <table class="cm">
-        <tr><th></th><th>rule: cosmetic</th><th>rule: real</th></tr>
-        <tr><th>me: cosmetic</th><td>9</td><td>10</td></tr>
-        <tr><th>me: real</th><td class="zero">0</td><td>3</td></tr>
-      </table>
-      <div class="big">12 of 22 <small>agree · no real change hidden</small></div>
+      <p class="tally-head">First rule vs my blind labels</p>
+      <p class="instruction">2021 vs 2025 · 22 changes</p>
+      <div class="grid" role="table" aria-label="First rule against my blind labels">
+        <div></div><div class="lab">rule: cosmetic</div><div class="lab">rule: real</div>
+        <div class="lab">me: cosmetic</div><div class="n agree">9</div><div class="n">10</div>
+        <div class="lab">me: real</div><div class="hidden"><span class="zero">0</span><span class="lab">real changes hidden</span></div><div class="n agree">3</div>
+      </div>
+      <p class="agreement"><b>12 of 22</b> agree</p>
     </div>
     <div>
-      <h3>Second rule on a pair it never saw<br>2020-09 vs 2020-12, 45 changes</h3>
-      <table class="cm">
-        <tr><th></th><th>rule: cosmetic</th><th>rule: real</th></tr>
-        <tr><th>me: cosmetic</th><td>33</td><td>5</td></tr>
-        <tr><th>me: real</th><td class="zero">0</td><td>7</td></tr>
-      </table>
-      <div class="big">40 of 45 <small>agree · 0 of my 7 real changes hidden (first rule: 20 of 45)</small></div>
+      <p class="tally-head">Second rule, on a pair it never saw</p>
+      <p class="instruction">2020-09 vs 2020-12 · 45 changes</p>
+      <div class="grid" role="table" aria-label="Second rule against my blind labels on an unseen pair">
+        <div></div><div class="lab">rule: cosmetic</div><div class="lab">rule: real</div>
+        <div class="lab">me: cosmetic</div><div class="n agree">33</div><div class="n">5</div>
+        <div class="lab">me: real</div><div class="hidden"><span class="zero">0</span><span class="lab">real changes hidden</span></div><div class="n agree">7</div>
+      </div>
+      <p class="agreement"><b>40 of 45</b> agree · first rule: 20 of 45</p>
     </div>
   </div>
   <aside class="notes">
     The check that shows I was in control: the ground truth is mine, made before the program could influence it.
     deriva generates a labels template with both descriptions and no verdict, and a test checks that no verdict leaks into it.
     I labelled every row by hand. Claude pointed out which words differed but never said cosmetic or real.
-    Only then I ran deriva-eval. The red zeros are the cell that matters: a real change the rule would hide.
+    Only then I ran deriva-eval. The big zeros are the cell that matters: a real change the rule would hide.
     It is zero on both pairs. The rule errs the safe way: it flags cosmetic edits as real.
     The second rule was measured once on a pair neither of us had looked at; the pass criterion for that
     measurement (hide no real change) was proposed by Claude and fixed before the labels were made.
@@ -322,37 +375,84 @@ wrote deriva_2021_vs_2025.csv</pre>
 
 <!-- 4 What I learned -->
 <section>
-  <span class="q">4 · What I learned</span>
-  <h2>The first README number was never checked</h2>
-  <div class="numbers">
-    <div><span class="n was">9 / 13</span><span class="label">cosmetic / real, AI-written README</span></div>
-    <div><span class="n">19 / 3</span><span class="label">cosmetic / real, my blind labels</span></div>
+  <div class="head"><div class="num">4</div><h2>The first README number was never checked</h2></div>
+  <div class="splits">
+    <div class="split ai">
+      <p class="who">AI-written README</p>
+      <p class="big"><span class="fragment strike ink" data-fragment-index="0">9<span class="sl"> / </span>13</span></p>
+      <p class="unit">cosmetic / real</p>
+    </div>
+    <div class="split fragment rise" data-fragment-index="1">
+      <p class="who">My blind labels</p>
+      <p class="big">19<span class="sl"> / </span>3</p>
+      <p class="unit">cosmetic / real</p>
+    </div>
   </div>
-  <p class="lesson">A number that matches the program's output is not evidence. Check it against something the program didn't produce.</p>
+  <p class="verdict fragment rise" data-fragment-index="2">A number that matches the program's output is not evidence. Check it against something the program didn't produce.</p>
   <aside class="notes">
     On 25 September my planning log records that the demo numbers in the README were AI-generated and unverified.
     They said 9 cosmetic and 13 real. When I ran the rule, it gave exactly 9 and 13, so the number looked confirmed.
-    But that was only the rule agreeing with itself. My blind labels said 19 cosmetic and 3 real
-    (p54a, p77 and rama1). After that, hand labels came before any change to the rule,
+    [click] But that was only the rule agreeing with itself. [click] My blind labels said 19 cosmetic and 3 real
+    (p54a, p77 and rama1). [click] After that, hand labels came before any change to the rule,
     and the README now shows the measured agreement instead.
   </aside>
 </section>
 
 <!-- 5 What's next -->
 <section>
-  <span class="q">5 · What's next</span>
-  <h2>Next</h2>
-  <ol class="next">
-    <li>A fourth blind pair, from the housing and household dictionaries
-      <span class="sub">If the second rule hides no real change there, it becomes the default.</span></li>
-    <li>Other surveys, and a crosswalk between rounds
-      <span class="sub">Which variable in one round is which in the next.</span></li>
-  </ol>
+  <div class="head"><div class="num">5</div><h2>What's next</h2></div>
+  <div class="route">
+    <div class="stop">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <rect x="14" y="22" width="52" height="70" fill="#fdfeff" stroke="#2a5bb0" stroke-width="2"/>
+        <rect x="40" y="34" width="52" height="70" fill="#fdfeff" stroke="#2a5bb0" stroke-width="2"/>
+        <line x1="48" y1="50" x2="84" y2="50" stroke="#a9c0e6" stroke-width="2"/>
+        <line x1="48" y1="60" x2="78" y2="60" stroke="#a9c0e6" stroke-width="2"/>
+        <circle cx="94" cy="88" r="11" fill="#fdfeff" stroke="#a9c0e6" stroke-width="2.5"/>
+        <circle cx="94" cy="88" r="17" fill="none" stroke="#12161d" stroke-width="2"/>
+      </svg>
+      <svg class="arrow" viewBox="0 0 16 15" aria-hidden="true"><path d="M0 0 L16 7.5 L0 15 Z" fill="#2a5bb0"/></svg>
+      <p class="t">A fourth blind pair</p>
+      <p class="s">From the housing and household dictionaries, labelled by hand first.</p>
+    </div>
+    <div class="stop fragment rise">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <rect x="10" y="10" width="100" height="100" fill="#fdfeff" stroke="#2a5bb0" stroke-width="2"/>
+        <line x1="60" y1="10" x2="60" y2="110" stroke="#a9c0e6" stroke-width="1.5"/>
+        <line x1="10" y1="60" x2="110" y2="60" stroke="#a9c0e6" stroke-width="1.5"/>
+        <rect x="11" y="11" width="48" height="48" fill="#edf3fc"/>
+        <rect x="61" y="61" width="48" height="48" fill="#edf3fc"/>
+        <rect x="12.5" y="62.5" width="45" height="45" fill="none" stroke="#12161d" stroke-width="3"/>
+        <text x="35" y="96" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="700" font-size="34" fill="#12161d">0</text>
+      </svg>
+      <svg class="arrow" viewBox="0 0 16 15" aria-hidden="true"><path d="M0 0 L16 7.5 L0 15 Z" fill="#2a5bb0"/></svg>
+      <p class="t">The second rule as default</p>
+      <p class="s">Only if it hides no real change there.</p>
+    </div>
+    <div class="stop fragment rise">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <rect x="0" y="0" width="120" height="120" fill="#fdfeff"/>
+        <g stroke="#2a5bb0" stroke-width="2" fill="none">
+          <line x1="26" y1="22" x2="94" y2="22"/>
+          <line x1="26" y1="48" x2="94" y2="74"/>
+          <line x1="26" y1="74" x2="94" y2="48"/>
+          <line x1="26" y1="100" x2="94" y2="100"/>
+        </g>
+        <g fill="#fdfeff" stroke="#12161d" stroke-width="2.5">
+          <circle cx="20" cy="22" r="7"/><circle cx="20" cy="48" r="7"/><circle cx="20" cy="74" r="7"/><circle cx="20" cy="100" r="7"/>
+          <circle cx="100" cy="22" r="7"/><circle cx="100" cy="48" r="7"/><circle cx="100" cy="74" r="7"/><circle cx="100" cy="100" r="7"/>
+        </g>
+      </svg>
+      <p class="t">Other surveys, and a crosswalk</p>
+      <p class="s">Which variable in one round is which in the next.</p>
+    </div>
+  </div>
   <aside class="notes">
     First, more held-out evidence. The persona pairs are used up: the one unlabelled consecutive pair repeats
-    20 of its 21 changes. The housing and household (vivienda/hogar) dictionaries are already downloaded, so the next step is to label
-    one pair blind and measure the second rule once. If it still hides no real change, it becomes the default.
-    Second, other surveys, and a crosswalk that says which variable in one round corresponds to which in the next.
+    20 of its 21 changes. The housing and household (vivienda/hogar) dictionaries are already downloaded,
+    so the next step is to label one pair blind and measure the second rule once.
+    [click] If it still hides no real change, it becomes the default.
+    [click] Then other surveys, and a crosswalk that says which variable in one round corresponds to which in the next.
     Also open: a colleague test of the project page, one analyst and one person who only looks a question up,
     each trying it unaided.
   </aside>
@@ -360,10 +460,17 @@ wrote deriva_2021_vs_2025.csv</pre>
 
 <!-- Closing -->
 <section>
-  <div class="wordmark">deriva</div>
-  <div class="links">
-    <p><a href="https://esst-prog2.github.io/deriva/">esst-prog2.github.io/deriva</a></p>
-    <p><a href="https://github.com/esst-prog2/deriva">github.com/esst-prog2/deriva</a></p>
+  <div class="close">
+    <div class="wordmark">deriva</div>
+    <div class="links">
+      <a href="https://esst-prog2.github.io/deriva/">esst-prog2.github.io/deriva</a>
+      <a href="https://github.com/esst-prog2/deriva">github.com/esst-prog2/deriva</a>
+    </div>
+    <div class="legend">
+      <span><i class="bubble real"></i>real change</span>
+      <span><i class="bubble cos"></i>cosmetic change</span>
+      <span><i class="bubble cos hand"></i>checked by hand</span>
+    </div>
   </div>
   <aside class="notes">
     The project page has the live history page, the install steps and the limits. The code and the eval files are in the repository.
@@ -378,11 +485,12 @@ wrote deriva_2021_vs_2025.csv</pre>
   Reveal.initialize({
     width: 1280,
     height: 720,
-    margin: 0.06,
+    margin: 0.05,
     hash: true,
-    slideNumber: 'c/t',
-    transition: 'none',
-    center: true,
+    center: false,
+    transition: 'fade',
+    transitionSpeed: 'default',
+    backgroundTransition: 'none',
     plugins: [RevealNotes]
   });
 </script>
