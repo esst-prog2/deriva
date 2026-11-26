@@ -79,6 +79,7 @@
 
   /* Strike drawn live: the words stay, a line is drawn through them */
   .reveal .slides section .fragment.strike { opacity: 1; visibility: inherit; position: relative; }
+  .strike { position: relative; }
   .strike::after {
     content: ""; position: absolute; left: -0.04em; right: -0.04em; top: 52%;
     height: 0.09em; background: currentColor; transform: scaleX(0); transform-origin: left center;
@@ -119,9 +120,7 @@
   .wrow .mark { text-align: center; }
   .wrow:has(.ins.visible) { background: var(--real-tint); }
   .wrow:has(.ins.visible) .round { color: var(--real); font-weight: 600; }
-  .strike.real-strike { color: var(--ink); }
-  .strike.real-strike::after { background: var(--real); }
-  .strike.real-strike.visible { color: var(--ink-soft); }
+  .wrow del.old { color: var(--ink-soft); text-decoration: line-through 3px var(--real); }
   .ins { display: inline-block; white-space: nowrap; background: var(--real-highlight); box-shadow: inset 0 -3px 0 var(--real); padding: 0 0.12em; color: var(--real); font-weight: 700; }
   .reveal .s1-note { margin-top: 18px; }
 
@@ -175,18 +174,19 @@
   .reveal .tally-head { font-size: 26px; font-weight: 700; font-variation-settings: "wdth" 85; margin-bottom: 4px; }
   .reveal .tally-head + .instruction { font-size: 20px; margin-bottom: 16px; }
   .grid {
-    display: grid; grid-template-columns: 104px 1.35fr 1fr; grid-template-rows: 40px 62px 250px;
+    display: grid; grid-template-columns: 132px 1.3fr 1fr; grid-template-rows: 66px 62px 222px;
     border: 1.5px solid var(--form);
   }
   .grid > div { border-right: 1px solid var(--form-line); border-bottom: 1px solid var(--form-line); display: grid; place-items: center; font-variant-numeric: tabular-nums; }
   .grid > div:nth-child(3n) { border-right: 0; }
   .grid > div:nth-child(n+7) { border-bottom: 0; }
-  .grid .lab { font-size: 14px; font-weight: 600; font-variation-settings: "wdth" 70; letter-spacing: 0.08em; text-transform: uppercase; color: var(--form); text-align: center; line-height: 1.15; }
+  .grid .lab { font-size: 20px; font-weight: 600; font-variation-settings: "wdth" 85; color: var(--form-deep); text-align: center; line-height: 1.15; padding: 0 8px; align-content: center; gap: 2px; }
+  .grid .lab b { display: block; font-size: 23px; font-weight: 700; color: var(--ink); }
   .grid .n { font-size: 40px; font-weight: 700; font-variation-settings: "wdth" 80; }
   .grid .agree { background: var(--form-tint); }
   .grid .hidden { outline: 3px solid var(--ink); outline-offset: -3px; align-content: center; gap: 4px; }
-  .grid .hidden .zero { font-size: 210px; font-weight: 700; font-variation-settings: "wdth" 80; line-height: 0.85; letter-spacing: -0.03em; }
-  .grid .hidden .lab { color: var(--ink); font-size: 15px; }
+  .grid .hidden .zero { font-size: 190px; font-weight: 700; font-variation-settings: "wdth" 80; line-height: 0.85; letter-spacing: -0.03em; }
+  .grid .hidden .lab { color: var(--ink); font-size: 19px; }
   .reveal .agreement { margin-top: 18px; font-size: 22px; color: var(--ink-soft); }
   .agreement b { color: var(--ink); font-variant-numeric: tabular-nums; }
 
@@ -250,8 +250,8 @@
     </div>
     <div class="wrow">
       <span class="round">2020-12</span>
-      <span class="text">How much did you receive in NOVEMBER from the <span class="fragment strike real-strike" data-fragment-index="0">HUMAN DEVELOPMENT BONUS?</span> <span class="fragment wipe ins" data-fragment-index="1">BONUS OR PENSION?</span></span>
-      <span class="mark"><i class="bubble real fragment fill" data-fragment-index="1" aria-label="real change"></i></span>
+      <span class="text">How much did you receive in NOVEMBER from the <del class="old">HUMAN DEVELOPMENT BONUS?</del> <span class="fragment wipe ins" data-fragment-index="0">BONUS OR PENSION?</span></span>
+      <span class="mark"><i class="bubble real fragment fill" data-fragment-index="0" aria-label="real change"></i></span>
     </div>
   </div>
   <p class="instruction s1-note">Translated from the Spanish codebook</p>
@@ -260,7 +260,8 @@
     Researchers pool several rounds to run a trend. The variable name stays the same across rounds,
     so nothing in the microdata tells you that p76 asked about the Human Development Bonus in
     September 2020 and about "a bonus or a pension" in December 2020.
-    [click] The old wording is struck. [click] The new one is written in, and the mark fills red: a real change.
+    The struck words are the September wording; they are not in the December codebook.
+    [click] The December wording is written in, and the mark fills red: a real change.
     That is a different question. Today the only way to find this is to open every round's codebook
     and go back and forth. deriva does that step.
     The wording on the slide is my English translation of the Spanish codebook.
@@ -320,9 +321,9 @@
       <p class="tally-head">First rule vs my blind labels</p>
       <p class="instruction">2021 vs 2025 · 22 changes</p>
       <div class="grid" role="table" aria-label="First rule against my blind labels">
-        <div></div><div class="lab">rule: cosmetic</div><div class="lab">rule: real</div>
-        <div class="lab">me: cosmetic</div><div class="n agree">9</div><div class="n">10</div>
-        <div class="lab">me: real</div><div class="hidden"><span class="zero">0</span><span class="lab">real changes hidden</span></div><div class="n agree">3</div>
+        <div></div><div class="lab">deriva said:<b>cosmetic</b></div><div class="lab">deriva said:<b>real</b></div>
+        <div class="lab">I said:<b>cosmetic</b></div><div class="n agree">9</div><div class="n">10</div>
+        <div class="lab">I said:<b>real</b></div><div class="hidden"><span class="zero">0</span><span class="lab">real changes hidden</span></div><div class="n agree">3</div>
       </div>
       <p class="agreement"><b>12 of 22</b> agree</p>
     </div>
@@ -330,9 +331,9 @@
       <p class="tally-head">Second rule, on a pair it never saw</p>
       <p class="instruction">2020-09 vs 2020-12 · 45 changes</p>
       <div class="grid" role="table" aria-label="Second rule against my blind labels on an unseen pair">
-        <div></div><div class="lab">rule: cosmetic</div><div class="lab">rule: real</div>
-        <div class="lab">me: cosmetic</div><div class="n agree">33</div><div class="n">5</div>
-        <div class="lab">me: real</div><div class="hidden"><span class="zero">0</span><span class="lab">real changes hidden</span></div><div class="n agree">7</div>
+        <div></div><div class="lab">deriva said:<b>cosmetic</b></div><div class="lab">deriva said:<b>real</b></div>
+        <div class="lab">I said:<b>cosmetic</b></div><div class="n agree">33</div><div class="n">5</div>
+        <div class="lab">I said:<b>real</b></div><div class="hidden"><span class="zero">0</span><span class="lab">real changes hidden</span></div><div class="n agree">7</div>
       </div>
       <p class="agreement"><b>40 of 45</b> agree · first rule: 20 of 45</p>
     </div>
