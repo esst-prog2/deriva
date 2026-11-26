@@ -23,14 +23,14 @@
     .gloss .g b { color: #c8102e; }
   </style>
   <div id="root" data-composition-id="csv" data-width="1920" data-height="1080">
-    <div id="csv-cap1" class="cap clip" data-start="0" data-duration="2.7">
-      <div class="w" id="csv-cap1-w">It writes a table: one row per change, both wordings.</div>
+    <div id="csv-cap1" class="cap clip" data-start="0" data-duration="3.6">
+      <div class="w" id="csv-cap1-w" data-hold>It writes a table: the rule's flag and both wordings, for you to check.</div>
     </div>
-    <div id="csv-cap2" class="cap clip" data-start="2.7" data-duration="3.3">
-      <div class="w" id="csv-cap2-w">Real: the industry classification changed version.</div>
+    <div id="csv-cap2" class="cap clip" data-start="3.6" data-duration="2.9">
+      <div class="w" id="csv-cap2-w">Real, checked by hand: the industry classification changed version.</div>
     </div>
 
-    <div id="csv-win" class="win clip" data-start="0" data-duration="6.0">
+    <div id="csv-win" class="win clip" data-start="0" data-duration="6.5">
       <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">deriva_2021_vs_2025.csv</span></div>
       <div class="sheet" id="csv-sheet">
         <div class="hl" id="csv-hl1" style="top: 488px"></div>
@@ -65,12 +65,12 @@
       function out(sel, t) { tl.to(sel, { opacity: 0, duration: 0.2, ease: "power1.in" }, t); }
 
       tl.fromTo("#csv-sheet", { opacity: 0 }, { opacity: 1, duration: 0.27, ease: "none" }, 0);
-      wipe("#csv-cap1-w", 0.05); out("#csv-cap1-w", 2.55);
+      wipe("#csv-cap1-w", 0.05); out("#csv-cap1-w", 3.4);
 
       // rama1: real, a different classification
-      tl.fromTo("#csv-hl1", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 2.7);
-      wipe("#csv-cap2-w", 2.7);
-      tl.fromTo("#csv-g1", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 2.9);
+      tl.fromTo("#csv-hl1", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 3.6);
+      wipe("#csv-cap2-w", 3.6);
+      tl.fromTo("#csv-g1", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 3.72);
 
 
       window.__timelines = window.__timelines || {};
